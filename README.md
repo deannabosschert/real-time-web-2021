@@ -23,6 +23,21 @@
 ## Description
 During this course you will learn how to build a real-time application. You will learn techniques to setup an open connection between the client and the server. This will enable you to send data in real-time both ways, at the same time.
 
+## Concept
+
+GitHub/Paper/anything-connectie voor maken van docs, zodat ik de docs kan schrijven in bijv Markdown via de Wiki en het weergeven wordt op mijn website in kek blogformaat
+
+Ik heb heel lang GitBook, Dropbox Paper, GitHub Wiki of andere document editing-programma's gebruikt. Laatst ben ik Figma gaan gebruiken om m'n documenten eindelijk eens geheel in eigen stijl/opmaak op te kunnen leveren. Nu typt dat alleen niet bepaald lekker weg en is het daardoor niet de meest ideale situatie voor grotere docs. Ik vond het juist wel 'lekker doortypen' in iets als GitBook of Dropbox Paper, maar daar kon die eigen opmaak dus niet in gebruikt worden. Stom! 
+
+Daarom lijkt het mij tof om een realtime connectie te maken tussen één van deze editors en een eigen output/website:
+
+- Ik typ m'n teksten gewoon in bijv Dropbox Paper
+- Ik kan de teksten inclusief custom vormgeving realtime terugvinden op m'n eigen blogpost-site
+- Ook op m'n eigen site kan ik de teksten aanpassen, waarbij de teksten eveneens realtime geüpdatet worden in Dropbox Paper
+
+
+
+
 ## Communication
 - [Github](https://github.com/cmda-minor-web/real-time-web-2021)
 - [Microsoft Teams](https://teams.microsoft.com/l/channel/19%3aeb75a05580374dfbb61a479e14cbcbe6%40thread.tacv2/06%2520-%2520Real-Time%2520Web?groupId=5d001f9a-0a4b-4768-92b1-0f1768328ba3&tenantId=0907bb1e-21fc-476f-8843-02d09ceb59a7)
