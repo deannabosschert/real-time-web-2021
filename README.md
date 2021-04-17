@@ -1,12 +1,152 @@
 # Real-Time Web @cmda-minor-web · 2020/21
 
-## Table of Contents
-- [Synopsis](#synopsis)
-- [Description](#description)
-- [Communication](#communication)
-- [Goals](#goals)
-- [Grading](#grading)
-- [Programme](#programme)
+<details>
+  <summary><strong>Table of Contents</strong> (click to expand)</summary>
+
+<!-- toc -->
+
+- [✅ To-do](#--to-do)
+- [📋 Concept](#---concept)
+- [⚙️ Installation](#---installation)
+- [🧑🏼‍ Actor Diagram](#------actor-diagram)
+- [↔️ Interaction diagram](#---interaction-diagram)
+- [🌍 Design patterns](#---design-patterns)
+- [👍🏽 Best practices](#-----best-practices)
+- [🗃 Data](#---data)
+  * [🐒 Github API](#---github-api)
+    + [Endpoint(s)](#endpoint-s-)
+    + [Rate limiting](#rate-limiting)
+  * [💽 Data cleaning](#---data-cleaning)
+- [👯🏿‍ Features (+ wishlist)](#------features----wishlist-)
+- [🏫 Assignment](#---assignment)
+  * [Learning goals](#learning-goals)
+  * [Week 1 - Hello API 🐒](#week-1---hello-api---)
+  * [Week 2 - Design and Refactor 🛠](#week-2---design-and-refactor---)
+  * [Week 3 - Wrapping up 🎁](#week-3---wrapping-up---)
+  * [Rubric](#rubric)
+- [ℹ️ Resources](#---resources)
+  * [Credits](#credits)
+  * [Small inspiration sources](#small-inspiration-sources)
+- [🗺️ License](#----license)
+
+<!-- tocstop -->
+
+</details>
+
+## Description
+During this course I learned how to build a real-time application. I learned techniques to setup an open connection between the client and the server. This enabled me to send data in real-time both ways, at the same time.
+
+## 📋 Concept
+_What does your app do, what is the goal? (passing butter)_ 
+
+GitHub/Paper/anything-connectie voor maken van docs, zodat ik de docs kan schrijven in bijv Markdown via de Wiki en het weergeven wordt op mijn website in kek blogformaat
+
+Ik heb heel lang GitBook, Dropbox Paper, GitHub Wiki of andere document editing-programma's gebruikt. Laatst ben ik Figma gaan gebruiken om m'n documenten eindelijk eens geheel in eigen stijl/opmaak op te kunnen leveren. Nu typt dat alleen niet bepaald lekker weg en is het daardoor niet de meest ideale situatie voor grotere docs. Ik vond het juist wel 'lekker doortypen' in iets als GitBook of Dropbox Paper, maar daar kon die eigen opmaak dus niet in gebruikt worden. Stom! 
+
+Daarom lijkt het mij tof om een realtime connectie te maken tussen één van deze editors en een eigen output/website:
+
+- Ik typ m'n teksten gewoon in bijv Dropbox Paper
+- Ik kan de teksten inclusief custom vormgeving realtime terugvinden op m'n eigen blogpost-site
+- Ook op m'n eigen site kan ik de teksten aanpassen, waarbij de teksten eveneens realtime geüpdatet worden in Dropbox Paper
+
+
+## ✅ To-do
+- [x] First item
+- [ ] Second item
+
+## ⚙️ Installation
+Clone this repository to your own device:
+```bash
+$ git clone https://github.com/deannabosschert/[folder].git
+```
+Then, navigate to this folder and run:
+
+
+```bash
+npm install
+```
+
+Last,
+
+When it's a serverless project (without NodeJS),
+
+```bash
+python -m SimpleHTTPServer 8000`
+```
+
+If not,
+
+```bash
+npm run dev
+```
+
+
+#### Dependencies
+```json
+{
+  "name": "my-package",
+  "version": "1.0.0",
+  "scripts": {
+    "iets": "iets"
+  },
+  "devDependencies": {
+    "iets": "*"
+  }
+}
+```
+
+
+## 🧑🏼‍ Actor Diagram
+_Which actors are there in your application? (actor diagram)_
+![actor diagram](https://github.com/deannabosschert/template/blob/master/src/img/actordiagram.png)
+
+## ↔️ Interaction diagram
+_How does flowed interaction through the application? (interaction diagram)_
+![interaction diagram](https://github.com/deannabosschert/template/blob/master/src/img/interactiondiagram.png)
+
+## 🌍 Design patterns
+
+- opsomming
+- van
+- patterns
+
+## 👍🏽 Best practices
+
+- Any tips applicable to this course or project
+
+
+## 🗃 Data
+
+### 🐒 API
+_What external data source is featured in your project and what are its properties?_ 
+
+Somethingsomething
+
+#### Properties
+
+#### Rate limiting
+
+### 💽 Data cleaning
+_What has been done with the fetched data?_What has been done with the initial data? Cleaning pattern?
+
+```js
+```
+
+outcome:
+```json
+```
+
+## 👯🏿‍ Features (+ wishlist)
+_What would you like to add (feature wishlist / backlog)?_ 
+
+- [x] one thing
+- [ ] second something
+- [ ] third thing
+
+
+## 🏫 Assignment
+<details>
+  <summary></strong> (click to expand)</summary>
 
 ## Synopsis
 - Course: Real-Time Web
@@ -20,46 +160,16 @@
 - Programme: Communication and Multimedia Design (full time bachelor)
 - Language: Dutch instructions and English resources
 
-## Description
-During this course you will learn how to build a real-time application. You will learn techniques to setup an open connection between the client and the server. This will enable you to send data in real-time both ways, at the same time.
 
-## Concept
-
-GitHub/Paper/anything-connectie voor maken van docs, zodat ik de docs kan schrijven in bijv Markdown via de Wiki en het weergeven wordt op mijn website in kek blogformaat
-
-Ik heb heel lang GitBook, Dropbox Paper, GitHub Wiki of andere document editing-programma's gebruikt. Laatst ben ik Figma gaan gebruiken om m'n documenten eindelijk eens geheel in eigen stijl/opmaak op te kunnen leveren. Nu typt dat alleen niet bepaald lekker weg en is het daardoor niet de meest ideale situatie voor grotere docs. Ik vond het juist wel 'lekker doortypen' in iets als GitBook of Dropbox Paper, maar daar kon die eigen opmaak dus niet in gebruikt worden. Stom! 
-
-Daarom lijkt het mij tof om een realtime connectie te maken tussen één van deze editors en een eigen output/website:
-
-- Ik typ m'n teksten gewoon in bijv Dropbox Paper
-- Ik kan de teksten inclusief custom vormgeving realtime terugvinden op m'n eigen blogpost-site
-- Ook op m'n eigen site kan ik de teksten aanpassen, waarbij de teksten eveneens realtime geüpdatet worden in Dropbox Paper
-
-
-
-
-## Communication
-- [Github](https://github.com/cmda-minor-web/real-time-web-2021)
-- [Microsoft Teams](https://teams.microsoft.com/l/channel/19%3aeb75a05580374dfbb61a479e14cbcbe6%40thread.tacv2/06%2520-%2520Real-Time%2520Web?groupId=5d001f9a-0a4b-4768-92b1-0f1768328ba3&tenantId=0907bb1e-21fc-476f-8843-02d09ceb59a7)
-- [Brightspace](https://dlo.mijnhva.nl/d2l/le/content/275640/Home)
-
-If you have questions:
-- [Look at the additional resources]()
-- [Use a search engine like startpage](https://www.startpage.com/)
-- [Ask questions on MS Teams](https://teams.microsoft.com/l/channel/19%3aeb75a05580374dfbb61a479e14cbcbe6%40thread.tacv2/06%2520-%2520Real-Time%2520Web?groupId=5d001f9a-0a4b-4768-92b1-0f1768328ba3&tenantId=0907bb1e-21fc-476f-8843-02d09ceb59a7) (please help each other!)
-- [Contact a student-assisstant](#synopsis)
-- [Contact a lecturer](#synopsis)
-
-## Goals
-
-After finishing this program you can:
+## Learning Goals
+After finishing this program I can:
 - _deal with real-time complexity;_
 - _handle real-time client-server interaction;_
 - _handle real-time data management;_
 - _handle multi-user support._
 
-## Grading
-Your efforts will be graded using a single point rubric (see below). You will have to pass the criterion (centre column) to pass the course. During the test you will be consulted and will be given feedback on things we think deficient and things we think are an improvement on the criterion.
+## Grading/goals
+My efforts will be graded using a single point rubric (see below). I will have to pass the criterion (centre column) to pass the course. During the test I will be consulted and will be given feedback on things they think deficient and things they think are an improvement on the criterion.
 
 | Deficiency | Criterion | Improvement |
 |:--|:--|:--|
@@ -178,29 +288,24 @@ Goal: Assess and wrap-up the course!
 
 
 
+</details>
 
-<!-- Here are some hints for your  -->
+### Rubric
 
-<!-- Add a link to your live demo in Github Pages 🌐-->
-
-<!-- ☝️ replace this description with a description of your own work -->
-
-<!-- replace the code in the /docs folder with your own, so you can showcase your work with GitHub Pages 🌍 -->
-
-<!-- Add a nice image here at the end of the week, showing off your shiny frontend 📸 -->
-
-<!-- Maybe a table of contents here? 📚 -->
-
-<!-- How about a section that describes how to install this project? 🤓 -->
-
-<!-- ...but how does one use this project? What are its features 🤔 -->
-
-<!-- What external data source is featured in your project and what are its properties 🌠 -->
-
-<!-- This would be a good place for your data life cycle ♻️-->
-
-<!-- Maybe a checklist of done stuff and stuff still on your wishlist? ✅ -->
-
-<!-- How about a license here? 📜  -->
-
+[Rubric- detailed rating of my project](https://github.com/deannabosschert/real-time-web-2021/wiki/Rubric)
+![rubric](https://github.com/deannabosschert/real-time-web-2021/blob/master/src/img/rubric.png)
 [rubric]: https://docs.google.com/spreadsheets/d/e/2PACX-1vTjLC7HzQngsRCmkxTGWvKkkH1JuA5KivKdky_9dzr1zzghARw4-ldQW_tWO3zpxT7ZQC7SpiUa0q2z/pubhtml?gid=0&single=true
+
+## ℹ️ Resources
+
+### Credits
+- Our superamazingteachers at @CMD
+
+### Small inspiration sources
+
+- one source
+- second source
+
+## 🗺️ License
+Author: [Deanna Bosschert](https://github.com/deannabosschert)
+License by [MIT](https://github.com/deannabosschert/project/blob/master/LICENSE)
