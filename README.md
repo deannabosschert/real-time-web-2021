@@ -125,6 +125,7 @@ Somethingsomething
 #### Properties
 
 #### Rate limiting
+Volgens de Dropbox Paper API kunnen maximaal 500 users connecten in dev, daarna moet je voor een Production-pack gaan
 
 ### 💽 Data cleaning
 _What has been done with the fetched data?_What has been done with the initial data? Cleaning pattern?
