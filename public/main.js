@@ -1,8 +1,10 @@
 const socket = io()
-const defineUsername = document.querySelector("defineUsername")
+const defineUsername = document.querySelector(".defineUsername")
 const usernameInput = document.querySelector(".username-input")
+const usernameSet = document.querySelector(".username-set")
 const current_users = document.querySelector(".current_users")
 const errorlogs = document.querySelector(".errorlogs")
+
 
 socket.emit("start") // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load)
 
@@ -11,7 +13,10 @@ defineUsername.addEventListener("submit", function (event) {
   const username = usernameInput.value
   console.log('ingevoerde username: ' + username)
   socket.emit("newUsername", username)
-  return false
+  defineUsername.classList.add("hidden")
+  usernameSet.classList.remove("hidden")
+  setUsername(username)
+   false
 }, false)
 
 socket.on("new_username", function (username) {
@@ -34,8 +39,8 @@ socket.on("user_left", function (username) {
   window.scrollTo(0, current_users.scrollHeight)
 })
 
-socket.on("new_data", function (data) {
-  console.log("nieuwe data!")
+socket.on("new_data", function (data) { // mag ook samengevoegd worden met addData maar tis nice om even de sockets gescheiden te houden wanneer er gemapped wordt
+  console.log("nieuwe data op de client!")
   console.log(data)
   loadingState('')
 
@@ -43,17 +48,23 @@ socket.on("new_data", function (data) {
   addData(data)
 })
 
-function addData(data) {
-  console.log('data adden')
-  loadingState('')
-  console.log(data)
-  // const documentContents = data.data.text // hier zometeen de data mappen en omvormen naar html-elementen om te kunnen injecten
-  // const li = document.createElement("li")
-  // li.innerHTML = `data_${user}`
-  // `data_${user}`.appendChild(li)
-  // window.scrollTo(0, `data_${user}`.scrollHeight)
-  // return
+function setUsername(username) {
+  const p = document.createElement("p")
+  p.innerHTML = `your username: ${username}`
+  usernameSet.appendChild(p)
+  window.scrollTo(0, usernameSet.scrollHeight)
 }
+
+function addData(data) {
+  console.log('data adden aan de DOM')
+  // loadingState('') die later erin doen
+  console.log(data)
+  // const documentContents = data.data.text // hier zometeen de data mappen en omvormen naar html-elementen om te kunnen injecten of lekker ''veilig'' te kunnen innerhtml'en
+}
+
+// function editPost() {
+//   // wanneer de user een edit maakt, dan dit
+// }
 
 function loadingState(state) {
   const loader = document.querySelector('div.loader')
@@ -67,7 +78,7 @@ function loadingState(state) {
 // ERRORAFHANDELING
 socket.on("conn_issue", function (json) {
   loadingState('')
-  // if (tweetObject.connection_issue = "TooManyConnections") {
+  // if (json.connection_issue = "TooManyConnections") {
   const errorDetail = json.detail
   showError(errorDetail)
   // } else {
@@ -86,7 +97,7 @@ function showError(errorDetail) {
 
 
 
-// NICE TO HAVE
+// NICE TO HAVE - rotating footnote, stockmarket-style met 'recente edits door [naam] om [tijd]
 // const recent_edits = document.querySelector(".recent_edits")
 
 // socket.on("last_edited_by", function (data) { // dat ding in de footer
