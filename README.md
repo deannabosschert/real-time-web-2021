@@ -98,7 +98,7 @@ npm run dev
 
 ## 🧑🏼‍ Actor Diagram
 _Which actors are there in your application? (actor diagram)_
-![actor diagram](https://github.com/deannabosschert/real-time-web/blob/main/data_flow.jpg)
+![actor diagram](https://github.com/deannabosschert/real-time-web-2021/blob/main/data_flow.jpg)
 
 ## ↔️ Interaction diagram
 _How does flowed interaction through the application? (interaction diagram)_
