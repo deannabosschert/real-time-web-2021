@@ -98,11 +98,11 @@ npm run dev
 
 ## 🧑🏼‍ Actor Diagram
 _Which actors are there in your application? (actor diagram)_
-![actor diagram](https://github.com/deannabosschert/template/blob/master/src/img/actordiagram.png)
+![actor diagram](https://github.com/deannabosschert/real-time-web/blob/main/data_flow.jpg)
 
 ## ↔️ Interaction diagram
 _How does flowed interaction through the application? (interaction diagram)_
-![interaction diagram](https://github.com/deannabosschert/template/blob/master/src/img/interactiondiagram.png)
+![interaction diagram](https://github.com/deannabosschert/template/blob/main/src/img/interactiondiagram.png)
 
 ## 🌍 Design patterns
 
