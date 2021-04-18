@@ -1,6 +1,7 @@
 // wat je doet; je opent een connectie, en gooit long polling op de api. edits in de database.
-// next up: user-aanwezigheid fixen zodat alles bij elke user goed aankomt?
-// username ergens stashen
+// next up: user-aanwezigheid fixen/stashen zodat alles bij elke user goed aankomt?
+
+// NOTE: er is nog geen gebruik gemaakt van ES6-knowledge zoals gewoonlijk, dit doe ik voor consistency bij herkansingen wat meer tegen 't einde
 
 const express = require('express')
 const app = express()
@@ -189,28 +190,9 @@ http.listen(port, () => {
   console.log('App listening on: ' + port)
 })
 
-// USERNAME-PRESENCE
-// function logEdit(username_1) {
-//   console.log("stop tijd en auteur van de laatste wijziging in een array") // iets met date-API voor time? of er was een dingetje voor; zie project web waar 't ook gebruikt is
-//   const rules = [{
-//     'author': `from:${username_1}`,
-//     'time': `time: ${time}`
-//   }]
-//   return rules
-// }
 
 
 // MUST HAVE: INTERACTIE
-// function logEdit(username_1) {
-//   console.log("stop tijd en auteur van de laatste wijziging in een array") // iets met date-API voor time? of er was een dingetje voor; zie project web waar 't ook gebruikt is
-//   const rules = [{
-//     'author': `from:${username_1}`,
-//     'time': `time: ${time}`
-//   }]
-//   return rules
-// }
-
-
 // socket.on("newEdit", async function (username) { // maak hier anders ff een promise chain van samen met de andere functies want dit is echt heel onoverzichtelijk
 //   const newLogEdit = await logEdit('username')
 //   addEditLog(newLogEdit) // stuur response/post data naar mongodb database voor iets (last edited by xxx om 10:30am oid ?)
@@ -224,3 +206,13 @@ http.listen(port, () => {
 //     getRecentEdits()
 //   }, 8000);
 // })
+
+
+// USERNAME + edits log
+// function logEdit(username) {
+//   console.log("stop tijd en auteur van de laatste wijziging in een array") // iets met date-API voor time? of er was een dingetje voor; zie project web waar 't ook gebruikt is
+//   return edit = [{
+//     'author': `from:${username}`,
+//     'time': `time: ${time}`
+//   }]
+// }
