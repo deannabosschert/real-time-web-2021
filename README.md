@@ -38,7 +38,13 @@ During this course I learned how to build a real-time application. I learned tec
 
 ## 📋 Concept
 _What does your app do, what is the goal? (passing butter)_ 
+### Concept 1
+Bij nader inzien misschien beter om voor een veel simpelere api/structure te gaan;
+Ik ga denk ik voor het gebruik van https://quizapi.io/ als Trivia-API, laat mensen in rooms potjes tegen elkaar spelen van like 5 vragen, en store de resultaten in een database voor het genereren van een leaderboard. Is een beter haalbare MVP, en er kan alsnog uitgebouwd worden met kekke CSS en categories etc.
 
+Wel nog checken of/hoe de real-time functionaliteit voldoende aan de orde komt dan.
+
+### Concept 2
 GitHub/Paper/anything-connectie voor maken van docs, zodat ik de docs kan schrijven in bijv Markdown via de Wiki en het weergeven wordt op mijn website in kek blogformaat
 
 Ik heb heel lang GitBook, Dropbox Paper, GitHub Wiki of andere document editing-programma's gebruikt. Laatst ben ik Figma gaan gebruiken om m'n documenten eindelijk eens geheel in eigen stijl/opmaak op te kunnen leveren. Nu typt dat alleen niet bepaald lekker weg en is het daardoor niet de meest ideale situatie voor grotere docs. Ik vond het juist wel 'lekker doortypen' in iets als GitBook of Dropbox Paper, maar daar kon die eigen opmaak dus niet in gebruikt worden. Stom! 
