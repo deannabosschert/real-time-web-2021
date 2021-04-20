@@ -39,12 +39,21 @@ During this course I learned how to build a real-time application. I learned tec
 ## 📋 Concept
 _What does your app do, what is the goal? (passing butter)_ 
 ### Concept 1
+Users kunnen uit 4 foto's uit een zelfgekozen categorie kiezen, en stemmen op de beste.
+
+#### DLC
+![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%203_%20popular%20photos.jpg)
+
+### Concept 2
 Bij nader inzien misschien beter om voor een veel simpelere api/structure te gaan;
 Ik ga denk ik voor het gebruik van https://quizapi.io/ als Trivia-API, laat mensen in rooms potjes tegen elkaar spelen van like 5 vragen, en store de resultaten in een database voor het genereren van een leaderboard. Is een beter haalbare MVP, en er kan alsnog uitgebouwd worden met kekke CSS en categories etc.
 
 Wel nog checken of/hoe de real-time functionaliteit voldoende aan de orde komt dan.
 
-### Concept 2
+#### DLC
+![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%202_%20trivia.jpg)
+
+### Concept 3
 GitHub/Paper/anything-connectie voor maken van docs, zodat ik de docs kan schrijven in bijv Markdown via de Wiki en het weergeven wordt op mijn website in kek blogformaat
 
 Ik heb heel lang GitBook, Dropbox Paper, GitHub Wiki of andere document editing-programma's gebruikt. Laatst ben ik Figma gaan gebruiken om m'n documenten eindelijk eens geheel in eigen stijl/opmaak op te kunnen leveren. Nu typt dat alleen niet bepaald lekker weg en is het daardoor niet de meest ideale situatie voor grotere docs. Ik vond het juist wel 'lekker doortypen' in iets als GitBook of Dropbox Paper, maar daar kon die eigen opmaak dus niet in gebruikt worden. Stom! 
@@ -55,15 +64,18 @@ Daarom lijkt het mij tof om een realtime connectie te maken tussen één van dez
 - Ik kan de teksten inclusief custom vormgeving realtime terugvinden op m'n eigen blogpost-site
 - Ook op m'n eigen site kan ik de teksten aanpassen, waarbij de teksten eveneens realtime geüpdatet worden in Dropbox Paper
 
+#### DLC
+![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%201_%20dropbox%20paper.jpg)
 
 ## ✅ To-do
-- [x] First item
-- [ ] Second item
+- [x] Draw DLC's for every concept
+- [ ] Ask questions
+- [ ] Add functionalities
 
 ## ⚙️ Installation
 Clone this repository to your own device:
 ```bash
-$ git clone https://github.com/deannabosschert/[folder].git
+$ git clone https://github.com/deannabosschert/real-time-web-2021.git
 ```
 Then, navigate to this folder and run:
 
@@ -108,7 +120,8 @@ _Which actors are there in your application? (actor diagram)_
 
 ## ↔️ Interaction diagram
 _How does flowed interaction through the application? (interaction diagram)_
-![interaction diagram](https://github.com/deannabosschert/template/blob/main/src/img/interactiondiagram.png)
+![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%201_%20dropbox%20paper.jpg)
+
 
 #### Socket
 ![socket](https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ExperienceTube_A5T0181-1200x630.jpg)
