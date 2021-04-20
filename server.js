@@ -19,7 +19,8 @@ let timeout = 0
 
 require('dotenv').config()
 
-const port = 3000
+const port = process.env.PORT || 3000
+
 // const url = process.env.MNG_URL
 // const dbName = process.env.DB_NAME
 
@@ -55,9 +56,6 @@ io.on('connection', socket => { // alle pong-batjes
   })
 
 })
-
-
-
 
 function openConnection(status) { // deze runt dus 1 keer op connection van de user (dus: per client dat entered) en loopt dan in zichzelf gedurende de sessie
   // Listen to the stream.
