@@ -110,6 +110,12 @@ _Which actors are there in your application? (actor diagram)_
 _How does flowed interaction through the application? (interaction diagram)_
 ![interaction diagram](https://github.com/deannabosschert/template/blob/main/src/img/interactiondiagram.png)
 
+#### Socket
+![socket](https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ExperienceTube_A5T0181-1200x630.jpg)
+
+#### 1v1 rooms
+![](https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ET-FINAL-POSTER-FRAME.jpg)
+
 ## 🌍 Design patterns
 
 - opsomming
