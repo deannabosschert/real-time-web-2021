@@ -37,11 +37,26 @@ app.get('/', function (req, res) {
 })
 
 io.on('connection', socket => { // alle pong-batjes
+  const userId = await fetchUserId(socket);
+  socket.join(userId);
 
-  socket.on("start", function () {
+    // // and then later
+    // io.to(userId).emit('hi');
+
+
+  socket.on("connect", function () {
     // openConnection() // voor document ophalen
     // getRecentEdits() // voor de recente edits weergeven onderaan de pagina (of liever gewoon storen..?)
     console.log('we here')
+  })
+
+
+
+  socket.on("start", function () {
+    console.log(username + category)
+    getData(category).then(() => {
+      io.to('some room').emit(data);
+    })
   })
 
   socket.on("newUsername", async function (username) { // je ontvangt de username van 1 client
@@ -56,6 +71,13 @@ io.on('connection', socket => { // alle pong-batjes
   })
 
 })
+
+function getData(category) {
+  const apiLink = `https://api.unsplash.com/photos/${category}/?client_id=WgCeJ15nZWDOCklDsGksqOag8Xb4TvCILMy5datSx7w`
+
+  return fetch(apiLink)
+  .then(res => res.json())
+}
 
 function openConnection(status) { // deze runt dus 1 keer op connection van de user (dus: per client dat entered) en loopt dan in zichzelf gedurende de sessie
   // Listen to the stream.

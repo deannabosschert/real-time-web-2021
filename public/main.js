@@ -6,15 +6,18 @@ const current_users = document.querySelector(".current_users")
 const errorlogs = document.querySelector(".errorlogs")
 
 
-socket.emit("start") // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load)
+socket.emit("connection") // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load)
 
 defineUsername.addEventListener("submit", function (event) {
   event.preventDefault() // when changing the username/entering as a new user, don't show the results of the previous username
   const username = usernameInput.value
   console.log('ingevoerde username: ' + username)
-  socket.emit("newUsername", username)
   defineUsername.classList.add("hidden")
   usernameSet.classList.remove("hidden")
+  
+  socket.emit("start", username, category) // en category
+  socket.join('some room')
+
   setUsername(username)
    false
 }, false)
