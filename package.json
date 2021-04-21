@@ -14,6 +14,10 @@
   },
   "homepage": "https://github.com/deannabosschert/real-time-web-2021#readme",
   "main": "server.js",
+  "engines": {
+    "node": "^15.12.0",
+    "npm": "^7.6.3"
+  },
   "devDependencies": {
     "cross-env": "^7.0.2",
     "node-sass": "^4.14.1",
