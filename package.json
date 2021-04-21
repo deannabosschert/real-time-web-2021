@@ -37,8 +37,6 @@
     "dev:server": "node server.js",
     "dev:css": "sass --watch ./public/assets/scss:./public/assets/css/",
     "dev": "cross-env run-p dev:*",
-    "build": "cross-env run-s build:*",
-    "build:server": "node server.js",
-    "build:css": "node-sass --importer node_modules/node-sass-glob-importer/dist/cli.js public/assets/scss/index.scss public/assets/css/index.css"
+    "build": "node server.js"
   }
 }
