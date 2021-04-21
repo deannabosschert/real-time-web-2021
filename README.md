@@ -36,7 +36,8 @@
 
 ## ✅ To-do
 - [x] Draw DLC's for every concept
-- [ ] Ask questions to Justus
+- [ ] Sketch wireframes for every concept
+- [ ] Ask questions to Justus (Room logic, scoreboard logic)
 - [ ] Add functionalities
 
 ## ⚙️ Installation
