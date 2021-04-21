@@ -37,8 +37,8 @@ app.get('/', function (req, res) {
 })
 
 io.on('connection', async (socket) => { // alle pong-batjes
-  const userId = await fetchUserId(socket);
-  socket.join(userId);
+  // const userId = await fetchUserId(socket);
+  // socket.join(userId);
 
     // // and then later
     // io.to(userId).emit('hi');
