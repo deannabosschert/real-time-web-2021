@@ -33,6 +33,31 @@
 
 </details>
 
+
+## ✅ To-do
+- [x] Draw DLC's for every concept
+- [ ] Ask questions to Justus
+- [ ] Add functionalities
+
+## ⚙️ Installation
+Clone this repository to your own device:
+```bash
+$ git clone https://github.com/deannabosschert/real-time-web-2021.git
+```
+Then, navigate to this folder and run:
+
+
+```bash
+npm install
+```
+
+Last,
+
+```bash
+npm run dev
+```
+
+
 ## Description
 During this course I learned how to build a real-time application. I learned techniques to setup an open connection between the client and the server. This enabled me to send data in real-time both ways, at the same time.
 
@@ -54,7 +79,7 @@ Interactie:
 - Dit blijft 1 minuut op het scherm staan, daarna wordt de room destroyed
 - De eindscore wordt wellicht in de database nog gestored
 
-Multi-user support; er zit al een default in zodra de user binnenkomt, dat diegene een personal ID toegewezen krijgt. Bij het binnentreden op we website komt iedereen in de 'general' room terecht; hier kunnen ze een scoreboard zien met de top-10-foto's, hun username invullen en een categorie invullen. Rooms; zodra er een categorie wordt gekozen; zo worden de 1v1 (of meer) -groepen samengesteld, zodra het de vote-sessie klaar is (of alle user disconnecten) wordt deze destroyed
+Multi-user support; er zit al een default in zodra de user binnenkomt, dat diegene een personal ID toegewezen krijgt. Bij het binnentreden op we website komt iedereen in de 'general' room terecht; hier kunnen ze een scoreboard zien met de top-10-foto's, hun username invullen en een categorie invullen. Na het invullen van de categorie, doet de server met deze query een request naar de API. De client krijgt deze data terug over een priveverbinding. Hierna wordt de user aan een room toegevoegd met een andere user; zo worden de 1v1 (of meer) -groepen samengesteld, zodra de vote-sessie klaar is (of alle user disconnecten) wordt deze destroyed en de 'winning pictures'-data-array teruggestuurd naar de server.
 
 #### DLC
 ![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%203_%20popular%20photos.jpg)
@@ -83,29 +108,6 @@ Daarom lijkt het mij tof om een realtime connectie te maken tussen één van dez
 #### DLC
 <img src="https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%201_%20dropbox%20paper.jpg" alt="data life cycle sketch" style="display: inline-block;"  width="502.8" height="565.6">
 
-
-## ✅ To-do
-- [x] Draw DLC's for every concept
-- [ ] Ask questions to Justus
-- [ ] Add functionalities
-
-## ⚙️ Installation
-Clone this repository to your own device:
-```bash
-$ git clone https://github.com/deannabosschert/real-time-web-2021.git
-```
-Then, navigate to this folder and run:
-
-
-```bash
-npm install
-```
-
-Last,
-
-```bash
-npm run dev
-```
 
 
 #### Dependencies
