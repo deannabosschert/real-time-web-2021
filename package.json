@@ -13,6 +13,7 @@
     "url": "https://github.com/deannabosschert/real-time-web-2021/issues"
   },
   "homepage": "https://github.com/deannabosschert/real-time-web-2021#readme",
+  "main": "server.js",
   "devDependencies": {
     "cross-env": "^7.0.2",
     "ejs": "^3.0.1",
@@ -37,6 +38,7 @@
     "dev:server": "node server.js",
     "dev:css": "sass --watch ./public/assets/scss:./public/assets/css/",
     "dev": "cross-env run-p dev:*",
-    "build": "node server.js"
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
