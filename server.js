@@ -36,12 +36,16 @@ app.get('/', function (req, res) {
   res.render('index.ejs', {})
 })
 
-io.on('connection', async (socket) => { // alle pong-batjes
-  // const userId = await fetchUserId(socket);
-  // socket.join(userId);
+io.on('connect', async (socket) => { // alle pong-batjes
+  console.log('IEMAND IS BINNEN')
+  const userId = await fetchUserId(socket);
+  socket.join(userId);
 
     // // and then later
-    // io.to(userId).emit('hi');
+  
+
+    setTimeout(function(){   io.to(userId).emit('yeet'); }, 2000);
+
 
 
   socket.on("connect", function () {

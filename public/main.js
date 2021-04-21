@@ -1,19 +1,29 @@
 const socket = io()
 const defineUsername = document.querySelector(".defineUsername")
 const usernameInput = document.querySelector(".username-input")
-const usernameSet = document.querySelector(".username-set")
-const current_users = document.querySelector(".current_users")
+const userdataSet = document.querySelector(".userdata-set")
 const errorlogs = document.querySelector(".errorlogs")
 
 
-socket.emit("connection") // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load)
+// socket.emit("connection") // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load), gebeurt automatisch (ingebouwd in socketio)
+
+
+// socket.on('connection', async (socket) => {
+//   const userId = await fetchUserId(socket);
+
+//   socket.join(userId);
+//   console.log(userId)
+//   // and then later
+//   io.to(userId).emit('hi');
+// });
+
 
 defineUsername.addEventListener("submit", function (event) {
   event.preventDefault() // when changing the username/entering as a new user, don't show the results of the previous username
   const username = usernameInput.value
   console.log('ingevoerde username: ' + username)
   defineUsername.classList.add("hidden")
-  usernameSet.classList.remove("hidden")
+  userdataSet.classList.remove("hidden")
   
   socket.emit("start", username, category) // en category
   socket.join('some room')
@@ -54,8 +64,8 @@ socket.on("new_data", function (data) { // mag ook samengevoegd worden met addDa
 function setUsername(username) {
   const p = document.createElement("p")
   p.innerHTML = `your username: ${username}`
-  usernameSet.appendChild(p)
-  window.scrollTo(0, usernameSet.scrollHeight)
+  userdataSet.appendChild(p)
+  window.scrollTo(0, userdataSet.scrollHeight)
 }
 
 function addData(data) {

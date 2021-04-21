@@ -4,30 +4,30 @@
 <main class="main">
   <header>
     <form class="defineUsername">
-      <input class="username-input" name="username" type="text" placeholder="Enter your username" autocomplete="off"
-        autofocus />
-      <button class="searchIcon">Confirm username</button>
+      <label>Username:
+        <input class="username-input" name="username" type="text" placeholder="Enter your username" autocomplete="off"
+          autofocus />
+      </label>
+
+      <label>Category:
+        <input type="search" id="category" name="category" aria-label="Pick a category" placeholder="e.g. tree">
+      </label>
+      <button class="searchIcon">Start</button>
     </form>
-    <article class="username-set hidden">
+    <article class="userdata-set hidden">
     </article>
   </header>
-  <section>
-    <h2>Document</h2>
-    <article class="documentContent">
-    </article>
-  </section>
-  <section>
+
+  <!-- <section>
     <h2>Aanwezige users</h2>
     <ul class="current_users"></ul>
-  </section>
+  </section> -->
   <section>
     <h2>Errors</h2>
     <ul class="errorlogs"></ul>
   </section>
 </main>
 <footer class="footer">
-  <h3>Recently edited by:</h3>
-  <ul class="recent_edits"></ul>
 </footer>
 
 <%- include('./partials/foot.ejs') %>
