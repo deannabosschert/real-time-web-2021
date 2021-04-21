@@ -134,12 +134,11 @@ Daarom lijkt het mij tof om een realtime connectie te maken tussen één van dez
 
 ## 🧑🏼‍ Actor Diagram
 _Which actors are there in your application? (actor diagram)_
-![actor diagram](https://github.com/deannabosschert/real-time-web-2021/blob/main/data_flow.jpg)
+See above --> this one with the functions specifically? 
 
 ## ↔️ Interaction diagram
 _How does flowed interaction through the application? (interaction diagram)_
-![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%201_%20dropbox%20paper.jpg)
-
+See above --> this one with focus on the user actions, like a wireflow? 
 
 #### Socket
 ![socket](https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ExperienceTube_A5T0181-1200x630.jpg)
@@ -152,6 +151,9 @@ _How does flowed interaction through the application? (interaction diagram)_
 - opsomming
 - van
 - patterns
+- die
+- gebruikt
+- zijn
 
 ## 👍🏽 Best practices
 
@@ -163,12 +165,13 @@ _How does flowed interaction through the application? (interaction diagram)_
 ### 🐒 API
 _What external data source is featured in your project and what are its properties?_ 
 
-Somethingsomething
+Unsplash API
 
 #### Properties
 
 #### Rate limiting
-Volgens de Dropbox Paper API kunnen maximaal 500 users connecten in dev, daarna moet je voor een Production-pack gaan
+- Unsplash: max 4000 per uur
+- Volgens de Dropbox Paper API kunnen maximaal 500 users connecten in dev, daarna moet je voor een Production-pack gaan
 
 ### 💽 Data cleaning
 _What has been done with the fetched data?_What has been done with the initial data? Cleaning pattern?
