@@ -3,19 +3,24 @@
 <%- include('./partials/header.ejs') %>
 <main class="main">
   <header>
-    <form class="defineUsername">
-      <label>Username:
+    <form class="userDataForm">
+      <label>Username
         <input class="username-input" name="username" type="text" placeholder="Enter your username" autocomplete="off"
           autofocus />
       </label>
 
-      <label>Category:
-        <input type="search" id="category" name="category" aria-label="Pick a category" placeholder="e.g. tree">
+      <label>Category
+        <input class="category" type="search" id="category" name="category" aria-label="Pick a category"
+          placeholder="e.g. tree">
       </label>
       <button class="searchIcon">Start</button>
     </form>
+
+
     <article class="userdata-set hidden">
     </article>
+
+
   </header>
 
   <!-- <section>
@@ -23,8 +28,16 @@
     <ul class="current_users"></ul>
   </section> -->
   <section>
-    <h2>Errors</h2>
-    <ul class="errorlogs"></ul>
+    <h2>photographs</h2>
+    <form class="photographQuiz">
+      <label>Choose the best photo:
+        <input type="radio" name="photo 1" value="photo 1">
+        <input type="radio" name="photo 2" value="photo 2">
+        <input type="radio" name="photo 3" value="photo 3">
+        <input type="radio" name="photo 4" value="photo 4">
+      </label>
+      <button class="searchIcon">Submit</button>
+    </form>
   </section>
 </main>
 <footer class="footer">

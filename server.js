@@ -5,15 +5,17 @@
 
 const express = require('express')
 const app = express()
+const fetch = require("node-fetch")
+
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 // const {
 //   MongoClient
 // } = require("mongodb")
-const request = require('request')
-const util = require('util')
-const get = util.promisify(request.get)
-const post = util.promisify(request.post)
+// const request = require('request')
+// const util = require('util')
+// const get = util.promisify(request.get)
+// const post = util.promisify(request.post)
 let stream
 let timeout = 0
 
@@ -29,7 +31,7 @@ const options = {
   useUnifiedTopology: true,
 }
 
-app.use(express.static('./public'))
+app.use(express.static('public'))
 app.set('view engine', 'ejs')
 app.set('views', './views')
 app.get('/', function (req, res) {
@@ -38,13 +40,13 @@ app.get('/', function (req, res) {
 
 io.on('connect', async (socket) => { // alle pong-batjes
   console.log('IEMAND IS BINNEN')
-  const userId = await fetchUserId(socket);
-  socket.join(userId);
+  // const userId = await fetchUserId(socket);
+  // socket.join(userId);
 
-    // // and then later
-  
+  //   // // and then later
 
-    setTimeout(function(){   io.to(userId).emit('yeet'); }, 2000);
+
+  //   setTimeout(function(){   io.to(userId).emit('yeet'); }, 2000);
 
 
 
@@ -55,12 +57,33 @@ io.on('connect', async (socket) => { // alle pong-batjes
   })
 
 
+  socket.on("setSocketId", function (data) {
+    // openConnection() // voor document ophalen
+    // getRecentEdits() // voor de recente edits weergeven onderaan de pagina (of liever gewoon storen..?)
+    console.log('yeet')
+    console.log(data)
+  })
 
-  socket.on("start", function () {
-    console.log(username + category)
-    getData(category).then(() => {
-      io.to('some room').emit(data);
+
+
+  socket.on("start", function (userData) {
+    getData(userData.category)
+    .then((data) => cleanData(data)
+    )
+    .then((data) => {
+      console.log('naar de room ermee!')
+      console.log(data)
     })
+        // const userBackpack = {
+      //   userId: userData.userId,
+      //   username: userData.username,
+      //   category: userData.category,
+      //   photos: data
+      // }
+
+      // findRoom(userBackpack)
+      // io.to('some room').emit(data);
+
   })
 
   socket.on("newUsername", async function (username) { // je ontvangt de username van 1 client
@@ -77,10 +100,32 @@ io.on('connect', async (socket) => { // alle pong-batjes
 })
 
 function getData(category) {
-  const apiLink = `https://api.unsplash.com/photos/${category}/?client_id=WgCeJ15nZWDOCklDsGksqOag8Xb4TvCILMy5datSx7w`
+  const endpoint = "https://api.unsplash.com"
+  const count = "2"
+  const clientID = "WgCeJ15nZWDOCklDsGksqOag8Xb4TvCILMy5datSx7w"
+  const apiLink = `${endpoint}/photos/random/?count=${count}&query=${category}&client_id=${clientID}`
 
   return fetch(apiLink)
-  .then(res => res.json())
+    .then(res => res.json())
+    .then(data => data)
+}
+
+function cleanData(data) {
+  return data.map(data => {
+    return {
+      id: data.id,
+      created_at: data.created_at,
+      width: data.width,
+      height: data.height,
+      color: data.color,
+      blur_hash: data.blur_hash,
+      description: data.description,
+      alt_description: data.alt_description,
+      categories: data.categories,
+      photographer: data.user.name,
+      location: data.location.title
+    }
+  })
 }
 
 function openConnection(status) { // deze runt dus 1 keer op connection van de user (dus: per client dat entered) en loopt dan in zichzelf gedurende de sessie
@@ -132,8 +177,8 @@ function streamConnect() { // pingpong middels 'stream'
   // }
 
   fetch(apiURL)
-  .then(res => res.json())
-  .then(data => console.log(data))
+    .then(res => res.json())
+    .then(data => console.log(data))
 
 
   // const stream = request.get(apiURL) // beetje zoals fetch
