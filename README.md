@@ -40,6 +40,10 @@
 - [ ] Ask questions to Justus (Room logic, scoreboard logic)
 - [ ] Add functionalities
 
+#### Quirks
+- Removed build command for css to avoid issues with Heroku
+- Heroku removed MongoDB support
+
 ## ⚙️ Installation
 Clone this repository to your own device:
 ```bash
