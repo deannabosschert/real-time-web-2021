@@ -36,7 +36,7 @@ app.get('/', function (req, res) {
   res.render('index.ejs', {})
 })
 
-io.on('connection', socket => { // alle pong-batjes
+io.on('connection', async (socket) => { // alle pong-batjes
   const userId = await fetchUserId(socket);
   socket.join(userId);
 
