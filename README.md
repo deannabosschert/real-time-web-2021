@@ -39,6 +39,7 @@
 - [ ] Sketch wireframes for every concept
 - [ ] Ask questions to Justus (Room logic, scoreboard logic)
 - [ ] Add functionalities
+- [ ] Fix error things (e.g. when an user tries to submit an unfound category.. check api statuscodes!)
 
 #### Quirks
 - Removed build command for css to avoid issues with Heroku
