@@ -19,6 +19,8 @@ const io = require('socket.io')(http)
 let stream
 let timeout = 0
 
+let availableRooms = []
+
 require('dotenv').config()
 
 const port = process.env.PORT || 3000
@@ -68,21 +70,28 @@ io.on('connect', async (socket) => { // alle pong-batjes
 
   socket.on("start", function (userData) {
     getData(userData.category)
-    .then((data) => cleanData(data)
-    )
-    .then((data) => {
-      console.log('naar de room ermee!')
-      console.log(data)
-    })
-        // const userBackpack = {
-      //   userId: userData.userId,
-      //   username: userData.username,
-      //   category: userData.category,
-      //   photos: data
-      // }
+      .then((data) => cleanData(data))
+      .then((data) =>
+        findRoom({
+          userId: userData.userId,
+          username: userData.username,
+          category: userData.category,
+          photos: data
+        })
+      )
+      .then(data => {
+        console.log('ga de room in!')
+        console.log('my username: ' + data.username)
+        console.log('room id: ' + data.room.roomID)
+        console.log('room creator: ' + data.room.creator)
 
-      // findRoom(userBackpack)
-      // io.to('some room').emit(data);
+        io.to(data.dataId).emit(data.room.roomID) // je stuurt nu alleen het besloten roomnummer en de data naar de client      
+      })
+  })
+
+  socket.on("joinRoom", function(data) {
+
+    io.to(data.room.roomID).emit(data)
 
   })
 
@@ -100,10 +109,8 @@ io.on('connect', async (socket) => { // alle pong-batjes
 })
 
 function getData(category) {
-  const endpoint = "https://api.unsplash.com"
-  const count = "2"
-  const clientID = "WgCeJ15nZWDOCklDsGksqOag8Xb4TvCILMy5datSx7w"
-  const apiLink = `${endpoint}/photos/random/?count=${count}&query=${category}&client_id=${clientID}`
+  const count = "3"
+  const apiLink = `https://api.unsplash.com/photos/random/?count=${count}&query=${category}&client_id=${process.env.API_KEY}`
 
   return fetch(apiLink)
     .then(res => res.json())
@@ -114,18 +121,40 @@ function cleanData(data) {
   return data.map(data => {
     return {
       id: data.id,
-      created_at: data.created_at,
+      url: data.urls.regular,
+      // created_at: data.created_at,
       width: data.width,
       height: data.height,
       color: data.color,
-      blur_hash: data.blur_hash,
-      description: data.description,
+      // blur_hash: data.blur_hash,
+      // description: data.description,
       alt_description: data.alt_description,
-      categories: data.categories,
+      // categories: data.categories,
       photographer: data.user.name,
       location: data.location.title
     }
   })
+}
+
+function findRoom(data) {
+  if (availableRooms.length == 0) {
+    console.log('maak nieuwe room aan')
+    let roomInfo = {roomID: `room-${data.userId}`, creator: data.username}
+    availableRooms.push(roomInfo)
+    data.room = roomInfo
+    return data
+
+
+
+
+// niet beter gelijk de photos erin stoppen? niemand boeit wie welke foto's exact heeft meegenomen
+
+
+  } else {
+    console.log('join bestaande room')
+    data.room = availableRooms.shift();
+    return data
+  }
 }
 
 function openConnection(status) { // deze runt dus 1 keer op connection van de user (dus: per client dat entered) en loopt dan in zichzelf gedurende de sessie

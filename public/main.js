@@ -9,16 +9,18 @@ const errorlogs = document.querySelector(".errorlogs")
 socket.on('connect', () => {    // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load), gebeurt automatisch (ingebouwd in socketio)
 const dataDing = {userId: socket.id}
 console.log(dataDing)
-// socket.emit('setSocketId', dataDing)
 }) 
 
-//   const userId = await fetchUserId(socket);
-
-//   socket.join(userId);
-//   console.log(userId)
-//   // and then later
-//   io.to(userId).emit('hi');
-// });
+socket.on(socket.id, (data) => {    // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load), gebeurt automatisch (ingebouwd in socketio)
+  
+  console.log(data)
+  if (data.room) {
+    socket.emit("joinRoom", userData)
+    // socket.join(data.room.roomId, data)
+    socket.join(data.room.roomId) // data van de twee users wordt verzameld, gebundeld en gebroadcast op de server
+  }
+  
+  }) 
 
 
 userDataForm.addEventListener("submit", function (event) {
