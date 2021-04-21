@@ -39,10 +39,26 @@ During this course I learned how to build a real-time application. I learned tec
 ## 📋 Concept
 _What does your app do, what is the goal? (passing butter)_ 
 ### Concept 1
-Users kunnen uit 4 foto's uit een zelfgekozen categorie kiezen, en stemmen op de beste.
+> Users kunnen uit 4 foto's uit een zelfgekozen categorie kiezen, en stemmen op de beste.
+
+Twee (of meer) users krijgen 4 foto's te  zien en kiezen hieruit de mooiste foto, en doen hier 4 rondes van. De mooiste foto wint en welke foto's na zo'n vote-session winnen, wordt door de server bijgehouden in bijv een array van objecten. Dit kan nog opgeslagen worden in een database om een scoreboard samen te stellen. 
+
+Interactie:
+- User komt binnen, voert username in en selecteert een categorie van foto's 
+- Client stuurt deze keuze naar de server 
+- Server doet een request met deze query naar de api, ontvangt data en cleant dit
+- Server stuurt deze data terug naar de client
+- User selecteert de 'beste' foto en deze data wordt door de client teruggestuurd naar de server en bijgehouden in een (tijdelijke) array met de score
+- Volgende 4 foto's worden door de server naar de client gestuurd en dit wordt herhaald voor 4 sessies
+- Na afloop van de 4 sessies reducet de server de tijdelijke array tot een eindscore en stuurt dit naar de clients in de room
+- Dit blijft 1 minuut op het scherm staan, daarna wordt de room destroyed
+- De eindscore wordt wellicht in de database nog gestored
+
+Multi-user support; er zit al een default in zodra de user binnenkomt, dat diegene een personal ID toegewezen krijgt. Bij het binnentreden op we website komt iedereen in de 'general' room terecht; hier kunnen ze een scoreboard zien met de top-10-foto's, hun username invullen en een categorie invullen. Rooms; zodra er een categorie wordt gekozen; zo worden de 1v1 (of meer) -groepen samengesteld, zodra het de vote-sessie klaar is (of alle user disconnecten) wordt deze destroyed
 
 #### DLC
 ![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%203_%20popular%20photos.jpg)
+
 
 ### Concept 2
 Bij nader inzien misschien beter om voor een veel simpelere api/structure te gaan;
@@ -51,7 +67,7 @@ Ik ga denk ik voor het gebruik van https://quizapi.io/ als Trivia-API, laat mens
 Wel nog checken of/hoe de real-time functionaliteit voldoende aan de orde komt dan.
 
 #### DLC
-![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%202_%20trivia.jpg)
+<img src="https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%202_%20trivia.jpg" alt="data life cycle sketch" style="display: inline-block;"  width="546.5" height="520.4">
 
 ### Concept 3
 GitHub/Paper/anything-connectie voor maken van docs, zodat ik de docs kan schrijven in bijv Markdown via de Wiki en het weergeven wordt op mijn website in kek blogformaat
@@ -65,11 +81,12 @@ Daarom lijkt het mij tof om een realtime connectie te maken tussen één van dez
 - Ook op m'n eigen site kan ik de teksten aanpassen, waarbij de teksten eveneens realtime geüpdatet worden in Dropbox Paper
 
 #### DLC
-![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%201_%20dropbox%20paper.jpg)
+<img src="https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%201_%20dropbox%20paper.jpg" alt="data life cycle sketch" style="display: inline-block;"  width="502.8" height="565.6">
+
 
 ## ✅ To-do
 - [x] Draw DLC's for every concept
-- [ ] Ask questions
+- [ ] Ask questions to Justus
 - [ ] Add functionalities
 
 ## ⚙️ Installation
@@ -86,14 +103,6 @@ npm install
 
 Last,
 
-When it's a serverless project (without NodeJS),
-
-```bash
-python -m SimpleHTTPServer 8000`
-```
-
-If not,
-
 ```bash
 npm run dev
 ```
@@ -101,16 +110,23 @@ npm run dev
 
 #### Dependencies
 ```json
-{
-  "name": "my-package",
-  "version": "1.0.0",
-  "scripts": {
-    "iets": "iets"
+ "devDependencies": {
+    "cross-env": "^7.0.2",
+    "ejs": "^3.0.1",
+    "node-sass": "^4.14.1",
+    "node-sass-glob-importer": "^5.3.2",
+    "npm-run-all": "^4.1.5"
   },
-  "devDependencies": {
-    "iets": "*"
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "heroku": "^7.2.0",
+    "mongodb": "^3.6.6",
+    "mongoose": "^5.9.10",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^2.0.2",
+    "socket.io": "^4.0.0"
   }
-}
 ```
 
 
