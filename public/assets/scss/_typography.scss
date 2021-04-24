@@ -1,65 +1,18 @@
-// Sources for the fluid typography: https://codepen.io/MadeByMike/pen/bEEGvv?editors%3D0100 and https://www.smashingmagazine.com/2016/05/fluid-typography/
-/* Older browsers */
 html {
-  font-size: 16px;
-}
-/* Modern browsers only need this one */
-@media screen and (min-width: 25em) {
-  html {
-    font-size: calc(16px + (24 - 16) * (100vw - 400px) / (800 - 400));
-  }
-}
-/* Safari <8 and IE <11 */
-@media screen and (min-width: 25em) {
-  html {
-    font-size: calc(16px + (24 - 16) * (100vw - 400px) / (800 - 400));
-  }
-}
-@media screen and (min-width: 50em) {
-  html {
-    font-size: calc(16px + (24 - 16) * (100vw - 400px) / (800 - 400));
-  }
-}
-@mixin fluid-type($properties, $min-vw, $max-vw, $min-value, $max-value) {
-  & {
-    @each $property in $properties {
-      #{$property}: $min-value;
-    }
-    @media screen and (min-width: $min-vw) {
-      @each $property in $properties {
-        #{$property}: calc(#{$min-value} + #{strip-unit($max-value - $min-value)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
-      }
-    }
-    @media screen and (min-width: $max-vw) {
-      @each $property in $properties {
-        #{$property}: $max-value;
-      }
-    }
-  }
-}
-@function strip-unit($value) {
-  @return $value / ($value * 0 + 1);
-}
-
-html {
-  height: 100%;
-  font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  @include fluid-type(font-size, $minScreen, $maxScreen, $minFont, $maxFont);
+  // height: 100%;
+  // font-smoothing: antialiased;
+  // text-rendering: optimizeLegibility;
+  // @include fluid-type(font-size, $minScreen, $maxScreen, $minFont, $maxFont);
 }
 
 body {
   line-height: $baseline;
-  padding: $baseline 0;
-  margin: 0 auto;
-  background-image: linear-gradient(rgba(200, 50, 50, .25) 1px, transparent 1px);
-  background-size: 1px $baseline;
-  // width: 22rem;
+  // padding: $baseline 0;
 }
 
-p {
-  line-height: $baseline;
-  margin-bottom: $baseline;
+p, li, address {
+  line-height: 1.4;
+  // margin-bottom: $baseline;
 }
 
 h1,
@@ -72,60 +25,158 @@ h5 {
 
 h1,
 h2 {
-  font-weight: 600;
-  text-align: center;
+  // font-weight: 600;
+  // text-align: center;
+}
+
+html {
+  font-family: Avenir;
+}
+
+h1,
+h2 {
+  font-family: Avenir Black;
 }
 
 h1 {
   font-size: $h1;
   line-height: $h1;
-  margin-bottom: calc((#{$baseline} - #{$h1}) + #{$baseline});
-  font-variant: small-caps;
-  width: 100%;
 }
 
 h2 {
   font-size: $h2;
   line-height: $h2;
-  margin-bottom: calc((#{$baseline} - #{$h2}) + #{$baseline});
 }
 
 h3 {
   font-size: $h3;
   line-height: $h3;
-  margin-bottom: calc((#{$baseline} - #{$h3}) + #{$baseline}/3);
+  font-weight: 500;
 }
 
 h4 {
   font-size: $h4;
   line-height: $h4;
-  margin-bottom: calc((#{$baseline} - #{$h4}) + #{$baseline});
 }
 
 h5 {
   font-size: $h5;
   line-height: $h5;
-  margin-bottom: calc((#{$baseline} - #{$h5}) + #{$baseline});
 }
 
 h6 {
   font-size: $h6;
   line-height: $h6;
-  margin-bottom: calc((#{$baseline} - #{$h6}) + #{$baseline});
 }
 
-
-p {
+p, li, address {
   font-size: $p;
-  // text-align: left;
 }
 
 a {
   text-decoration: none;
   font-size: $p;
-  font-size: inherit;
 }
 
-footer p {
+button {
   font-size: $p;
+}
+
+nav ul li a {
+  font-size: $h3;
+  line-height: 1;
+  text-align: center;
+}
+
+header section aside {
+  font-weight: bold;
+  text-align: center;
+}
+
+header section aside span {
+  color: black;
+}
+
+figcaption {
+  font-size: $figcaption;
+  font-weight: 300;
+  text-align: right;
+}
+
+@media screen and (min-width: 250px) {
+
+  h3,
+  nav ul li a {
+    // font-size: calc(1.25rem * 1.2);
+    // line-height: calc(2.25rem * 2);
+  }
+
+  p, li, address {
+    font-size: 1.2rem;
+    // line-height: calc(1.2rem * 2.5);
+  }
+
+  figcaption {
+    font-size: 1rem;
+    // line-height: calc(1rem * 2.5);
+  }
+
+}
+
+@media screen and (min-width: 450px) {
+
+  h3,
+  nav ul li a {
+    // font-size: calc(2.25rem * 1.32);
+    // line-height: calc(2.25rem * 2);
+  }
+
+  p, li, address {
+    font-size: calc(1.2rem * 1.2);
+    // line-height: calc(1.2rem * 2);
+  }
+
+  figcaption {
+    font-size: 1rem;
+    // line-height: calc(1rem * 2.5);
+  }
+}
+
+@media screen and (min-width: 730px) {
+
+  h3,
+  nav ul li a {
+    // font-size: calc(2.25rem * 1.05);
+    // line-height: calc(2.25rem * 2);
+  }
+
+  p, li, address {
+    font-size: calc(1.2rem * 1.1);
+    // line-height: calc(1.2rem * 1.5);
+  }
+
+  figcaption {
+    font-size: 1.1rem;
+    // line-height: calc(1rem * 1.8);
+  }
+}
+
+
+@media screen and (min-width: 1024px) {
+
+  h3,
+  nav ul li a {
+    font-size: $h3;
+    // line-height: $h3;
+  }
+
+  p, li, address {
+    font-size: $p;
+    // line-height: $p;
+  }
+
+  figcaption {
+    font-size: $figcaption;
+    // line-height: $figcaption;
+  }
 }

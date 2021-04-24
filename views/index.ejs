@@ -1,8 +1,8 @@
 <!doctype html>
 <%- include('./partials/head.ejs') %>
 <%- include('./partials/header.ejs') %>
-<main class="main">
-  <header>
+<main class="main inspiratie">
+  <header class="unsplash">
     <form class="userDataForm">
       <label>Username
         <input class="username-input" name="username" type="text" placeholder="Enter your username" autocomplete="off"
@@ -27,16 +27,55 @@
     <h2>Aanwezige users</h2>
     <ul class="current_users"></ul>
   </section> -->
-  <section>
+
+  <section class="unsplashGallery">
+    <h2>most popular photographs</h2>
+    <div class="masonry-with-columns">
+
+    </div>
+  </section>
+
+  <section class="photograph-chooser">
     <h2>photographs</h2>
     <form class="photographQuiz">
-      <label>Choose the best photo:
-        <input type="radio" name="photo 1" value="photo 1">
-        <input type="radio" name="photo 2" value="photo 2">
-        <input type="radio" name="photo 3" value="photo 3">
-        <input type="radio" name="photo 4" value="photo 4">
-      </label>
-      <button class="searchIcon">Submit</button>
+      <fieldset>
+        <legend>Choose the best photo</legend>
+        <div class="photographs-wrapper">
+        <div class="photo-1-wrapper photowrapper">
+          <label for="photo1"><span>Photo 1</span>
+            <span class="checkmark"></span>
+          <input type="radio" name="photo" id="photo1" checked>
+          <img src="https://images.unsplash.com/photo-1607040480256-f379dec18774?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3300&q=80.jpg"
+
+          </label>
+        </div>
+        <div class="photo-2-wrapper photowrapper">
+          <label for="photo2"><span>Photo 2</span>
+          <span class="checkmark"></span>
+          <input type="radio" name="photo" id="photo2">
+          <img src="https://images.unsplash.com/photo-1607040480256-f379dec18774?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3300&q=80.jpg"
+
+          </label>
+        </div>
+        <div class="photo-3-wrapper photowrapper">
+          <label for="photo2"><span>Photo 3</span>
+            <span class="checkmark"></span>
+
+          <input type="radio" name="photo" id="photo3">
+          <img src="https://images.unsplash.com/photo-1607040480256-f379dec18774?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3300&q=80.jpg"
+
+          </label>
+        </div>
+        <div class="photo-4-wrapper photowrapper">
+          <label for="photo4"><span>Photo 4</span>
+            <span class="checkmark"></span>
+
+          <input type="radio" name="photo" id="photo4">
+          <img src="https://images.unsplash.com/photo-1607040480256-f379dec18774?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3300&q=80.jpg"
+  </label>
+        </div>
+      </div>
+      </fieldset>
     </form>
   </section>
 </main>
