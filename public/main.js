@@ -9,7 +9,9 @@ const currentUsers = document.querySelector(".currentUsers")
 const user1 = document.querySelector(".user1")
 const user2 = document.querySelector(".user2")
 const statusField = document.querySelector(".statusField")
-
+const q1Photos = document.querySelector(".q1-photos")
+const q2Photos = document.querySelector(".q2-photos")
+const nextButton = document.querySelector(".nextButton")
 
 
 socket.on('connect', () => { // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load), gebeurt automatisch (ingebouwd in socketio)
@@ -43,6 +45,53 @@ socket.on('connect', () => { // wordt eenmalig uitgevoerd zodat de client entere
     }
   })
 })
+
+function startGame(data) {
+  console.log(data)
+  const photos = data.room.roomPhotos
+
+  question1data = photos.slice(0, 2)
+  question2data = photos.slice(2, 4)
+  // question3data = photos.slice(8, 12) // deze zometeen uncommenten
+  // question4data = photos.slice(12, 16)
+  console.log(question1data)
+  question1data.map(data => {
+    let div = document.createElement("div")
+    let photo = `<label for="photo1"><span>Photo 1</span>
+    <input type="radio" name="photo" id="photo1">
+    <img src="${data.url}" alt="${data.alt_description}"
+  </label>`
+
+
+    div.innerHTML = photo
+  
+    q1Photos.appendChild(div)
+
+  })
+
+  nextButton.addEventListener("click", function (event) {
+    question2data.map(data => {
+      let div = document.createElement("div")
+      let photo = `<label for="photo2"><span>Photo 2</span>
+      <input type="radio" name="photo" id="photo2">
+      <img src="${data.url}" alt="${data.alt_description}"
+    </label>`
+  
+  
+      div.innerHTML = photo
+    
+      q2Photos.appendChild(div)
+  
+    })
+  })
+
+
+  // map over photos, maak voor elk een question aan?
+}
+
+function renderGame(data) {
+
+}
 
 
 // socket.on(socket.id, (data) => {

@@ -5,6 +5,9 @@
   <div>
     <ul class="consoleLogs"></ul>
   </div>
+  <div>
+    <p class="statusField"></p>
+  </div>
   <header class="unsplash">
     <form class="userDataForm">
       <label>Username
@@ -19,6 +22,11 @@
     </form>
     <article class="userdata-set none">
     </article>
+    <article class="currentUsers none">
+      <h3>current users in this game:</h3>
+      <p class="user1"></p>
+      <p class="user2"></p>
+    </article>
   </header>
   <section class="unsplashGallery">
     <h2>most popular photographs</h2>
@@ -30,36 +38,27 @@
     <form class="photographQuiz">
       <fieldset id="question-1">
         <legend>Choose the best photo</legend>
-        <div class="photographs-wrapper">
-          <div class="photo-1-wrapper photowrapper">
-            <label for="photo1"><span>Photo 1</span>
-            <input type="radio" name="photo" id="photo1">
-            <img src="https://images.unsplash.com/photo-1607040480256-f379dec18774?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3300&q=80.jpg"
-            </label>
-          </div>
-          <div class="photo-2-wrapper photowrapper">
-            <label for="photo2"><span>Photo 2</span>
-            <input type="radio" name="photo" id="photo2">
-            <img src="https://images.unsplash.com/photo-1607040480256-f379dec18774?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3300&q=80.jpg"
-            </label>
-          </div>
-          <div class="photo-3-wrapper photowrapper">
-            <label for="photo3"><span>Photo 3</span>
-            <input type="radio" name="photo" id="photo3">
-            <img src="https://images.unsplash.com/photo-1607040480256-f379dec18774?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3300&q=80.jpg"
-            </label>
-          </div>
-          <div class="photo-4-wrapper photowrapper">
-            <label for="photo4"><span>Photo 4</span>
-            <input type="radio" name="photo" id="photo4">
-            <img src="https://images.unsplash.com/photo-1607040480256-f379dec18774?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3300&q=80.jpg"
-            </label>
-          </div>
+        <div class="q1-photos photographs-wrapper">   
         </div>
       </fieldset>
+      <fieldset id="question-2">
+        <legend>Choose the best photo</legend>
+        <div class="q2-photos photographs-wrapper">   
+        </div>
+      </fieldset>
+      <!-- <fieldset id="question-3">
+        <legend>Choose the best photo</legend>
+        <div class="q3-photos photographs-wrapper">   
+        </div>
+      </fieldset>
+      <fieldset id="question-4">
+        <legend>Choose the best photo</legend>
+        <div class="q4-photos photographs-wrapper">   
+        </div>
+      </fieldset> -->
       <div class="buttonwrapper">
         <button class="previous" type="button">Previous</button>
-        <button class="next" type="button">Next</button>
+        <button class="next nextButton" type="button">Next</button>
         <button class="submit none" type="submit">Submit</button>
       </div>
     </form>

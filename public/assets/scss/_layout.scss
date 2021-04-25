@@ -990,7 +990,7 @@ header  {
   margin-bottom: 1.5rem;
 }
 
-.photowrapper input {
+.photographs-wrapper div input {
   background-color: transparent;
   border: 0;
   box-shadow: none;
@@ -1005,7 +1005,7 @@ header  {
   grid-gap: 1.5rem;
 }
 
-.photowrapper {
+.photographs-wrapper div {
   width: 100%;
   // background-image: url(https://images.unsplash.com/photo-1607040480256-f379dec18774?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3300&q=80.jpg);
     // background-size: contain;
@@ -1053,9 +1053,6 @@ header  {
     }
 }
 
-.photo-1-wrapper {
- 
-}
 
 .photograph-chooser {
   min-width: 100%;
