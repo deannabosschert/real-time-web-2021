@@ -2,6 +2,9 @@
 <%- include('./partials/head.ejs') %>
 <%- include('./partials/header.ejs') %>
 <main class="main inspiratie">
+  <div>
+    <ul class="consoleLogs"></ul>
+  </div>
   <header class="unsplash">
     <form class="userDataForm">
       <label>Username
@@ -14,7 +17,7 @@
       </label>
       <button class="searchIcon">Start</button>
     </form>
-    <article class="userdata-set hidden">
+    <article class="userdata-set none">
     </article>
   </header>
   <section class="unsplashGallery">
@@ -41,7 +44,7 @@
             </label>
           </div>
           <div class="photo-3-wrapper photowrapper">
-            <label for="photo2"><span>Photo 3</span>
+            <label for="photo3"><span>Photo 3</span>
             <input type="radio" name="photo" id="photo3">
             <img src="https://images.unsplash.com/photo-1607040480256-f379dec18774?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3300&q=80.jpg"
             </label>

@@ -3,73 +3,68 @@ const userDataForm = document.querySelector(".userDataForm")
 const usernameInput = document.querySelector(".username-input")
 const categoryInput = document.querySelector(".category")
 const userdataSet = document.querySelector(".userdata-set")
-const errorlogs = document.querySelector(".errorlogs")
+const consoleLogs = document.querySelector(".consoleLogs")
 const gallery = document.querySelector(".masonry-with-columns")
 
-loadScoreboard()
-function loadScoreboard() { // gaat gereplaced worden met data uit database ofc, dit is alleen even om vast te kunnen stylen (en naar plaatjes te kijken lol)
-  const count = "10"
-  const category = "snow"
-  // const apiLink = `https://api.unsplash.com/photos/random/?count=${count}&query=${category}&client_id=WgCeJ15nZWDOCklDsGksqOag8Xb4TvCILMy5datSx7w`
-
-  return fetch(apiLink)
-    .then(res => res.json())
-    .then(data => cleanScoreboard(data))
-    .then(data => renderScoreboard(data))
-}
-
-function cleanScoreboard(data) {
-  return data.map(data => {
-    return {
-      id: data.id,
-      url: data.urls.regular,
-      // created_at: data.created_at,
-      width: data.width,
-      height: data.height,
-      color: data.color,
-      // blur_hash: data.blur_hash,
-      // description: data.description,
-      alt_description: data.alt_description,
-      // categories: data.categories,
-      photographer: data.user.name,
-      location: data.location.title
-    }
-  })
-}
-
-function renderScoreboard(data) {
-  return data.map(data => {
-    // console.log(data.urls.regular)
-    gallery.innerHTML +=
-      `
-    <article>
-    <figure>
-      <img style="border: 6.5px solid ${data.color};" src="${data.url}" alt="${data.alt_description}">
-    </figure>
-    </article>
-    `
-  })
-}
 
 socket.on('connect', () => {    // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load), gebeurt automatisch (ingebouwd in socketio)
-const dataDing = {userId: socket.id}
-console.log(dataDing)
+  console.log('socket on connect')
+  const dataDing = {userId: socket.id}
+  console.log(dataDing)
+  
+  socket.on(socket.id, (data) => {
+    console.log('je hebt een bericht!')
+    console.log(data)
+    let roomNumberthing = data.room.roomID
+
+    if (data.status == 'ready') {
+      displayConsole('hier is je roomnumber, er staat al iemand klaar')
+      displayConsole(roomNumberthing)
+      // socket.join(roomNumberthing)
+    } else if (data.status == 'waiting') {
+      displayConsole('status is waiting, hier is de room number waarin je kunt wachten')
+      displayConsole(roomNumberthing)
+      // socket.join(roomNumberthing)
+
+    } else {
+      displayConsole('hier ging iets mis')
+    }
+  })
+
+  socket.on('new_game', (data) => {
+    console.log(data)
+    displayConsole(data)
+
+  })
+
 }) 
 
-socket.on(socket.id, (data) => {    // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load), gebeurt automatisch (ingebouwd in socketio)
+// socket.on(socket.id, (data) => {
+//   console.log('socket on socketid')    
+//   console.log(data)
+//   if (data.room) {
+//     socket.emit("joinRoom", userData)
+//     // socket.join(data.room.roomId, data)
+//     socket.join(data.room.roomId) // data van de twee users wordt verzameld, gebundeld en gebroadcast op de server
+//   }
   
-  console.log(data)
-  console.log('test')
-  if (data.room) {
-    socket.emit("joinRoom", userData)
-    // socket.join(data.room.roomId, data)
-    socket.join(data.room.roomId) // data van de twee users wordt verzameld, gebundeld en gebroadcast op de server
-  }
+//   })
   
-  }) 
+  socket.on('user_left', (data) => {
+    console.log('the other user has left')
+    console.log(data)
+    console.log(socket.id)
+  })
 
+function displayConsole(message) {
+  const li = document.createElement("li")
+  li.innerHTML = message
+  consoleLogs.appendChild(li)
+}
 
 userDataForm.addEventListener("submit", function (event) {
+  console.log('client function userDataForm')
+
   event.preventDefault() // when entering as a new user and/or submitting, don't show the results of the previous username which would reset the form instantly
 
   console.log('ingevoerde username: ' + usernameInput.value)
@@ -81,10 +76,10 @@ userDataForm.addEventListener("submit", function (event) {
     category: categoryInput.value
   }
 
-  // socket.emit("start", userData)
+  socket.emit("start", userData)
 
-  userDataForm.classList.add("hidden")
-  userdataSet.classList.remove("hidden")
+  userDataForm.classList.add("none")
+  userdataSet.classList.remove("none")
   displayUsername(usernameInput.value)
   displayCategory(categoryInput.value)
 
@@ -92,17 +87,21 @@ userDataForm.addEventListener("submit", function (event) {
 }, false)
 
 function displayUsername(username) {
+  console.log('client function displayUsername')
+
   const p = document.createElement("p")
   p.innerHTML = `your username: ${username}`
   userdataSet.appendChild(p)
-  window.scrollTo(0, userdataSet.scrollHeight)
+  // window.scrollTo(0, userdataSet.scrollHeight)
 }
 
 function displayCategory(category) {
+  console.log('client function displayCategory')
+
   const p = document.createElement("p")
   p.innerHTML = `your category: ${category}`
   userdataSet.appendChild(p)
-  window.scrollTo(0, userdataSet.scrollHeight)
+  // window.scrollTo(0, userdataSet.scrollHeight)
 }
 
 // socket.on("new_username", function (username) {
@@ -148,6 +147,8 @@ function displayCategory(category) {
 // }
 
 function loadingState(state) {
+  console.log('client function loadingState')
+
   const loader = document.querySelector('div.loader')
   if (state === 'active') {
     loader.classList.add('loading')
@@ -158,6 +159,8 @@ function loadingState(state) {
 
 // ERRORAFHANDELING
 socket.on("conn_issue", function (json) {
+  console.log('socket on connection issue')
+
   loadingState('')
   // if (json.connection_issue = "TooManyConnections") {
   const errorDetail = json.detail
@@ -194,3 +197,51 @@ socket.on("conn_issue", function (json) {
 //   recent_edits.appendChild(li)
 //   window.scrollTo(0, recent_edits.scrollHeight)
 // }
+
+
+
+// SCOREBOARD UIT DATABASE
+// loadScoreboard()
+function loadScoreboard() { // gaat gereplaced worden met data uit database ofc, dit is alleen even om vast te kunnen stylen (en naar plaatjes te kijken lol)
+  const count = "10"
+  const category = "snow"
+  // const apiLink = `https://api.unsplash.com/photos/random/?count=${count}&query=${category}&client_id=WgCeJ15nZWDOCklDsGksqOag8Xb4TvCILMy5datSx7w`
+
+  return fetch(apiLink)
+    .then(res => res.json())
+    .then(data => cleanScoreboard(data))
+    .then(data => renderScoreboard(data))
+}
+
+function cleanScoreboard(data) {
+  return data.map(data => {
+    return {
+      id: data.id,
+      url: data.urls.regular,
+      // created_at: data.created_at,
+      width: data.width,
+      height: data.height,
+      color: data.color,
+      // blur_hash: data.blur_hash,
+      // description: data.description,
+      alt_description: data.alt_description,
+      // categories: data.categories,
+      photographer: data.user.name,
+      location: data.location.title
+    }
+  })
+}
+
+function renderScoreboard(data) {
+  return data.map(data => {
+    // console.log(data.urls.regular)
+    gallery.innerHTML +=
+      `
+    <article>
+    <figure>
+      <img style="border: 6.5px solid ${data.color};" src="${data.url}" alt="${data.alt_description}">
+    </figure>
+    </article>
+    `
+  })
+}

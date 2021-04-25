@@ -41,7 +41,8 @@ app.get('/', function (req, res) {
 })
 
 io.on('connect', async (socket) => { // alle pong-batjes
-  console.log('IEMAND IS BINNEN')
+  console.log('IO on connect')
+
   // const userId = await fetchUserId(socket);
   // socket.join(userId);
 
@@ -52,23 +53,26 @@ io.on('connect', async (socket) => { // alle pong-batjes
 
 
 
-  socket.on("connect", function () {
-    // openConnection() // voor document ophalen
-    // getRecentEdits() // voor de recente edits weergeven onderaan de pagina (of liever gewoon storen..?)
-    console.log('we here')
-  })
+  // socket.on("connect", function () {
+  //   // openConnection() // voor document ophalen
+  //   // getRecentEdits() // voor de recente edits weergeven onderaan de pagina (of liever gewoon storen..?)
+  //   console.log('io socket on connect')
+
+  // })
 
 
   socket.on("setSocketId", function (data) {
     // openConnection() // voor document ophalen
     // getRecentEdits() // voor de recente edits weergeven onderaan de pagina (of liever gewoon storen..?)
-    console.log('yeet')
+    console.log('io socket on setSocketId')
     console.log(data)
   })
 
 
 
   socket.on("start", function (userData) {
+    console.log('io socket on start')
+
     getData(userData.category)
       .then((data) => cleanData(data))
       .then((data) =>
@@ -82,26 +86,77 @@ io.on('connect', async (socket) => { // alle pong-batjes
       .then(data => {
         console.log('ga de room in!')
         console.log('my username: ' + data.username)
+        // console.log('eigen photos zijn:')
+        // console.log(data.photos)
         console.log('room id: ' + data.room.roomID)
         console.log('room creator: ' + data.room.creator)
+        // console.log('room photos zijn:')
+        // console.log(data.room.roomPhotos)
 
-        io.to(data.dataId).emit(data.room.roomID) // je stuurt nu alleen het besloten roomnummer en de data naar de client      
+        const persoonlijkeID = data.userId
+        let roomNaam = data.room.roomID
+
+
+        if (data.status == 'ready') {
+          data.room.roomPhotos.push(data.photos) // add eigen foto's aan roomdatading
+          // console.log('de nieuwe room photos zijn nu:')
+          // console.log(data.room.roomPhotos)
+          // emit met foto's
+          console.log('status is ready, stuur room number en fotos')
+          console.log('emit naar persoonlijk:')
+          console.log(data.userId)
+          console.log('met roomid als data:')
+          console.log(data.room.roomID)
+          io.emit(persoonlijkeID, data)
+
+          console.log('join de bemande socket-room')
+
+          socket.join(roomNaam)
+          io.to(roomNaam).emit('new_game', 'ik ben er nu ook')
+
+
+        } else if (data.status == 'waiting') {
+          // alleen de room joinen, waiting for another user
+          console.log('status is waiting, stuur alleen room number')
+          // io.to(data.dataId).emit(data.room.roomID) // je stuurt nu alleen het besloten roomnummer en de data naar de client, zodat de client zelf aan client side die room van de server kan joinen    
+          console.log('emit naar persoonlijk:')
+          console.log(data.userId)
+          console.log('met roomid als data:')
+          console.log(data.room.roomID)
+          io.emit(persoonlijkeID, data)
+
+          console.log('join de nu nog empty socket-room')
+          socket.join(roomNaam)
+
+          io.to(roomNaam).emit('new_game', 'ik ben er vast!')
+
+        }
+        // io.to(persoonlijkeID.emit,(data.room.roomID) // je stuurt nu alleen het besloten roomnummer en de data naar de client, zodat de client zelf aan client side die room van de server kan joinen    
+        //  hierna stuurt de server de juiste data naar de room
       })
+    // .then(data => {
+    //   emit de roomPhotos-data naar de room
+    // }) 
+    // evt hierna weer een then met settimeout die overeenkomt met die van de client, ivm collecten uitslagen
   })
 
-  socket.on("joinRoom", function(data) {
-
+  socket.on("joinRoom", function (data) {
+    console.log('io socket on joinRoom')
     io.to(data.room.roomID).emit(data)
 
   })
 
   socket.on("newUsername", async function (username) { // je ontvangt de username van 1 client
+    console.log('io socket on newUsername')
+
     console.log(username)
     io.emit("new_username", username) // en je gooit die terug naar alle clients
   })
 
   socket.on('disconnect', function () {
-    console.log('user has left the building')
+    console.log('io socket on disconnect')
+
+    // console.log('user has left the building')
     // openConnection('user_left')
     io.emit('user_left', 'anonymous user') // veranderen in username
   })
@@ -109,6 +164,7 @@ io.on('connect', async (socket) => { // alle pong-batjes
 })
 
 function getData(category) {
+  console.log('function getData')
   const count = "3"
   const apiLink = `https://api.unsplash.com/photos/random/?count=${count}&query=${category}&client_id=${process.env.API_KEY}`
 
@@ -118,6 +174,8 @@ function getData(category) {
 }
 
 function cleanData(data) {
+  console.log('function cleanData')
+
   return data.map(data => {
     return {
       id: data.id,
@@ -137,18 +195,29 @@ function cleanData(data) {
 }
 
 function findRoom(data) {
+  console.log('function findRoom')
+  // console.log(data)
+
   if (availableRooms.length == 0) {
     console.log('maak nieuwe room aan')
-    let roomInfo = {roomID: `room-${data.userId}`, creator: data.username}
+    let roomInfo = {
+      roomID: `room-${data.userId}`,
+      creator: data.username,
+      roomPhotos: data.photos
+    }
     availableRooms.push(roomInfo)
     data.room = roomInfo
+    data.status = 'waiting'
+
     return data
 
-// niet beter gelijk de photos erin stoppen? niemand boeit wie welke foto's exact heeft meegenomen
+    // niet beter gelijk de photos erin stoppen? niemand boeit wie welke foto's exact heeft meegenomen
   } else {
     console.log('join bestaande room')
-    data.room = availableRooms.shift();
-    return data
+    data.room = availableRooms.shift() // verwijdert het eerste element van de array en geeft het element terug als resultaat
+    data.status = 'ready'
+
+    return data // je kan hier zeggen van 'nu pas de foto's assemblen'?
   }
 }
 
@@ -189,6 +258,8 @@ function openConnection(status) { // deze runt dus 1 keer op connection van de u
 }
 
 function streamConnect() { // pingpong middels 'stream'
+  console.log('function streamConnect')
+
   // Listen to the stream
   const searchTerm = "tree"
   const count = "10"
@@ -243,16 +314,14 @@ function streamConnect() { // pingpong middels 'stream'
 
 
 async function sleep(delay) {
+  console.log('function sleep')
+
   return new Promise((resolve) =>
     setTimeout(() =>
       resolve(true), delay))
 }
 
 
-
-function getDocument() {
-  console.log('document ophalen')
-}
 
 
 // async function addEditLog(newEdit) {
