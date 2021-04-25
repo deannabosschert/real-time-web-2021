@@ -4,7 +4,52 @@ const usernameInput = document.querySelector(".username-input")
 const categoryInput = document.querySelector(".category")
 const userdataSet = document.querySelector(".userdata-set")
 const errorlogs = document.querySelector(".errorlogs")
+const gallery = document.querySelector(".masonry-with-columns")
 
+loadScoreboard()
+function loadScoreboard() { // gaat gereplaced worden met data uit database ofc, dit is alleen even om vast te kunnen stylen (en naar plaatjes te kijken lol)
+  const count = "10"
+  const category = "snow"
+  // const apiLink = `https://api.unsplash.com/photos/random/?count=${count}&query=${category}&client_id=WgCeJ15nZWDOCklDsGksqOag8Xb4TvCILMy5datSx7w`
+
+  return fetch(apiLink)
+    .then(res => res.json())
+    .then(data => cleanScoreboard(data))
+    .then(data => renderScoreboard(data))
+}
+
+function cleanScoreboard(data) {
+  return data.map(data => {
+    return {
+      id: data.id,
+      url: data.urls.regular,
+      // created_at: data.created_at,
+      width: data.width,
+      height: data.height,
+      color: data.color,
+      // blur_hash: data.blur_hash,
+      // description: data.description,
+      alt_description: data.alt_description,
+      // categories: data.categories,
+      photographer: data.user.name,
+      location: data.location.title
+    }
+  })
+}
+
+function renderScoreboard(data) {
+  return data.map(data => {
+    // console.log(data.urls.regular)
+    gallery.innerHTML +=
+      `
+    <article>
+    <figure>
+      <img style="border: 6.5px solid ${data.color};" src="${data.url}" alt="${data.alt_description}">
+    </figure>
+    </article>
+    `
+  })
+}
 
 socket.on('connect', () => {    // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load), gebeurt automatisch (ingebouwd in socketio)
 const dataDing = {userId: socket.id}
@@ -14,6 +59,7 @@ console.log(dataDing)
 socket.on(socket.id, (data) => {    // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load), gebeurt automatisch (ingebouwd in socketio)
   
   console.log(data)
+  console.log('test')
   if (data.room) {
     socket.emit("joinRoom", userData)
     // socket.join(data.room.roomId, data)
@@ -35,7 +81,7 @@ userDataForm.addEventListener("submit", function (event) {
     category: categoryInput.value
   }
 
-  socket.emit("start", userData)
+  // socket.emit("start", userData)
 
   userDataForm.classList.add("hidden")
   userdataSet.classList.remove("hidden")

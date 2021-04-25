@@ -144,12 +144,7 @@ function findRoom(data) {
     data.room = roomInfo
     return data
 
-
-
-
 // niet beter gelijk de photos erin stoppen? niemand boeit wie welke foto's exact heeft meegenomen
-
-
   } else {
     console.log('join bestaande room')
     data.room = availableRooms.shift();
