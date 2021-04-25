@@ -5,39 +5,45 @@ const categoryInput = document.querySelector(".category")
 const userdataSet = document.querySelector(".userdata-set")
 const consoleLogs = document.querySelector(".consoleLogs")
 const gallery = document.querySelector(".masonry-with-columns")
+const currentUsers = document.querySelector(".currentUsers")
+const user1 = document.querySelector(".user1")
+const user2 = document.querySelector(".user2")
+const statusField = document.querySelector(".statusField")
 
 
-socket.on('connect', () => {    // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load), gebeurt automatisch (ingebouwd in socketio)
+
+socket.on('connect', () => { // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load), gebeurt automatisch (ingebouwd in socketio)
   console.log('socket on connect')
-  const dataDing = {userId: socket.id}
+  const dataDing = {
+    userId: socket.id
+  }
   console.log(dataDing)
-  
+
   socket.on(socket.id, (data) => {
-    console.log('je hebt een bericht!')
-    console.log(data)
-    let roomNumberthing = data.room.roomID
-
     if (data.status == 'ready') {
-      displayConsole('hier is je roomnumber, er staat al iemand klaar')
-      displayConsole(roomNumberthing)
-      // socket.join(roomNumberthing)
+      displayStatus('joining another user..')
     } else if (data.status == 'waiting') {
-      displayConsole('status is waiting, hier is de room number waarin je kunt wachten')
-      displayConsole(roomNumberthing)
-      // socket.join(roomNumberthing)
-
+      displayStatus('waiting for another user..')
     } else {
       displayConsole('hier ging iets mis')
     }
   })
 
   socket.on('new_game', (data) => {
-    console.log(data)
-    displayConsole(data)
+    currentUsers.classList.remove("none")
 
+    user1.innerHTML = `User 1: ${data.room.creator}`
+
+
+    if (data.username != data.room.creator) {
+      // user1.innerHTML = `User 1: ${data.room.creator} (creator)`
+      user2.innerHTML = `User 2: ${data.username}`
+      displayStatus('starting a new game!')
+      startGame(data)
+    }
   })
+})
 
-}) 
 
 // socket.on(socket.id, (data) => {
 //   console.log('socket on socketid')    
@@ -47,19 +53,29 @@ socket.on('connect', () => {    // wordt eenmalig uitgevoerd zodat de client ent
 //     // socket.join(data.room.roomId, data)
 //     socket.join(data.room.roomId) // data van de twee users wordt verzameld, gebundeld en gebroadcast op de server
 //   }
-  
+
 //   })
-  
-  socket.on('user_left', (data) => {
-    console.log('the other user has left')
-    console.log(data)
-    console.log(socket.id)
-  })
+
+socket.on('user_left', (data) => {
+  console.log('the other user has left')
+  console.log(data)
+  console.log(socket.id)
+})
 
 function displayConsole(message) {
   const li = document.createElement("li")
   li.innerHTML = message
   consoleLogs.appendChild(li)
+}
+
+function displayStatus(status) {
+  statusField.innerHTML = status
+}
+
+function displayUsers(username) {
+  const p = document.createElement("p")
+  p.innerHTML = username
+  currentUsers.appendChild(p)
 }
 
 userDataForm.addEventListener("submit", function (event) {
@@ -83,7 +99,7 @@ userDataForm.addEventListener("submit", function (event) {
   displayUsername(usernameInput.value)
   displayCategory(categoryInput.value)
 
-   false
+  false
 }, false)
 
 function displayUsername(username) {

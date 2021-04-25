@@ -84,52 +84,28 @@ io.on('connect', async (socket) => { // alle pong-batjes
         })
       )
       .then(data => {
-        console.log('ga de room in!')
-        console.log('my username: ' + data.username)
-        // console.log('eigen photos zijn:')
-        // console.log(data.photos)
-        console.log('room id: ' + data.room.roomID)
-        console.log('room creator: ' + data.room.creator)
-        // console.log('room photos zijn:')
-        // console.log(data.room.roomPhotos)
-
-        const persoonlijkeID = data.userId
+        // console.log('my username: ' + data.username)
+        // console.log('room id: ' + data.room.roomID)
+        // console.log('room creator: ' + data.room.creator)
+        
         let roomNaam = data.room.roomID
 
 
         if (data.status == 'ready') {
-          data.room.roomPhotos.push(data.photos) // add eigen foto's aan roomdatading
-          // console.log('de nieuwe room photos zijn nu:')
-          // console.log(data.room.roomPhotos)
-          // emit met foto's
-          console.log('status is ready, stuur room number en fotos')
-          console.log('emit naar persoonlijk:')
-          console.log(data.userId)
-          console.log('met roomid als data:')
-          console.log(data.room.roomID)
-          io.emit(persoonlijkeID, data)
-
-          console.log('join de bemande socket-room')
+          Array.prototype.push.apply(data.room.roomPhotos, data.photos)
+          io.emit(data.userId, data) // stuur de individuele user of ze moeten wachten op een ander user of eentje joinen
 
           socket.join(roomNaam)
-          io.to(roomNaam).emit('new_game', 'ik ben er nu ook')
-
+          io.to(roomNaam).emit('new_game', data)
 
         } else if (data.status == 'waiting') {
-          // alleen de room joinen, waiting for another user
-          console.log('status is waiting, stuur alleen room number')
-          // io.to(data.dataId).emit(data.room.roomID) // je stuurt nu alleen het besloten roomnummer en de data naar de client, zodat de client zelf aan client side die room van de server kan joinen    
-          console.log('emit naar persoonlijk:')
-          console.log(data.userId)
-          console.log('met roomid als data:')
-          console.log(data.room.roomID)
-          io.emit(persoonlijkeID, data)
+          io.emit(data.userId, data)  // stuur persoonlijk bericht; waiting for another user
+         
+          socket.join(roomNaam) // wijs socket toe aan deze room
+          io.to(roomNaam).emit('new_game', data)
 
-          console.log('join de nu nog empty socket-room')
-          socket.join(roomNaam)
-
-          io.to(roomNaam).emit('new_game', 'ik ben er vast!')
-
+        } else {
+          console.log('error')
         }
         // io.to(persoonlijkeID.emit,(data.room.roomID) // je stuurt nu alleen het besloten roomnummer en de data naar de client, zodat de client zelf aan client side die room van de server kan joinen    
         //  hierna stuurt de server de juiste data naar de room
