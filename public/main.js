@@ -9,9 +9,8 @@ const currentUsers = document.querySelector(".currentUsers")
 const user1 = document.querySelector(".user1")
 const user2 = document.querySelector(".user2")
 const statusField = document.querySelector(".statusField")
-const q1Photos = document.querySelector(".q1-photos")
-const q2Photos = document.querySelector(".q2-photos")
 const nextButton = document.querySelector(".nextButton")
+const previousButton = document.querySelector(".previousButton")
 
 
 socket.on('connect', () => { // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load), gebeurt automatisch (ingebouwd in socketio)
@@ -52,46 +51,54 @@ function startGame(data) {
 
   question1data = photos.slice(0, 2)
   question2data = photos.slice(2, 4)
-  // question3data = photos.slice(8, 12) // deze zometeen uncommenten
-  // question4data = photos.slice(12, 16)
-  console.log(question1data)
-  question1data.map(data => {
-    let div = document.createElement("div")
-    let photo = `<label for="photo1"><span>Photo 1</span>
-    <input type="radio" name="photo" id="photo1">
-    <img src="${data.url}" alt="${data.alt_description}"
-  </label>`
+  question3data = photos.slice(4, 6) // deze zometeen uncommenten
+  question4data = photos.slice(6, 8)
+  // console.log(question1data)
 
+  mapPhotos(question1data, 1)
+  mapPhotos(question2data, 2)
+  mapPhotos(question3data, 3)
+  mapPhotos(question4data, 4)
 
-    div.innerHTML = photo
-  
-    q1Photos.appendChild(div)
-
-  })
-
-  nextButton.addEventListener("click", function (event) {
-    question2data.map(data => {
-      let div = document.createElement("div")
-      let photo = `<label for="photo2"><span>Photo 2</span>
-      <input type="radio" name="photo" id="photo2">
-      <img src="${data.url}" alt="${data.alt_description}"
-    </label>`
-  
-  
-      div.innerHTML = photo
-    
-      q2Photos.appendChild(div)
-  
-    })
-  })
+  // nextButton.addEventListener("click", showNextPhoto())
 
 
   // map over photos, maak voor elk een question aan?
 }
 
-function renderGame(data) {
+function mapPhotos(data, question) {
+  
+  const questionPhotos = document.querySelector(`.q${question}-photos`)
 
+  return data.map(data => {
+    let div = document.createElement("div")
+    let photo = `<label for="photo${question}"><span>Photo ${question}</span>
+    <input type="radio" name="photo" id="photo${question}">
+    <img src="${data.url}" alt="${data.alt_description}"
+  </label>`
+
+    div.innerHTML = photo
+
+    questionPhotos.appendChild(div)
+  })
 }
+
+// function showNextPhoto() {
+//   question2data.map(data => {
+//     let div = document.createElement("div")
+//     let photo = `<label for="photo2"><span>Photo 2</span>
+//     <input type="radio" name="photo" id="photo2">
+//     <img src="${data.url}" alt="${data.alt_description}"
+//   </label>`
+
+
+//     div.innerHTML = photo
+
+//     q2Photos.appendChild(div)
+
+//   })
+// }
+
 
 
 // socket.on(socket.id, (data) => {
