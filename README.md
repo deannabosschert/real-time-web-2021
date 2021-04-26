@@ -1,4 +1,5 @@
 # Real-Time Web @cmda-minor-web · 2020/21
+https://real-time-web-21.herokuapp.com/
 
 <details>
   <summary><strong>Table of Contents</strong> (click to expand)</summary>
@@ -44,6 +45,7 @@
 #### Quirks
 - Removed build command for css to avoid issues with Heroku
 - Heroku removed MongoDB support
+- If someone opened a room and disconnected before another player could join, the room has to be destroyed from the availableRooms-array
 
 ## ⚙️ Installation
 Clone this repository to your own device:
