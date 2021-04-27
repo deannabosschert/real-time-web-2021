@@ -67,20 +67,29 @@ function startGame(data) {
 }
 
 function mapPhotos(data, question) {
-  
+
   const questionPhotos = document.querySelector(`.q${question}-photos`)
 
-  return data.map(data => {
-    let div = document.createElement("div")
-    let photo = `<label for="photo${question}"><span>Photo ${question}</span>
-    <input type="radio" name="photo" id="photo${question}">
-    <img src="${data.url}" alt="${data.alt_description}"
-  </label>`
+  // return data.map(data => {
+  let div1 = document.createElement("div")
+  let div2 = document.createElement("div")
+  let photoA = `
+    <label for="photo${question}a"><span>Photo ${question}- option A</span>
+      <input type="radio" name="photo${question}" value="photo${question}a" id="photo${question}a">
+      <img src="${data[0].url}" alt="${data[0].alt_description}"</label>`
 
-    div.innerHTML = photo
+  let photoB = `<label for="photo${question}b"><span>Photo ${question}- option B</span>
+      <input type="radio" name="photo${question}" value="photo${question}b" id="photo${question}b">
+      <img src="${data[1].url}" alt="${data[1].alt_description}"
+    </label>`
 
-    questionPhotos.appendChild(div)
-  })
+  div1.innerHTML = photoA
+  div2.innerHTML = photoB
+
+  questionPhotos.appendChild(div1)
+  questionPhotos.appendChild(div2)
+
+  // })
 }
 
 // function showNextPhoto() {
