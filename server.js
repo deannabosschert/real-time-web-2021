@@ -68,7 +68,9 @@ io.on('connect', async (socket) => { // alle pong-batjes
     console.log(data)
   })
 
-
+  socket.on("quiz_results", function (data) {
+    console.log(data)
+  })
 
   socket.on("start", function (userData) {
     console.log('io socket on start')
@@ -141,7 +143,7 @@ io.on('connect', async (socket) => { // alle pong-batjes
 
 function getData(category) {
   console.log('function getData')
-  const count = "6"
+  const count = "4"
   const apiLink = `https://api.unsplash.com/photos/random/?count=${count}&query=${category}&client_id=${process.env.API_KEY}`
 
   return fetch(apiLink)

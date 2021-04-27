@@ -11,7 +11,8 @@ const user2 = document.querySelector(".user2")
 const statusField = document.querySelector(".statusField")
 const nextButton = document.querySelector(".nextButton")
 const previousButton = document.querySelector(".previousButton")
-
+const submitButton = document.querySelector(".submitButton");
+const photographQuiz = document.querySelector(".photographQuiz")
 
 socket.on('connect', () => { // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load), gebeurt automatisch (ingebouwd in socketio)
   console.log('socket on connect')
@@ -92,6 +93,26 @@ function mapPhotos(data, question) {
   // })
 }
 
+// send results to server
+photographQuiz.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  let data = {
+    photo1: document.querySelector("#photo1").value,
+    photo2: document.querySelector("#photo2").value,
+    photo3: document.querySelector("#photo3").value,
+    photo4: document.querySelector("#photo4").value,
+    time: new Date().toLocaleString(),
+    username: document.querySelector("#username").value,
+    userId: document.querySelector("#userid").value,
+    roomNumber: document.querySelector("#roomNumber").value
+  }
+
+  document.querySelector(".photograph-chooser").classList.toggle("none")
+  socket.emit("quiz_results", data)
+})
+
+
 // function showNextPhoto() {
 //   question2data.map(data => {
 //     let div = document.createElement("div")
@@ -161,19 +182,26 @@ userDataForm.addEventListener("submit", function (event) {
 
   userDataForm.classList.add("none")
   userdataSet.classList.remove("none")
-  displayUsername(usernameInput.value)
+  displayUsername(usernameInput.value, socket.id)
   displayCategory(categoryInput.value)
 
   false
 }, false)
 
-function displayUsername(username) {
+function displayUsername(username, userId) {
   console.log('client function displayUsername')
 
   const p = document.createElement("p")
-  p.innerHTML = `your username: ${username}`
+  p.innerHTML = `your username: <span id="username">${username}</span><span class="userId">${userId}</span>`
   userdataSet.appendChild(p)
-  // window.scrollTo(0, userdataSet.scrollHeight)
+}
+
+function displayRoomnumber(roomnumber) {
+  console.log('client function displayRoomnumber')
+
+  const p = document.createElement("p")
+  p.innerHTML = `room number: <span class="roomNumber">${roomnumber}</span>`
+  userdataSet.appendChild(p)
 }
 
 function displayCategory(category) {
@@ -182,7 +210,6 @@ function displayCategory(category) {
   const p = document.createElement("p")
   p.innerHTML = `your category: ${category}`
   userdataSet.appendChild(p)
-  // window.scrollTo(0, userdataSet.scrollHeight)
 }
 
 // socket.on("new_username", function (username) {
