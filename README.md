@@ -47,6 +47,7 @@ https://real-time-web-21.herokuapp.com/
 - Heroku removed MongoDB support
 - If someone opened a room and disconnected before another player could join, the room has to be destroyed from the availableRooms-array
 - Fatsoenlijke formafhandeling ipv deze hacky
+- Usernames moeten uniek zijn; wellicht een (invisible) hash toevoegen?
 
 ## ⚙️ Installation
 Clone this repository to your own device:
