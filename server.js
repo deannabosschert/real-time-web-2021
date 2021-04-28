@@ -1,38 +1,24 @@
-// wat je doet; je opent een connectie, en gooit long polling op de api. edits in de database.
-// next up: user-aanwezigheid fixen/stashen zodat alles bij elke user goed aankomt?
-
-// NOTE: er is nog geen gebruik gemaakt van ES6-knowledge zoals gewoonlijk, dit doe ik voor consistency bij herkansingen wat meer tegen 't einde
-
 const express = require('express')
 const app = express()
 const fetch = require("node-fetch")
-
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const {
   MongoClient
 } = require("mongodb")
-// const request = require('request')
-// const util = require('util')
-// const get = util.promisify(request.get)
-// const post = util.promisify(request.post)
-let stream
-let timeout = 0
-
-let availableRooms = []
-let quizResults = []
-
 require('dotenv').config()
 
 const port = process.env.PORT || 3000
-
 const url = process.env.MNG_URL
 const dbName = process.env.DB_NAME
-
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }
+
+let availableRooms = []
+let quizResults = []
+
 
 app.use(express.static('public'))
 app.set('view engine', 'ejs')
@@ -45,28 +31,6 @@ io.on('connect', async (socket) => { // alle pong-batjes
   console.log('IO on connect')
 
   getScoreboard()
-  // const userId = await fetchUserId(socket);
-  // socket.join(userId);
-
-  //   // // and then later
-
-
-  //   setTimeout(function(){   io.to(userId).emit('yeet'); }, 2000);
-
-
-
-  // socket.on("connect", function () {
-  //   // openConnection() // voor document ophalen
-  //   // getRecentEdits() // voor de recente edits weergeven onderaan de pagina (of liever gewoon storen..?)
-  //   console.log('io socket on connect')
-
-  // })
-
-
-  socket.on("setSocketId", function (data) {
-   console.log('io socket on setSocketId')
-    console.log(data)
-  })
 
   socket.on("start", function (userData) {
     console.log('io socket on start')
@@ -87,16 +51,10 @@ io.on('connect', async (socket) => { // alle pong-batjes
       })
       .then((data) => checkStatus(data))
       .then((data) => shufflePhotos(data))
-
-    // .then(data => {
-    //   emit de roomPhotos-data naar de room
-    // }) 
-    // evt hierna weer een then met settimeout die overeenkomt met die van de client, ivm collecten uitslagen
   })
 
 
   socket.on("quiz_results", function (data, results) {
-    // quizResults.push(results)
     const winningPhotos = matchPhotoResults(data, results).flat()
 
     if (quizResults.find(element => element == data.room.roomID )) {
@@ -118,19 +76,8 @@ io.on('connect', async (socket) => { // alle pong-batjes
 
   })
 
-  socket.on("newUsername", async function (username) { // je ontvangt de username van 1 client
-    console.log('io socket on newUsername')
-
-    console.log(username)
-    io.emit("new_username", username) // en je gooit die terug naar alle clients
-  })
-
   socket.on('disconnect', function () {
-    console.log('io socket on disconnect')
-
-    // console.log('user has left the building')
-    // openConnection('user_left')
-    io.emit('user_left', 'anonymous user') // veranderen in username
+    console.log('user disconnected')
   })
 
 })
@@ -290,59 +237,49 @@ function openConnection(status) { // deze runt dus 1 keer op connection van de u
   connect()
 }
 
-function streamConnect() { // pingpong middels 'stream'
+function streamConnect() { // pingpong zoals sockets ook doen, maar dan middels 'stream'-longpolling
   console.log('function streamConnect')
-
   // Listen to the stream
-  const searchTerm = "tree"
-  const count = "10"
-  const clientID = "WgCeJ15nZWDOCklDsGksqOag8Xb4TvCILMy5datSx7w"
-  const apiURL = `https://api.unsplash.com/photos/random/?count=${count}&query=${searchTerm}&client_id=${clientID}`
-
-  // const config = {
-  //   url = "https://api.unsplash.com/photos/random/?count=10&query=tree&client_id=WgCeJ15nZWDOCklDsGksqOag8Xb4TvCILMy5datSx7w",
-  //   timeout: 20000
-  // }
 
   fetch(apiURL)
     .then(res => res.json())
     .then(data => console.log(data))
 
 
-  // const stream = request.get(apiURL) // beetje zoals fetch
+  const stream = request.get(apiURL) // beetje zoals fetch
 
-  // stream.on('data', data => { // wanneer je data terugkrijgt, doe dan dit
-  //   try {
-  //     console.log('je hebt data ontvangen!')
+  stream.on('data', data => { // wanneer je data terugkrijgt, doe dan dit
+    try {
+      console.log('je hebt data ontvangen!')
 
-  //     const datading = data.json()
+      const datading = data.json()
 
-  //     console.log(datading)
+      console.log(datading)
 
-  //     const json = JSON.parse(data)
-  //     console.log(json)
+      const json = JSON.parse(data)
+      console.log(json)
 
-  //     if (json.connection_issue) {
-  //       console.log('issue, timeout')
-  //       console.log(json.connection_issue)
-  //       stream.emit('timeout')
-  //       io.emit("conn_issue", json)
-  //     } else {
-  //       console.log('geen issues, emit json naar de client')
-  //       // io.emit("new_data", json) // stuur de data naar de client!
-  //     }
-  //   } catch (e) {
-  //     // Heartbeat received. Niets nieuws ontvangen. Do nothing.
-  //     console.log(e)
-  //   }
+      if (json.connection_issue) {
+        console.log('issue, timeout')
+        console.log(json.connection_issue)
+        stream.emit('timeout')
+        io.emit("conn_issue", json)
+      } else {
+        console.log('geen issues, emit json naar de client')
+        // io.emit("new_data", json) // stuur de data naar de client!
+      }
+    } catch (e) {
+      // Heartbeat received. Niets nieuws ontvangen. Do nothing.
+      console.log(e)
+    }
 
-  // }).on('error', error => {
-  //   if (error.code === 'ESOCKETTIMEDOUT') {
-  //     stream.emit('timeout') // terug naar openConnection() en re-try connectie
-  //   }
-  // })
+  }).on('error', error => {
+    if (error.code === 'ESOCKETTIMEDOUT') {
+      stream.emit('timeout') // terug naar openConnection() en re-try connectie
+    }
+  })
 
-  // return stream
+  return stream
 }
 
 
@@ -357,36 +294,8 @@ async function sleep(delay) {
 
 
 
-// async function addEditLog(newEdit) {
-//   const client = await MongoClient.connect(url, options)
-//   const db = client.db(dbName)
-//   console.log("Connected correctly to server to store edit")
-//   const item = await db.collection('twitter_searches').insertOne(newEdit) // verander in document_edits
-//   console.log('big data at your service')
-//   client.close()
-//   return
-// }
-
-// async function getRecentEdits() {
-//   console.log('recente edits getten')
-//   const client = await MongoClient.connect(url, options)
-//   const db = client.db(dbName)
-//   console.log("Connected correctly to server to retrieve edit") // verander dit naar de 5 meest recente ipv random searches
-//   const recentEdit = await db.collection('twitter_searches').aggregate([{
-//     $sample: {
-//       size: 1
-//     }
-//   }]).toArray()
-//   client.close()
-//   io.emit("recent_edits", recentEdit)
-// }
-
-
-// DATABASE STUFF
+// SCOREBOARD FROM DATABASE
 async function addToScoreboard(data) {
-  console.log(data)
-
-  // const item = await db.collection('unsplash_scores').insertOne(data[0])
    let searches = await data.map(async function (data) {
     const client = await MongoClient.connect(url, options)
     const db = client.db(dbName)
@@ -416,24 +325,6 @@ async function addToScoreboard(data) {
   })
 
   console.log(searches)
-
-//   const search = await db.collection('unsplash_scores').findOneAndUpdate(
-//     { "id" : "V72xxgvew-A" },
-//     { $inc: { "score" : 1 } }
-//  )
-//  const search2 = await db.collection('unsplash_scores').findOneAndUpdate(
-//   { "id": "Andy" },
-//    { $inc: { "score": 1 } },
-//    {
-//      upsert: true,
-//      multi: true
-//    }
-// )
-  // const search = await db.collection('unsplash_scores').findOneAndUpdate(filter, update, options, callback)
-  console.log('big data at your service')
-  // console.log(search)
-  // console.log(search2)
-
 }
 
 async function getScoreboard() {
@@ -454,30 +345,3 @@ async function getScoreboard() {
 http.listen(port, () => {
   console.log('App listening on: ' + port)
 })
-
-
-
-// MUST HAVE: INTERACTIE
-// socket.on("newEdit", async function (username) { // maak hier anders ff een promise chain van samen met de andere functies want dit is echt heel onoverzichtelijk
-//   const newLogEdit = await logEdit('username')
-//   addEditLog(newLogEdit) // stuur response/post data naar mongodb database voor iets (last edited by xxx om 10:30am oid ?)
-// })
-
-
-// NICE TO HAVE
-
-// socket.on("last_edited_by", function () { // dat ding in de footer
-//   setTimeout(function () {
-//     getRecentEdits()
-//   }, 8000);
-// })
-
-
-// USERNAME + edits log
-// function logEdit(username) {
-//   console.log("stop tijd en auteur van de laatste wijziging in een array") // iets met date-API voor time? of er was een dingetje voor; zie project web waar 't ook gebruikt is
-//   return edit = [{
-//     'author': `from:${username}`,
-//     'time': `time: ${time}`
-//   }]
-// }

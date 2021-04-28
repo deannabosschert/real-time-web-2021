@@ -66,6 +66,7 @@ socket.on('connect', () => { // wordt eenmalig uitgevoerd zodat de client entere
   socket.on('scoreboard', (data) => renderScoreboard(data))
 })
 
+
 function startGame(data) {
   const photos = data.room.roomPhotos
 
@@ -138,12 +139,6 @@ function addSubmitButton(data) {
 }
 
 
-socket.on('user_left', (data) => {
-  console.log('the other user has left')
-  console.log(data)
-  console.log(socket.id)
-})
-
 function displayConsole(message) {
   const li = document.createElement("li")
   li.innerHTML = message
@@ -208,48 +203,23 @@ function displayCategory(category) {
   userdataSet.appendChild(p)
 }
 
-// socket.on("new_username", function (username) {
-//   console.log("nieuwe user aanwezig!")
-//   console.log(username)
-
-//   const li = document.createElement("li")
-//   li.innerHTML = username
-//   current_users.appendChild(li)
-//   window.scrollTo(0, current_users.scrollHeight)
-// })
-
-// socket.on("user_left", function (username) {
-//   console.log("user gaat doei")
-//   console.log(username)
-
-//   const li = document.createElement("li")
-//   li.innerHTML = `left just now: ${username}`
-//   current_users.appendChild(li)
-//   window.scrollTo(0, current_users.scrollHeight)
-// })
-
-// socket.on("new_data", function (data) { // mag ook samengevoegd worden met addData maar tis nice om even de sockets gescheiden te houden wanneer er gemapped wordt
-//   console.log("nieuwe data op de client!")
-//   console.log(data)
-//   loadingState('')
-
-//   // const username = username_tag.charAt(5) // kan wellicht zoals bij Dropbox paper de naam van de auteur erbij zetten, en in deze functie al lostrekken?
-//   addData(data)
-// })
 
 
+// RENDER SCOREBOARD GALLERY ON HOMEPAGE
+function renderScoreboard(data) {
+  return data.map(data => {
+    gallery.innerHTML +=
+      `
+    <article>
+    <figure>
+      <img style="border: 6.5px solid ${data.color};" src="${data.url}" alt="${data.alt_description}">
+    </figure>
+    </article>
+    `
+  })
+}
 
-// function addData(data) {
-//   console.log('data adden aan de DOM')
-//   // loadingState('') die later erin doen
-//   console.log(data)
-//   // const documentContents = data.data.text // hier zometeen de data mappen en omvormen naar html-elementen om te kunnen injecten of lekker ''veilig'' te kunnen innerhtml'en
-// }
-
-// function editPost() {
-//   // wanneer de user een edit maakt, dan dit
-// }
-
+// LOADING STATE
 function loadingState(state) {
   console.log('client function loadingState')
 
@@ -260,6 +230,7 @@ function loadingState(state) {
     loader.classList.remove('loading')
   }
 }
+
 
 // ERRORAFHANDELING
 socket.on("conn_issue", function (json) {
@@ -282,69 +253,3 @@ socket.on("conn_issue", function (json) {
 //   errorlogs.appendChild(li)
 //   window.scrollTo(0, errorlogs.scrollHeight)
 // }
-
-
-
-// NICE TO HAVE - rotating footnote, stockmarket-style met 'recente edits door [naam] om [tijd]
-// const recent_edits = document.querySelector(".recent_edits")
-
-// socket.on("last_edited_by", function (data) { // dat ding in de footer
-//   showEdits(data)
-//   socket.emit("last_edited_by")  // pong terug naar de server, en daar staat een time-out klaar
-// })
-
-
-// function showEdits(data) { // dat ding in de footer
-//   const lastEdit = `${data},  `
-//   const li = document.createElement("li")
-//   li.innerHTML = lastEdit
-//   recent_edits.appendChild(li)
-//   window.scrollTo(0, recent_edits.scrollHeight)
-// }
-
-
-
-// SCOREBOARD UIT DATABASE
-// loadScoreboard()
-function loadScoreboard() { // gaat gereplaced worden met data uit database ofc, dit is alleen even om vast te kunnen stylen (en naar plaatjes te kijken lol)
-  const count = "10"
-  const category = "snow"
-  // const apiLink = `https://api.unsplash.com/photos/random/?count=${count}&query=${category}&client_id=WgCeJ15nZWDOCklDsGksqOag8Xb4TvCILMy5datSx7w`
-
-  return fetch(apiLink)
-    .then(res => res.json())
-    .then(data => cleanScoreboard(data))
-    .then(data => renderScoreboard(data))
-}
-
-function cleanScoreboard(data) {
-  return data.map(data => {
-    return {
-      id: data.id,
-      url: data.urls.regular,
-      // created_at: data.created_at,
-      width: data.width,
-      height: data.height,
-      color: data.color,
-      // blur_hash: data.blur_hash,
-      // description: data.description,
-      alt_description: data.alt_description,
-      // categories: data.categories,
-      photographer: data.user.name,
-      location: data.location.title
-    }
-  })
-}
-
-function renderScoreboard(data) {
-  return data.map(data => {
-    gallery.innerHTML +=
-      `
-    <article>
-    <figure>
-      <img style="border: 6.5px solid ${data.color};" src="${data.url}" alt="${data.alt_description}">
-    </figure>
-    </article>
-    `
-  })
-}
