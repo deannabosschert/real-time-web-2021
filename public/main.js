@@ -37,7 +37,6 @@ socket.on('connect', () => { // wordt eenmalig uitgevoerd zodat de client entere
   socket.on('results', (data, status) => {
     console.log(data)
      data.map(data => {
-      // console.log(data.urls.regular)
       resultsGallery.innerHTML +=
         `
       <article>
@@ -58,13 +57,6 @@ socket.on('connect', () => { // wordt eenmalig uitgevoerd zodat de client entere
     currentUsers.classList.remove("none")
     user1.innerHTML = `User 1: ${data.room.creator}`
 
-    // if (data.username != data.room.creator) { // dus; degene die als laatste de kamer binnenkomt en de data meeneemt
-    //   // user1.innerHTML = `User 1: ${data.room.creator} (creator)`
-    //   user2.innerHTML = `User 2: ${data.username}`
-    //   displayStatus('starting a new game!')
-    //   startGame(data)
-    // }
-
     if (data.start == 'true') {
       user2.innerHTML = `User 2: ${data.username}`
       displayStatus('starting a new game!')
@@ -74,14 +66,8 @@ socket.on('connect', () => { // wordt eenmalig uitgevoerd zodat de client entere
 })
 
 function startGame(data) {
-  console.log('data bij startGame:')
-  console.log(data)
   const photos = data.room.roomPhotos
 
-  // question1data = photos.slice(0, 2)
-  // question2data = photos.slice(2, 4)
-  // question3data = photos.slice(4, 6) // deze zometeen uncommenten
-  // question4data = photos.slice(6, 8)
 
   photoduo1 = [photos[0], photos[2]] 
   photoduo2 = [photos[1], photos[3]] 
@@ -94,8 +80,7 @@ function startGame(data) {
   renderPhotos(photoduo4, 4)
 
   addSubmitButton(data)
-  // nextButton.addEventListener("click", showNextPhoto())
-  // map over photos, maak voor elk een question aan?
+  
 }
 
 function renderPhotos(data, question) {
@@ -150,37 +135,7 @@ function addSubmitButton(data) {
     socket.emit("quiz_results", data, results)
   })  
 }
-// send results to server
 
-
-// function showNextPhoto() {
-//   question2data.map(data => {
-//     let div = document.createElement("div")
-//     let photo = `<label for="photo2"><span>Photo 2</span>
-//     <input type="radio" name="photo" id="photo2">
-//     <img src="${data.url}" alt="${data.alt_description}"
-//   </label>`
-
-
-//     div.innerHTML = photo
-
-//     q2Photos.appendChild(div)
-
-//   })
-// }
-
-
-
-// socket.on(socket.id, (data) => {
-//   console.log('socket on socketid')    
-//   console.log(data)
-//   if (data.room) {
-//     socket.emit("joinRoom", userData)
-//     // socket.join(data.room.roomId, data)
-//     socket.join(data.room.roomId) // data van de twee users wordt verzameld, gebundeld en gebroadcast op de server
-//   }
-
-//   })
 
 socket.on('user_left', (data) => {
   console.log('the other user has left')

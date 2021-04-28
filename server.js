@@ -9,9 +9,9 @@ const fetch = require("node-fetch")
 
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
-// const {
-//   MongoClient
-// } = require("mongodb")
+const {
+  MongoClient
+} = require("mongodb")
 // const request = require('request')
 // const util = require('util')
 // const get = util.promisify(request.get)
@@ -26,8 +26,8 @@ require('dotenv').config()
 
 const port = process.env.PORT || 3000
 
-// const url = process.env.MNG_URL
-// const dbName = process.env.DB_NAME
+const url = process.env.MNG_URL
+const dbName = process.env.DB_NAME
 
 const options = {
   useNewUrlParser: true,
@@ -104,11 +104,12 @@ io.on('connect', async (socket) => { // alle pong-batjes
       console.log('de ander heeft al gesubmit, laat results zien') 
       io.to(data.room.roomID).emit('results', winningPhotos, 'showResults')
     } else {
+
       quizResults.push(data.room.roomID)
       io.to(data.room.roomID).emit('results', winningPhotos, 'hideResults')
     }
   
-    toDatabase(winningPhotos)
+    addToScoreboard(winningPhotos)
   })
 
 
@@ -156,7 +157,7 @@ function addScore(data) {
 function toDatabase(data) {
   console.log('functie toDatabase')
   console.log(data)
-
+  addToScoreboard(data)
   // data ophalen
   // data bewerken met addScore(data)
   // data updaten
@@ -387,6 +388,69 @@ async function sleep(delay) {
 //   client.close()
 //   io.emit("recent_edits", recentEdit)
 // }
+
+
+// DATABASE STUFF
+async function addToScoreboard(data) {
+  console.log(data)
+
+  // const item = await db.collection('unsplash_scores').insertOne(data[0])
+   let searches = await data.map(async function (data) {
+    const client = await MongoClient.connect(url, options)
+    const db = client.db(dbName)
+    console.log("Connected correctly to server to add score")
+    let search = await db.collection('unsplash_scores').findOneAndUpdate(
+      { "id" : `${data.id}` },
+      { $inc: { "score" : 1 } },
+      {
+        upsert: true,
+        multi: true
+      }
+   )
+   console.log(search)
+   client.close()
+   return search
+  })
+
+  console.log(searches)
+
+//   const search = await db.collection('unsplash_scores').findOneAndUpdate(
+//     { "id" : "V72xxgvew-A" },
+//     { $inc: { "score" : 1 } }
+//  )
+//  const search2 = await db.collection('unsplash_scores').findOneAndUpdate(
+//   { "id": "Andy" },
+//    { $inc: { "score": 1 } },
+//    {
+//      upsert: true,
+//      multi: true
+//    }
+// )
+  // const search = await db.collection('unsplash_scores').findOneAndUpdate(filter, update, options, callback)
+  console.log('big data at your service')
+  // console.log(search)
+  // console.log(search2)
+
+}
+
+async function getScoreboard() {
+  console.log('scores getten')
+  const client = await MongoClient.connect(url, options)
+  const db = client.db(dbName)
+  console.log("Connected correctly to server to retrieve scores")
+  const search = await db.collection('unsplash_scores').aggregate([{
+    $sample: {
+      size: 1
+    }
+  }]).toArray()
+  console.log(search)
+  const myDoc = await db.findOne()
+  // Print to the console
+  console.log(myDoc);
+  client.close()
+return
+  // io.emit("recent_search", search[0].username)
+}
 
 http.listen(port, () => {
   console.log('App listening on: ' + port)
