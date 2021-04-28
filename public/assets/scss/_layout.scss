@@ -276,7 +276,7 @@ main {
   justify-content: center;
   align-self: center;
   align-items: center;
-  overflow-x: hidden;
+  // overflow-x: hidden;
 
   section {
     display: flex;
@@ -1203,7 +1203,7 @@ main section {
   min-width: 100%;
 }
 
-.anotherRound {
+button.anotherRound {
   max-width: 100%;
     margin-top: 3rem;
     height: 4rem;

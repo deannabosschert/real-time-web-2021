@@ -35,6 +35,8 @@ socket.on('connect', () => {
     if (status == 'showResults') {
       toggleNone(".bothChosen")
       toggleNone(".otherChosen")
+      toggleNone(".unsplash")
+      toggleNone(".subtitle")
       renderGallery(data, ".resultsGallery")
     } else if (status == 'hideResults') {
      renderGallery(data, ".selfChosenGallery")
@@ -83,6 +85,10 @@ function renderInfo(destination, element, message, empty) {
   ding.appendChild(el)
 }
 
+function scrollView(classname) {
+  document.querySelector(`${classname}`).scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+}
+
 // ACTIONS
 function startGame(data) {
   const photos = data.room.roomPhotos
@@ -97,6 +103,7 @@ function startGame(data) {
   renderFormPhotos(photoduo3, 3)
   renderFormPhotos(photoduo4, 4)
   toggleNone(".photographForm")
+  scrollView(".photographForm")
 
   handleForm(data)
 }
@@ -138,6 +145,7 @@ function handleForm(data) {
     toggleNone(".photographForm")
     toggleNone(".formResults")
     toggleNone(".statusField")
+    scrollView(".formResults")
   })  
 }
 
