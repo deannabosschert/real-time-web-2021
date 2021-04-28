@@ -200,95 +200,6 @@ function findRoom(data) {
   }
 }
 
-function openDatabaseConnection() { // deze runt dus 1 keer op connection van de user (dus: per client dat entered) en loopt dan in zichzelf gedurende de sessie
-  // Listen to the stream.
-  // This reconnection logic will attempt to reconnect when a disconnection is detected.
-  // To avoid rate limites, this logic implements exponential backoff, so the wait time
-  // will increase if the client cannot reconnect to the stream.
-
-
-  const connect = () => {
-    try {
-      stream = streamConnect() // ja: open connectie
-
-      stream.on('timeout', async () => { // bijna: re-try connectie
-        // Reconnect on error
-        console.warn('A connection error occurred. Reconnecting…')
-        timeout++
-        stream.abort()
-        await sleep((2 ** timeout) * 1000) // wacht ff, en increase dit exponentioneel bij elke keer dat 't niet lukt
-        connect()
-      })
-
-      stream.on('user_left', function () { // nee: close connectie
-        console.log('user has left, closing connnection now')
-        stream.abort()
-      })
-
-    } catch (e) {
-      connect()
-    }
-  }
-  connect()
-}
-
-function streamConnect() { // pingpong zoals sockets ook doen, maar dan middels 'stream'-longpolling
-  console.log('function streamConnect')
-  // Listen to the stream
-
-  fetch(apiURL)
-    .then(res => res.json())
-    .then(data => console.log(data))
-
-
-  const stream = request.get(apiURL) // beetje zoals fetch
-
-  stream.on('data', data => { // wanneer je data terugkrijgt, doe dan dit
-    try {
-      console.log('je hebt data ontvangen!')
-
-      const datading = data.json()
-
-      console.log(datading)
-
-      const json = JSON.parse(data)
-      console.log(json)
-
-      if (json.connection_issue) {
-        console.log('issue, timeout')
-        console.log(json.connection_issue)
-        stream.emit('timeout')
-        io.emit("conn_issue", json)
-      } else {
-        console.log('geen issues, emit json naar de client')
-        // io.emit("new_data", json) // stuur de data naar de client!
-      }
-    } catch (e) {
-      // Heartbeat received. Niets nieuws ontvangen. Do nothing.
-      console.log(e)
-    }
-
-  }).on('error', error => {
-    if (error.code === 'ESOCKETTIMEDOUT') {
-      stream.emit('timeout') // terug naar openConnection() en re-try connectie
-    }
-  })
-
-  return stream
-}
-
-
-async function sleep(delay) {
-  console.log('function sleep')
-
-  return new Promise((resolve) =>
-    setTimeout(() =>
-      resolve(true), delay))
-}
-
-
-
-
 // SCOREBOARD FROM DATABASE
 async function addToScoreboard(data) {
   data.map(async (data) => {
@@ -318,15 +229,6 @@ async function addToScoreboard(data) {
   })
 }
 
-// async function getScoreboard() {
-//   const client = await MongoClient.connect(url, options)
-//   const data = await client.db(dbName).collection('unsplash_scores').find({}).sort([
-//     ["score", -1]
-//   ]).limit(10).toArray()
-//   client.close()
-//   io.emit("scoreboard", data)
-// }
-
 async function getScoreboard() {
   try {
     return MongoClient.connect(url, options)
@@ -336,9 +238,7 @@ async function getScoreboard() {
   } catch (err) {
     console.error(err)
   }
-
 }
-
 
 http.listen(port, () => {
   console.log('App listening on: ' + port)
