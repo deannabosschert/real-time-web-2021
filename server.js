@@ -447,8 +447,8 @@ async function getScoreboard() {
   console.log(search)
 
   client.close()
+  io.emit("scoreboard", search)
   return
-  // io.emit("recent_search", search[0].username)
 }
 
 http.listen(port, () => {

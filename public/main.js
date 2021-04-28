@@ -20,7 +20,6 @@ socket.on('connect', () => { // wordt eenmalig uitgevoerd zodat de client entere
   const dataDing = {
     userId: socket.id
   }
-  console.log(dataDing)
 
   socket.on(socket.id, (data) => {
     if (data.status == 'ready') {
@@ -63,6 +62,8 @@ socket.on('connect', () => { // wordt eenmalig uitgevoerd zodat de client entere
       startGame(data)
     }
   })
+
+  socket.on('scoreboard', (data) => renderScoreboard(data))
 })
 
 function startGame(data) {
@@ -337,7 +338,6 @@ function cleanScoreboard(data) {
 
 function renderScoreboard(data) {
   return data.map(data => {
-    // console.log(data.urls.regular)
     gallery.innerHTML +=
       `
     <article>
