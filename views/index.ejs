@@ -2,14 +2,8 @@
 <%- include('./partials/head.ejs') %>
 <%- include('./partials/header.ejs') %>
 <main class="main inspiratie">
-  <div>
-    <ul class="consoleLogs"></ul>
-  </div>
-  <div>
-    <p class="statusField"></p>
-  </div>
   <header class="unsplash">
-    <form class="userDataForm">
+    <form class="userdataForm">
       <label>Username
         <input class="username-input" name="username" type="text" placeholder="Enter your username" autocomplete="off"
           autofocus required />
@@ -20,7 +14,7 @@
       </label>
       <button class="searchIcon">Start</button>
     </form>
-    <article class="userdata-set none">
+    <article class="userdataSet none">
     </article>
     <article class="currentUsers none">
       <h3>current users in this game:</h3>
@@ -28,12 +22,14 @@
       <p class="user2"></p>
     </article>
   </header>
+
   <section class="unsplashGallery">
     <h2>most popular photographs</h2>
     <div class="masonry-with-columns">
     </div>
   </section>
-  <section class="photograph-chooser">
+
+  <section class="photographForm none">
     <h2>Choose the best photo</h2>
     <form class="photographQuiz">
       <fieldset id="question-1">
@@ -63,12 +59,21 @@
       </div>
     </form>
   </section>
-  <section>
+  <section class="formResults none">
     <h2>Thank you for voting!</h2>
-    <p>Chosen photos:</p>
-    <div class="resultsGallery none">
-
-    </div>
+    <article class="bothChosen none">
+      <h3>Photos you've both chosen</h3>
+      <div class="resultsGallery">
+      </div>
+      <a class="anotherRound" href="https://real-time-web-21.herokuapp.com/" >Go for another voting session</a>
+    </article>
+    <article class="otherChosen none">
+      <h3>Photos that already made the vote..</h3>
+      <p>Wait until both users have voted to see results</p>
+      <div class="selfChosenGallery">
+      </div>
+    </article>
+  
   </section>
 </main>
 <footer class="footer">
