@@ -13,6 +13,7 @@ const nextButton = document.querySelector(".nextButton")
 const previousButton = document.querySelector(".previousButton")
 const submitButton = document.querySelector(".submitButton");
 const photographQuiz = document.querySelector(".photographQuiz")
+const resultsGallery = document.querySelector('.resultsGallery')
 
 socket.on('connect', () => { // wordt eenmalig uitgevoerd zodat de client entered (= on webpage load), gebeurt automatisch (ingebouwd in socketio)
   console.log('socket on connect')
@@ -24,11 +25,33 @@ socket.on('connect', () => { // wordt eenmalig uitgevoerd zodat de client entere
   socket.on(socket.id, (data) => {
     if (data.status == 'ready') {
       displayStatus('joining another user..')
+      data.status = null
     } else if (data.status == 'waiting') {
       displayStatus('waiting for another user..')
+      data.status = null
     } else {
       displayConsole('hier ging iets mis')
     }
+  })
+
+  socket.on('results', (data, status) => {
+    console.log(data)
+     data.map(data => {
+      // console.log(data.urls.regular)
+      resultsGallery.innerHTML +=
+        `
+      <article>
+      <figure>
+        <img style="border: 6.5px solid ${data.color};" src="${data.url}" alt="${data.alt_description}">
+      </figure>
+      </article>
+      `
+    })
+
+    if (status == 'showResults') {
+      document.querySelector(".resultsGallery").classList.toggle("none")
+    }
+
   })
 
   socket.on('new_game', (data) => {

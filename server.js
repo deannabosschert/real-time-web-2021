@@ -98,8 +98,17 @@ io.on('connect', async (socket) => { // alle pong-batjes
 
   socket.on("quiz_results", function (data, results) {
     // quizResults.push(results)
-    matchPhotoResults(data, results)
-    // .then((data) => toDatabase(data))    
+    const winningPhotos = matchPhotoResults(data, results).flat()
+
+    if (quizResults.find(element => element == data.room.roomID )) {
+      console.log('de ander heeft al gesubmit, laat results zien') 
+      io.to(data.room.roomID).emit('results', winningPhotos, 'showResults')
+    } else {
+      quizResults.push(data.room.roomID)
+      io.to(data.room.roomID).emit('results', winningPhotos, 'hideResults')
+    }
+  
+    toDatabase(winningPhotos)
   })
 
 
@@ -126,35 +135,31 @@ io.on('connect', async (socket) => { // alle pong-batjes
 
 })
 
-function matchPhotoResults (data, results) {
- // merge results into data als turven
- 
- let roomPhotos = data.room.roomPhotos
- console.log(results)
- console.log(roomPhotos)
+function matchPhotoResults(data, results) {
+  // merge results into data als turven
+  let roomPhotos = data.room.roomPhotos
+  //  const found = results.map(photo => {
+  //   return roomPhotos.findIndex(element => element.id == photo)
+  //  })
 
- const found = results.map(photo => {
-  return roomPhotos.findIndex(element => element.id == photo)
- })
-
-
-
- const thing2 = found.map(i => {
-   return roomPhotos[i].score = 1
- })
-
-//  console.log(thing2)
- console.log(roomPhotos)
-//  console.log(roomPhotos[0])
+  return results.map(photo => {
+    return roomPhotos.filter(item => item.id == photo)
+  })
 }
 
-function addScore (data) {
-  data.score++
+function addScore(data) {
+  return data.map(i => {
+    return roomPhotos[i].score + 1
+  })
 }
 
 function toDatabase(data) {
   console.log('functie toDatabase')
   console.log(data)
+
+  // data ophalen
+  // data bewerken met addScore(data)
+  // data updaten
 }
 
 function checkStatus(data) {
@@ -181,7 +186,7 @@ function shufflePhotos(data) {
     data.start = 'true'
     let idRoomphotos = addID(data.room.roomPhotos)
     data.room.roomPhotos = idRoomphotos
-    
+
     io.to(roomNaam).emit('new_game', data)
 
   } else if (data.status == 'waiting') {

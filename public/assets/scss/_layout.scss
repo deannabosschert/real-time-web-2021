@@ -423,6 +423,35 @@ main .inspiratie .unsplash {
   }
 }
 
+.resultsGallery {
+  columns: 3;
+  column-gap: 1rem;
+  line-height: 0;
+
+  article {
+    // margin: 0 1rem 1rem 0;
+    display: inline-block;
+    width: 100%;
+
+    figure {
+      img {
+        padding: 0;
+        // object-fit: cover;
+      }
+
+      // figcaption {}
+    }
+  }
+
+  @for $i from 1 through 36 {
+    div:nth-child(#{$i}) {
+      $h: (random(400) + 100) + px;
+      height: $h;
+      line-height: $h;
+    }
+  }
+}
+
 
 
 
