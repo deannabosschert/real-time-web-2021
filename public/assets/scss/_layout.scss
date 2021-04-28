@@ -32,8 +32,6 @@ form {
   width: 100%;
   margin-bottom: 2.5rem;
 
-
-
   fieldset {
     display: flex;
     flex-direction: row;
@@ -43,14 +41,12 @@ form {
     align-content: center;
     margin: revert;
     padding: revert;
-
     // border: 1px solid $dark;
     text-align: center;
     background-color: $grey;
     border-radius: 5px;
     border-top: 10px solid $lilac;
   }
-
 
   legend {
     margin-top: 2rem;
@@ -62,14 +58,12 @@ form {
       margin: 0;
       color: white;
     }
-
-
   }
-
 
   label,
   input,
-  button {
+  button,
+  a {
     margin: 0.5rem;
     border-radius: 5px;
   }
@@ -93,24 +87,24 @@ form {
   }
 
   input,
-  button {
+  button,
+  a {
     height: 3rem;
   }
 
-  button {
+  button,
+  a {
     width: 7rem;
     box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.2);
   }
 }
 
-
-
-
 .inspiratie {
-  button {
+
+  button,
+  a {
     max-width: 7rem;
   }
-
 
   input {
     max-width: 50%;
@@ -127,8 +121,6 @@ form {
     margin-bottom: 1.5rem;
   }
 }
-
-
 
 aside figure {
   margin-bottom: 4rem;
@@ -194,13 +186,12 @@ header {
       }
     }
 
-    button {
+    button,
+    a {
       width: 7rem;
       padding: 1rem 0.8rem;
       margin: 1rem 0 0.5rem;
     }
-
-
 
     a {
       background-color: $sweetpink;
@@ -252,12 +243,10 @@ header {
           text-align: center;
           padding: 0.1rem 0.5rem;
           line-height: 1.25;
-
         }
       }
     }
   }
-
 
   figure img {
     position: absolute;
@@ -276,8 +265,8 @@ main {
   justify-content: center;
   align-self: center;
   align-items: center;
-  // overflow-x: hidden;
 
+  // overflow-x: hidden;
   section {
     display: flex;
     flex-direction: row;
@@ -299,13 +288,13 @@ article {
   // background-color: white;
   // border-radius: $border-radius;
   display: flex;
+
   // flex-direction: row;
   // flex-wrap: wrap;
   // // align-items: center;
   // align-content: flex-start;
   // margin: 1rem;
   // box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .15);
-
   h2 {
     text-align: center;
     background-color: $sweetpink;
@@ -374,12 +363,11 @@ main .inspiratie .unsplash {
   margin-left: -0.8rem;
   max-width: 72rem;
   padding: 1rem;
+
   // margin-bottom: -1rem;
   // flex-direction: row;
   // flex-wrap: wrap;
   // max-width: 100%;
-
-
   h4 {
     font-weight: lighter;
     color: $dark;
@@ -423,7 +411,8 @@ main .inspiratie .unsplash {
   }
 }
 
-.resultsGallery, .selfChosenGallery {
+.resultsGallery,
+.selfChosenGallery {
   max-width: 800px;
   columns: 2;
   column-gap: 1rem;
@@ -452,13 +441,6 @@ main .inspiratie .unsplash {
     }
   }
 }
-
-
-
-
-
-
-
 
 /* SPECIFICS */
 main {
@@ -490,7 +472,6 @@ main {
   width: 100%;
 }
 
-
 // POST-IT NOTES
 .saved-notitions {
   display: flex;
@@ -498,7 +479,6 @@ main {
   flex-direction: row-reverse;
   flex-wrap: wrap;
 }
-
 
 .sticky {
   position: relative;
@@ -509,7 +489,6 @@ main {
   margin: 1rem;
   background: $verylightpink;
   // gradient off https://dev.to/thormeier/fully-responsive-html-css-sticky-note-4okl
-
   background: linear-gradient(180deg,
       rgba(187, 235, 255, 1) 0%,
       rgba(187, 235, 255, 1) 12%,
@@ -517,7 +496,6 @@ main {
       rgba(195, 229, 244, 1) 100%);
   resize: both;
   box-shadow: -2px 2px 15px 0 rgba(0, 0, 0, 0.5);
-
   overflow: scroll;
   animation: stickAnim .3s ease;
   display: flex;
@@ -553,7 +531,6 @@ main {
     margin-bottom: 1.25rem;
     // height: 3.5rem;
     color: $antracite;
-
   }
 
   .close {
@@ -588,9 +565,7 @@ main {
     font-size: calc(1.2rem * 1.2);
     padding: 0rem 1.5rem 2rem 1rem
   }
-
 }
-
 
 .inspiratie>section>.noPinterest {
   background-color: white;
@@ -623,23 +598,21 @@ main {
   box-shadow: inset 0px 0 1px 1px rgba(31, 38, 135, 0.1);
   backdrop-filter: blur(4px);
   padding: 1rem 0;
-  // max-width: 72rem;
 
+  // max-width: 72rem;
   h3 {
     line-height: 1.5;
-
   }
 
   input {
     width: 100%;
   }
 
-  button {
+  button,
+  a {
     background-image: linear-gradient(to right, #db709499 -10%, #db709499 60%, #ece0ec 99%, #b582b5 155%);
-
   }
 }
-
 
 .moodboard {
   min-width: 22rem;
@@ -652,7 +625,6 @@ main {
     background-color: $grey;
     color: $antracitetransparant;
     height: fit-content;
-
     // content: "click to load"
   }
 }
@@ -661,13 +633,13 @@ main {
   // height: 25rem !important;
 }
 
-
 /* STATES */
 *:focus {
   outline: $lilac auto 7px;
 }
 
-button {
+button,
+a {
   box-shadow: 0 0 0 2px rgba(48, 8, 75, 0.45);
   // border: 5px solid rgba(95, 0, 158, 0.185);
   background-image: linear-gradient(to right, $purple -10%, $purple 60%, $pink 99%, $lilac 155%);
@@ -740,11 +712,10 @@ input:focus {
     color: $antracite;
     width: 100%;
     margin: 0.25rem 0.5rem;
-
   }
 
-
-  button {
+  button,
+  a {
     margin: 0.5rem;
     padding: 0.5rem 1rem;
     background-image: linear-gradient(to right, #db709499 -10%, #db709499 60%, #ece0ec 99%, #b582b5 155%);
@@ -789,22 +760,20 @@ input:focus {
   position: absolute;
   top: 31rem;
   right: 17%;
+
   // max-height: 11rem;
   // max-width: 12rem;
   // margin-top: -3.75rem;
-
   // img {
   // object-fit: cover;
   // width: 200%;
   // height: 200%;
   // transform: scale(3.5);   
   // }
-
   span {
     font-size: $h3;
   }
 }
-
 
 .paragraphs {
   margin-top: 5%;
@@ -831,8 +800,6 @@ input:focus {
   border-radius: 5px 5px 0 0;
 }
 
-
-
 .paragraphs {
   margin-top: 5%;
   max-width: 50%;
@@ -852,9 +819,6 @@ input:focus {
   max-width: 550px;
   width: 90%;
 }
-
-
-
 
 .notities .paragraphs {
   margin-left: 1rem;
@@ -879,7 +843,6 @@ input:focus {
 
 .toevoegen {
   animation: wiggle 2s infinite;
-
 }
 
 .notities>p {
@@ -888,7 +851,6 @@ input:focus {
   padding-left: 2rem;
   // border: none;
 }
-
 
 @keyframes wiggle {
   0% {
@@ -936,9 +898,6 @@ input:focus {
   }
 }
 
-
-
-
 .hidden {
   visibility: hidden;
 
@@ -950,12 +909,11 @@ input:focus {
 .visible {
   visibility: visible;
   z-index: 10;
-
 }
 
 .visiblehover {
-  // visibility: hidden;
 
+  // visibility: hidden;
   &:hover {
     visibility: visible;
     z-index: 10;
@@ -976,10 +934,6 @@ input:focus {
 .block {
   display: block;
 }
-
-
-
-
 
 .webpage-header {
   display: flex;
@@ -1039,11 +993,11 @@ header {
 
 .photographs-wrapper div {
   width: 100%;
+
   // background-image: url(https://images.unsplash.com/photo-1607040480256-f379dec18774?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3300&q=80.jpg);
   // background-size: contain;
   // background-repeat: no-repeat;
   // background-position: center;
-
   label {
     margin: 0;
     position: relative;
@@ -1053,7 +1007,6 @@ header {
     visibility: hidden;
     position: absolute;
   }
-
 
   input {
     min-width: 101%;
@@ -1074,9 +1027,6 @@ header {
     box-shadow: 0 0px 0px 4px $palevioletred, 0 0px 8px $palevioletred;
   }
 
-
-
-
   img {
     min-width: 100%;
     min-height: 100%;
@@ -1085,13 +1035,11 @@ header {
   }
 }
 
-
 .photograph-chooser {
   min-width: 100%;
   width: 1075px;
   max-width: 100%;
 }
-
 
 .photograph-chooser form {
 
@@ -1104,7 +1052,6 @@ header {
 }
 
 .photographQuiz {
-
   fieldset {
     margin: 0;
   }
@@ -1112,7 +1059,6 @@ header {
   .buttonwrapper {
     min-width: 100%;
     display: flex;
-    
     justify-content: space-evenly;
     background-color: $grey;
     margin-top: -10px;
@@ -1162,7 +1108,8 @@ main section {
   max-width: 1075px;
 }
 
-.formResults, .formResults article {
+.formResults,
+.formResults article {
   // display: flex;
   flex-direction: column;
 }
@@ -1174,7 +1121,8 @@ main section {
     margin-bottom: 4rem;
   }
 
-  h3, p {
+  h3,
+  p {
     min-width: 100%;
     padding: 0;
     margin-bottom: 2.5rem;
@@ -1203,8 +1151,10 @@ main section {
   min-width: 100%;
 }
 
-button.anotherRound {
+a.anotherRound {
   max-width: 100%;
-    margin-top: 3rem;
-    height: 4rem;
+  margin-top: 3rem;
+  height: 4rem;
+  padding: 3rem ​0 0rem;
+  margin-bottom: 4rem;
 }
