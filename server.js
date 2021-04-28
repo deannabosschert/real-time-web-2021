@@ -44,6 +44,7 @@ app.get('/', function (req, res) {
 io.on('connect', async (socket) => { // alle pong-batjes
   console.log('IO on connect')
 
+  getScoreboard()
   // const userId = await fetchUserId(socket);
   // socket.join(userId);
 
@@ -63,9 +64,7 @@ io.on('connect', async (socket) => { // alle pong-batjes
 
 
   socket.on("setSocketId", function (data) {
-    // openConnection() // voor document ophalen
-    // getRecentEdits() // voor de recente edits weergeven onderaan de pagina (of liever gewoon storen..?)
-    console.log('io socket on setSocketId')
+   console.log('io socket on setSocketId')
     console.log(data)
   })
 
@@ -154,14 +153,7 @@ function addScore(data) {
   })
 }
 
-function toDatabase(data) {
-  console.log('functie toDatabase')
-  console.log(data)
-  addToScoreboard(data)
-  // data ophalen
-  // data bewerken met addScore(data)
-  // data updaten
-}
+
 
 function checkStatus(data) {
 
@@ -449,17 +441,13 @@ async function getScoreboard() {
   const client = await MongoClient.connect(url, options)
   const db = client.db(dbName)
   console.log("Connected correctly to server to retrieve scores")
-  const search = await db.collection('unsplash_scores').aggregate([{
-    $sample: {
-      size: 1
-    }
-  }]).toArray()
+  // const search = await db.collection('unsplash_scores').find().toArray()
+
+  const search = await db.collection('unsplash_scores').find({}).sort([["score", -1]]).limit(10).toArray()                       // Skip 1 and limit 10
   console.log(search)
-  const myDoc = await db.findOne()
-  // Print to the console
-  console.log(myDoc);
+
   client.close()
-return
+  return
   // io.emit("recent_search", search[0].username)
 }
 
