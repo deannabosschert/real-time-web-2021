@@ -3,18 +3,13 @@ const app = express()
 const fetch = require("node-fetch")
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
-const {
-  MongoClient
-} = require("mongodb")
+const { MongoClient } = require("mongodb")
 require('dotenv').config()
 
 const port = process.env.PORT || 3000
 const url = process.env.MNG_URL
 const dbName = process.env.DB_NAME
-const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}
+const options = {useNewUrlParser: true, useUnifiedTopology: true }
 
 let availableRooms = []
 let quizResults = []
@@ -28,13 +23,12 @@ app.get('/', function (req, res) {
 })
 
 io.on('connect', async (socket) => { // alle pong-batjes
+
   getScoreboard()
   .then((data) => io.emit("scoreboard", data))
 
 
-  socket.on("start", function (userData) {
-    console.log('io socket on start')
-
+  socket.on("start", (userData) => {
     getData(userData.category)
       .then((data) => cleanData(data))
       .then((data) =>
@@ -46,7 +40,7 @@ io.on('connect', async (socket) => { // alle pong-batjes
         })
       )
       .then(data => {
-        socket.join(data.room.roomID);
+        socket.join(data.room.roomID)
         return data
       })
       .then((data) => checkStatus(data))
@@ -55,18 +49,16 @@ io.on('connect', async (socket) => { // alle pong-batjes
 
 
   socket.on("quiz_results", function (data, results) {
-    const winningPhotos = matchPhotoResults(data, results).flat()
+    const chosenPhotos = matchPhotoResults(data, results).flat()
 
     if (quizResults.find(element => element == data.room.roomID)) {
-      console.log('de ander heeft al gesubmit, laat results zien')
-      io.to(data.room.roomID).emit('results', winningPhotos, 'showResults')
+      let bothChosenPhotos = [...new Set(chosenPhotos)]
+      io.to(data.room.roomID).emit('results', bothChosenPhotos, 'showResults')
     } else {
-
       quizResults.push(data.room.roomID)
-      io.to(data.room.roomID).emit('results', winningPhotos, 'hideResults')
+      io.to(data.room.roomID).emit('results', chosenPhotos, 'hideResults')
     }
-
-    addToScoreboard(winningPhotos)
+    addToScoreboard(chosenPhotos)
   })
 
 
@@ -200,7 +192,7 @@ function findRoom(data) {
   }
 }
 
-// SCOREBOARD FROM DATABASE
+// GET OR STORE IN SCOREBOARD (DATABASE)
 async function addToScoreboard(data) {
   data.map(async (data) => {
     const client = await MongoClient.connect(url, options)
@@ -232,7 +224,7 @@ async function addToScoreboard(data) {
 async function getScoreboard() {
   try {
     return MongoClient.connect(url, options)
-      .then((client) => {
+      .then(client => {
          return client.db(dbName).collection('unsplash_scores').find({}).sort([["score", -1]]).limit(10).toArray()
       })
   } catch (err) {
@@ -240,6 +232,7 @@ async function getScoreboard() {
   }
 }
 
+// PORT
 http.listen(port, () => {
   console.log('App listening on: ' + port)
 })
