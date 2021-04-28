@@ -33,12 +33,16 @@ socket.on('connect', () => { // wordt eenmalig uitgevoerd zodat de client entere
 
   socket.on('new_game', (data) => {
     currentUsers.classList.remove("none")
-
     user1.innerHTML = `User 1: ${data.room.creator}`
 
+    // if (data.username != data.room.creator) { // dus; degene die als laatste de kamer binnenkomt en de data meeneemt
+    //   // user1.innerHTML = `User 1: ${data.room.creator} (creator)`
+    //   user2.innerHTML = `User 2: ${data.username}`
+    //   displayStatus('starting a new game!')
+    //   startGame(data)
+    // }
 
-    if (data.username != data.room.creator) {
-      // user1.innerHTML = `User 1: ${data.room.creator} (creator)`
+    if (data.start == 'true') {
       user2.innerHTML = `User 2: ${data.username}`
       displayStatus('starting a new game!')
       startGame(data)
@@ -47,27 +51,31 @@ socket.on('connect', () => { // wordt eenmalig uitgevoerd zodat de client entere
 })
 
 function startGame(data) {
+  console.log('data bij startGame:')
   console.log(data)
   const photos = data.room.roomPhotos
 
-  question1data = photos.slice(0, 2)
-  question2data = photos.slice(2, 4)
-  question3data = photos.slice(4, 6) // deze zometeen uncommenten
-  question4data = photos.slice(6, 8)
-  // console.log(question1data)
+  // question1data = photos.slice(0, 2)
+  // question2data = photos.slice(2, 4)
+  // question3data = photos.slice(4, 6) // deze zometeen uncommenten
+  // question4data = photos.slice(6, 8)
 
-  mapPhotos(question1data, 1)
-  mapPhotos(question2data, 2)
-  mapPhotos(question3data, 3)
-  mapPhotos(question4data, 4)
+  photoduo1 = [photos[0], photos[2]] 
+  photoduo2 = [photos[1], photos[3]] 
+  photoduo3 = [photos[4], photos[6]] 
+  photoduo4 = [photos[5], photos[7]] 
 
+  renderPhotos(photoduo1, 1)
+  renderPhotos(photoduo2, 2)
+  renderPhotos(photoduo3, 3)
+  renderPhotos(photoduo4, 4)
+
+  addSubmitButton(data)
   // nextButton.addEventListener("click", showNextPhoto())
-
-
   // map over photos, maak voor elk een question aan?
 }
 
-function mapPhotos(data, question) {
+function renderPhotos(data, question) {
 
   const questionPhotos = document.querySelector(`.q${question}-photos`)
 
@@ -76,11 +84,11 @@ function mapPhotos(data, question) {
   let div2 = document.createElement("div")
   let photoA = `
     <label for="photo${question}a"><span>Photo ${question}- option A</span>
-      <input type="radio" name="photo${question}" value="photo${question}a" id="photo${question}a">
+      <input type="radio" name="photo${question}" value="${data[0].id}" id="photo${question}a">
       <img src="${data[0].url}" alt="${data[0].alt_description}"</label>`
 
   let photoB = `<label for="photo${question}b"><span>Photo ${question}- option B</span>
-      <input type="radio" name="photo${question}" value="photo${question}b" id="photo${question}b">
+      <input type="radio" name="photo${question}" value="${data[1].id}" id="photo${question}b">
       <img src="${data[1].url}" alt="${data[1].alt_description}"
     </label>`
 
@@ -93,24 +101,33 @@ function mapPhotos(data, question) {
   // })
 }
 
+function addSubmitButton(data) {
+  photographQuiz.addEventListener("submit", function (event) {
+    event.preventDefault()
+  
+    // let results = {
+    //   photo1: document.querySelector('input[name=photo1]:checked').value,
+    //   photo2: document.querySelector('input[name=photo2]:checked').value,
+    //   photo3: document.querySelector('input[name=photo3]:checked').value,
+    //   photo4: document.querySelector('input[name=photo4]:checked').value,
+    //   time: new Date().toLocaleString(),
+    //   username: document.querySelector('#username').value,
+    //   userId: document.querySelector('#userid').value,
+    //   roomNumber: data.room.roomID
+    // }
+
+    let results =[
+      document.querySelector('input[name=photo1]:checked').value,
+      document.querySelector('input[name=photo2]:checked').value,
+      document.querySelector('input[name=photo3]:checked').value,
+      document.querySelector('input[name=photo4]:checked').value,
+    ]
+  
+    document.querySelector(".photograph-chooser").classList.toggle("none")
+    socket.emit("quiz_results", data, results)
+  })  
+}
 // send results to server
-photographQuiz.addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  let data = {
-    photo1: document.querySelector("#photo1").value,
-    photo2: document.querySelector("#photo2").value,
-    photo3: document.querySelector("#photo3").value,
-    photo4: document.querySelector("#photo4").value,
-    time: new Date().toLocaleString(),
-    username: document.querySelector("#username").value,
-    userId: document.querySelector("#userid").value,
-    roomNumber: document.querySelector("#roomNumber").value
-  }
-
-  document.querySelector(".photograph-chooser").classList.toggle("none")
-  socket.emit("quiz_results", data)
-})
 
 
 // function showNextPhoto() {
@@ -192,7 +209,7 @@ function displayUsername(username, userId) {
   console.log('client function displayUsername')
 
   const p = document.createElement("p")
-  p.innerHTML = `your username: <span id="username">${username}</span><span class="userId">${userId}</span>`
+  p.innerHTML = `your username: <span id="username">${username}</span><span id="userId">${userId}</span>`
   userdataSet.appendChild(p)
 }
 

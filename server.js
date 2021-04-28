@@ -20,6 +20,7 @@ let stream
 let timeout = 0
 
 let availableRooms = []
+let quizResults = []
 
 require('dotenv').config()
 
@@ -68,10 +69,6 @@ io.on('connect', async (socket) => { // alle pong-batjes
     console.log(data)
   })
 
-  socket.on("quiz_results", function (data) {
-    console.log(data)
-  })
-
   socket.on("start", function (userData) {
     console.log('io socket on start')
 
@@ -86,37 +83,25 @@ io.on('connect', async (socket) => { // alle pong-batjes
         })
       )
       .then(data => {
-        // console.log('my username: ' + data.username)
-        // console.log('room id: ' + data.room.roomID)
-        // console.log('room creator: ' + data.room.creator)
-        
-        let roomNaam = data.room.roomID
-
-
-        if (data.status == 'ready') {
-          Array.prototype.push.apply(data.room.roomPhotos, data.photos)
-          io.emit(data.userId, data) // stuur de individuele user of ze moeten wachten op een ander user of eentje joinen
-
-          socket.join(roomNaam)
-          io.to(roomNaam).emit('new_game', data)
-
-        } else if (data.status == 'waiting') {
-          io.emit(data.userId, data)  // stuur persoonlijk bericht; waiting for another user
-         
-          socket.join(roomNaam) // wijs socket toe aan deze room
-          io.to(roomNaam).emit('new_game', data)
-
-        } else {
-          console.log('error')
-        }
-        // io.to(persoonlijkeID.emit,(data.room.roomID) // je stuurt nu alleen het besloten roomnummer en de data naar de client, zodat de client zelf aan client side die room van de server kan joinen    
-        //  hierna stuurt de server de juiste data naar de room
+        socket.join(data.room.roomID);
+        return data
       })
+      .then((data) => checkStatus(data))
+      .then((data) => shufflePhotos(data))
+
     // .then(data => {
     //   emit de roomPhotos-data naar de room
     // }) 
     // evt hierna weer een then met settimeout die overeenkomt met die van de client, ivm collecten uitslagen
   })
+
+
+  socket.on("quiz_results", function (data, results) {
+    // quizResults.push(results)
+    matchPhotoResults(data, results)
+    // .then((data) => toDatabase(data))    
+  })
+
 
   socket.on("joinRoom", function (data) {
     console.log('io socket on joinRoom')
@@ -140,6 +125,78 @@ io.on('connect', async (socket) => { // alle pong-batjes
   })
 
 })
+
+function matchPhotoResults (data, results) {
+ // merge results into data als turven
+ 
+ let roomPhotos = data.room.roomPhotos
+ console.log(results)
+ console.log(roomPhotos)
+
+ const found = results.map(photo => {
+  return roomPhotos.findIndex(element => element.id == photo)
+ })
+
+
+
+ const thing2 = found.map(i => {
+   return roomPhotos[i].score = 1
+ })
+
+//  console.log(thing2)
+ console.log(roomPhotos)
+//  console.log(roomPhotos[0])
+}
+
+function addScore (data) {
+  data.score++
+}
+
+function toDatabase(data) {
+  console.log('functie toDatabase')
+  console.log(data)
+}
+
+function checkStatus(data) {
+
+  if (data.status == 'ready') {
+    Array.prototype.push.apply(data.room.roomPhotos, data.photos)
+    io.emit(data.userId, data) // stuur de individuele user dat ze een andere user nu joinen
+    return data
+  } else if (data.status == 'waiting') {
+    io.emit(data.userId, data) // stuur persoonlijk bericht; waiting for another user
+    return data
+  } else {
+    console.log('error')
+  }
+  // io.to(persoonlijkeID.emit,(data.room.roomID) // je stuurt nu alleen het besloten roomnummer en de data naar de client, zodat de client zelf aan client side die room van de server kan joinen    
+  //  hierna stuurt de server de juiste data naar de room
+
+}
+
+function shufflePhotos(data) {
+  let roomNaam = data.room.roomID
+
+  if (data.status == 'ready') {
+    data.start = 'true'
+    let idRoomphotos = addID(data.room.roomPhotos)
+    data.room.roomPhotos = idRoomphotos
+    
+    io.to(roomNaam).emit('new_game', data)
+
+  } else if (data.status == 'waiting') {
+    data.start = 'false'
+    io.to(roomNaam).emit('new_game', data) // beetje onnodig om alle data mee te sturen ivm performance maargoed
+  }
+}
+
+function addID(array) {
+  return array.map((x, i) => {
+    x.photoid = i + 1
+    return x
+  })
+}
+
 
 function getData(category) {
   console.log('function getData')
