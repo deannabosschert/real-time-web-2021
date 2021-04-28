@@ -37,17 +37,14 @@ https://real-time-web-21.herokuapp.com/
 
 ## ✅ To-do
 - [x] Draw DLC's for every concept
-- [ ] Sketch wireframes for every concept
-- [ ] Ask questions to Justus (Room logic, scoreboard logic)
-- [ ] Add functionalities
-- [ ] Fix error things (e.g. when an user tries to submit an unfound category.. check api statuscodes!)
+- [x] Ask questions to Justus (Room logic, scoreboard logic)
+- [x] Fix error things (e.g. when an user tries to submit an unfound category.. check api statuscodes!)
+- [ ] Hash for usernames
+- [ ] Haven't made use of modules for this one as I usually do, might be nice?
 
 #### Quirks
 - Removed build command for css to avoid issues with Heroku
-- Heroku removed MongoDB support
 - If someone opened a room and disconnected before another player could join, the room has to be destroyed from the availableRooms-array
-- Fatsoenlijke formafhandeling ipv deze hacky
-- Usernames moeten uniek zijn; wellicht een (invisible) hash toevoegen?
 
 ## ⚙️ Installation
 Clone this repository to your own device:
@@ -92,12 +89,17 @@ Interactie:
 Multi-user support; er zit al een default in zodra de user binnenkomt, dat diegene een personal ID toegewezen krijgt. Bij het binnentreden op we website komt iedereen in de 'general' room terecht; hier kunnen ze een scoreboard zien met de top-10-foto's, hun username invullen en een categorie invullen. Na het invullen van de categorie, doet de server met deze query een request naar de API. De client krijgt deze data terug over een priveverbinding. Hierna wordt de user aan een room toegevoegd met een andere user; zo worden de 1v1 (of meer) -groepen samengesteld, zodra de vote-sessie klaar is (of alle user disconnecten) wordt deze destroyed en de 'winning pictures'-data-array teruggestuurd naar de server.
 
 #### DLC
-![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%203_%20popular%20photos.jpg)
+![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/DLC_final.jpg)
 
+
+<details>
+  <summary><strong>Vorige versie</strong> (click to expand)</summary>
+![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%203_%20popular%20photos.jpg)
+</details>
 
 ### Concept 2
 Bij nader inzien misschien beter om voor een veel simpelere api/structure te gaan;
-Ik ga denk ik voor het gebruik van https://quizapi.io/ als Trivia-API, laat mensen in rooms potjes tegen elkaar spelen van like 5 vragen, en store de resultaten in een database voor het genereren van een leaderboard. Is een beter haalbare MVP, en er kan alsnog uitgebouwd worden met kekke CSS en categories etc.
+Ik wilde gaan voor gebruik van https://quizapi.io/ als Trivia-API, laat mensen in rooms potjes tegen elkaar spelen van like 5 vragen, en store de resultaten in een database voor het genereren van een leaderboard. Is een beter haalbare MVP, en er kan alsnog uitgebouwd worden met kekke CSS en categories etc.
 
 Wel nog checken of/hoe de real-time functionaliteit voldoende aan de orde komt dan.
 
@@ -158,12 +160,9 @@ See above --> this one with focus on the user actions, like a wireflow?
 
 ## 🌍 Design patterns
 
-- opsomming
-- van
-- patterns
-- die
-- gebruikt
-- zijn
+- Functional programming patterns
+- Document structured as a cascade
+
 
 ## 👍🏽 Best practices
 
@@ -175,9 +174,27 @@ See above --> this one with focus on the user actions, like a wireflow?
 ### 🐒 API
 _What external data source is featured in your project and what are its properties?_ 
 
-Unsplash API
+#### Unsplash API!
+https://www.programmableweb.com/api/unsplash
+
+![unsplash screenshot](https://gblobscdn.gitbook.com/assets%2F-MO3t4x8E_KNQlUwiOWq%2F-MO3t6SU8qGoybL570JI%2F-MO3u5zjbetqd4w9y-F4%2FDeanna%20-%20New%20frame%20(2).jpg?alt=media&token=b1a3b6ab-f359-4e9b-bc90-cd4a0e0d76cf)
+
+*Endpoint*
+https://api.unsplash.com/photos/?client_id=YOUR_ACCESS_KEY
+
+
 
 #### Properties
+*Response*
+JSON
+
+![json response](https://gblobscdn.gitbook.com/assets%2F-MO3t4x8E_KNQlUwiOWq%2F-MO3t6SU8qGoybL570JI%2F-MO3uN7pwD9lGYCYnRmW%2Fimage%20(10).png?alt=media&token=4560d63e-9b04-4ba5-bd2f-feb23a685e0e)
+
+Ik doe een request naar de API met de volgende URL+queries; hierin is het keyword uiteraard afhankelijk van de input van de gebruiker.
+
+`https://api.unsplash.com/photos/random/?count=4&query=ROSES&client_id=WgCeJ15nZWDOCklDsGksqOag8Xb4TvCILMy5datSx7w`
+
+Daarmee haal ik in totaal 4 foto's op per user.
 
 #### Rate limiting
 - Unsplash: max 4000 per uur
@@ -187,18 +204,59 @@ Unsplash API
 _What has been done with the fetched data?_What has been done with the initial data? Cleaning pattern?
 
 ```js
+(12) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+0: {id: "Cp_VUkZgXUk", created_at: "2021-01-24T04:25:53-05:00", updated_at: "2021-01-25T16:18:09-05:00", promoted_at: null, width: 3881, …}
+1: {id: "vqgXGe79Z28", created_at: "2021-01-22T12:54:54-05:00", updated_at: "2021-01-25T14:17:00-05:00", promoted_at: null, width: 4000, …}
+2: {id: "0pJjQFV6GVs", created_at: "2021-01-25T12:08:50-05:00", updated_at: "2021-01-25T18:28:38-05:00", promoted_at: null, width: 4000, …}
+3: {id: "3QdnUQi7rWs", created_at: "2021-01-25T10:56:52-05:00", updated_at: "2021-01-25T12:47:39-05:00", promoted_at: null, width: 5472, …}
 ```
 
-outcome:
-```json
+
+Een enkele foto heeft de volgende data:
+
+```js
+alt_description: "black and gray stone on white surface"
+blur_hash: "LCPQ4~_4?bofx]t7WCog~qj[4nt6"
+categories: []
+color: "#d9d9d9"
+created_at: "2021-01-24T04:25:53-05:00"
+current_user_collections: []
+description: null
+downloads: 1
+exif: {make: "Apple", model: "iPhone XR", exposure_time: "1/120", aperture: "1.8", focal_length: "4.2", …}
+height: 2562
+id: "Cp_VUkZgXUk"
+liked_by_user: false
+likes: 0
+links: {self: "https://api.unsplash.com/photos/Cp_VUkZgXUk", html: "https://unsplash.com/photos/Cp_VUkZgXUk", download: "https://unsplash.com/photos/Cp_VUkZgXUk/download", download_location: "https://api.unsplash.com/photos/Cp_VUkZgXUk/download"}
+location: {title: null, name: null, city: null, country: null, position: {…}}
+promoted_at: null
+sponsorship: null
+updated_at: "2021-01-25T16:18:09-05:00"
+urls: {raw: "https://images.unsplash.com/photo-1611480192372-a1…wxODgwNTh8MHwxfHJhbmRvbXx8fHx8fHx8&ixlib=rb-1.2.1", full: "https://images.unsplash.com/photo-1611480192372-a1…wNTh8MHwxfHJhbmRvbXx8fHx8fHx8&ixlib=rb-1.2.1&q=85", regular: "https://images.unsplash.com/photo-1611480192372-a1…wxfHJhbmRvbXx8fHx8fHx8&ixlib=rb-1.2.1&q=80&w=1080", small: "https://images.unsplash.com/photo-1611480192372-a1…HwxfHJhbmRvbXx8fHx8fHx8&ixlib=rb-1.2.1&q=80&w=400", thumb: "https://images.unsplash.com/photo-1611480192372-a1…HwxfHJhbmRvbXx8fHx8fHx8&ixlib=rb-1.2.1&q=80&w=200"}
+user: {id: "gJT9v0ULiY4", updated_at: "2021-01-25T17:08:00-05:00", username: "juvnsky", name: "Juvnsky Anton Maksimov", first_name: "Juvnsky", …}
+views: 216
+width: 3881
 ```
+
+
+Een heel tof detail hierbij is dat #color automatisch gegenereerd wordt, evenals in sommige gevallen de alt-tekst.
+Uiteindelijk render ik met deze data de gallery van foto's:
+
+```html
+<article>
+   <figure>
+      <img style="border: 6.5px solid ${data.color};" src="${data.urls.regular}" alt="${data.alt_description}">
+   </figure>
+</article>
+```
+
+
 
 ## 👯🏿‍ Features (+ wishlist)
 _What would you like to add (feature wishlist / backlog)?_ 
 
-- [x] one thing
-- [ ] second something
-- [ ] third thing
+- [ ]  hmmmoduless?
 
 
 ## 🏫 Assignment
@@ -360,8 +418,7 @@ Goal: Assess and wrap-up the course!
 
 ### Small inspiration sources
 
-- one source
-- second source
+- Rubber ducky
 
 ## 🗺️ License
 Author: [Deanna Bosschert](https://github.com/deannabosschert)
