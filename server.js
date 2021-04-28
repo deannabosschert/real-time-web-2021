@@ -398,14 +398,25 @@ async function addToScoreboard(data) {
    let searches = await data.map(async function (data) {
     const client = await MongoClient.connect(url, options)
     const db = client.db(dbName)
-    console.log("Connected correctly to server to add score")
+    console.log("Connected correctly to server to add score") 
     let search = await db.collection('unsplash_scores').findOneAndUpdate(
-      { "id" : `${data.id}` },
-      { $inc: { "score" : 1 } },
+      { "id" : data.id },
+      { $inc: { "score" : 1 },
+        $setOnInsert: {                    
+        id: data.id,
+        url: data.url,
+        width: data.width,
+        height: data.height,
+        color: data.color,
+        alt_description: data.alt_description,
+        photographer: data.photographer,
+        location: data.location,
+        photoid: data.photoid
+       }},
       {
         upsert: true,
-        multi: true
-      }
+        multi: true,
+      }  
    )
    console.log(search)
    client.close()
