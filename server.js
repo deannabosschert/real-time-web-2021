@@ -47,19 +47,12 @@ io.on('connect', async (socket) => {
   })
 
 
-  socket.on("quiz_results", (data, results) => {
-    const chosenPhotos = matchPhotoResults(data, results).flat()
-
-    if (quizResults.find(element => element == data.room.roomID)) {
-      let bothChosenPhotos = [...new Set(chosenPhotos)]
-      io.to(data.room.roomID).emit('results', bothChosenPhotos, 'showResults')
-    } else {
-      quizResults.push(data.room.roomID)
-      io.to(data.room.roomID).emit('results', chosenPhotos, 'hideResults')
-    }
+  socket.on("form_results", (data, results) => {
+    const chosenPhotos = matchFormtoRoomPhotos(data, results).flat()
+    data.room.chosenPhotos = chosenPhotos
+    checkUserMatches(data, chosenPhotos)
     addToScoreboard(chosenPhotos)
   })
-
 
   socket.on('disconnect', () => {
     console.log('user disconnected')
@@ -70,9 +63,21 @@ io.on('connect', async (socket) => {
 
 // API DATA
 function getData(category) {
-  return fetch(`https://api.unsplash.com/photos/random/?count=4&query=${category}&client_id=${process.env.API_KEY}`)
+  try {
+    return fetch(`https://api.unsplash.com/photos/random/?count=4&query=${category}&client_id=${process.env.API_KEY}`)
     .then(res => res.json())
-    .then(data => data)
+    .then(data => {
+      if (data.errors) {
+        return fetch(`https://api.unsplash.com/photos/random/?count=4&client_id=${process.env.API_KEY}`)
+         .then(res => res.json())
+      } else {
+        return data
+      }
+    }) 
+  }
+  catch (err) {
+    console.error(err)
+  }
 }
 
 function cleanData(data) {
@@ -144,12 +149,25 @@ function addID(array) {
 }
 
 // FORM RESULTS
-function matchPhotoResults(data, results) {
+function matchFormtoRoomPhotos(data, results) {
   let roomPhotos = data.room.roomPhotos
   
   return results.map(photo => {
     return roomPhotos.filter(item => item.id == photo)
   })
+}
+
+// MATCH RESULTS OF THE TWO USERS
+function checkUserMatches(data, chosenPhotos) {
+  const resultArray = quizResults.find(element => element.room.roomID == data.room.roomID)
+   if (resultArray != undefined ){
+     resultArray.room.chosenPhotos.push(chosenPhotos)
+     const bothChosenPhotos = [...new Set(resultArray.room.chosenPhotos)]
+      io.to(data.room.roomID).emit('results', bothChosenPhotos, 'showResults')
+  } else {
+    quizResults.push(data)
+    io.to(data.room.roomID).emit('results', chosenPhotos, 'hideResults')
+  }
 }
 
 // GET OR STORE IN SCOREBOARD (DATABASE)

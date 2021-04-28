@@ -141,7 +141,7 @@ function handleForm(data) {
       document.querySelector('input[name=photo4]:checked').value,
     ]
   
-    socket.emit("quiz_results", data, results)
+    socket.emit("form_results", data, results)
     toggleNone(".photographForm")
     toggleNone(".formResults")
     toggleNone(".statusField")
