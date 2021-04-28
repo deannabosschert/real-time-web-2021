@@ -22,11 +22,11 @@ app.get('/', function (req, res) {
   res.render('index.ejs', {})
 })
 
-io.on('connect', async (socket) => { // alle pong-batjes
+// ALL CONN POINTS
+io.on('connect', async (socket) => {
 
   getScoreboard()
   .then((data) => io.emit("scoreboard", data))
-
 
   socket.on("start", (userData) => {
     getData(userData.category)
@@ -37,18 +37,17 @@ io.on('connect', async (socket) => { // alle pong-batjes
           username: userData.username,
           category: userData.category,
           photos: data
-        })
-      )
+        }))
       .then(data => {
         socket.join(data.room.roomID)
         return data
       })
       .then((data) => checkStatus(data))
-      .then((data) => shufflePhotos(data))
+      .then((data) => emitPhotos(data))
   })
 
 
-  socket.on("quiz_results", function (data, results) {
+  socket.on("quiz_results", (data, results) => {
     const chosenPhotos = matchPhotoResults(data, results).flat()
 
     if (quizResults.find(element => element == data.room.roomID)) {
@@ -62,20 +61,14 @@ io.on('connect', async (socket) => { // alle pong-batjes
   })
 
 
-  socket.on("joinRoom", function (data) {
-    console.log('io socket on joinRoom')
-    io.to(data.room.roomID).emit(data)
-
-  })
-
-  socket.on('disconnect', function () {
+  socket.on('disconnect', () => {
     console.log('user disconnected')
   })
 
 })
 
 
-
+// API DATA
 function getData(category) {
   return fetch(`https://api.unsplash.com/photos/random/?count=4&query=${category}&client_id=${process.env.API_KEY}`)
     .then(res => res.json())
@@ -87,26 +80,19 @@ function cleanData(data) {
     return {
       id: data.id,
       url: data.urls.regular,
-      // created_at: data.created_at,
       width: data.width,
       height: data.height,
       color: data.color,
-      // blur_hash: data.blur_hash,
-      // description: data.description,
       alt_description: data.alt_description,
-      // categories: data.categories,
       photographer: data.user.name,
       location: data.location.title
     }
   })
 }
 
+// MULTIPLE USERS
 function findRoom(data) {
-  console.log('function findRoom')
-  // console.log(data)
-
   if (availableRooms.length == 0) {
-    console.log('maak nieuwe room aan')
     let roomInfo = {
       roomID: `room-${data.userId}`,
       creator: data.username,
@@ -115,53 +101,34 @@ function findRoom(data) {
     availableRooms.push(roomInfo)
     data.room = roomInfo
     data.status = 'waiting'
-
     return data
-
-    // niet beter gelijk de photos erin stoppen? niemand boeit wie welke foto's exact heeft meegenomen
   } else {
-    console.log('join bestaande room')
-    data.room = availableRooms.shift() // verwijdert het eerste element van de array en geeft het element terug als resultaat
+    data.room = availableRooms.shift() // join bestaande room; verwijdert het eerste element van de array en geeft het element terug als resultaat
     data.status = 'ready'
-
-    return data // je kan hier zeggen van 'nu pas de foto's assemblen'?
+    return data
   }
 }
 
-function matchPhotoResults(data, results) {
-  // merge results into data als turven
-  let roomPhotos = data.room.roomPhotos
-  //  const found = results.map(photo => {
-  //   return roomPhotos.findIndex(element => element.id == photo)
-  //  })
-
-  return results.map(photo => {
-    return roomPhotos.filter(item => item.id == photo)
-  })
-}
-
-
 function checkStatus(data) {
-
   if (data.status == 'ready') {
     Array.prototype.push.apply(data.room.roomPhotos, data.photos)
-    io.emit(data.userId, data) // stuur de individuele user dat ze een andere user nu joinen
+    io.emit(data.userId, data) // joining another user
     return data
   } else if (data.status == 'waiting') {
-    io.emit(data.userId, data) // stuur persoonlijk bericht; waiting for another user
+    io.emit(data.userId, data) // waiting for another user
     return data
   } else {
     console.log('error')
   }
 }
 
-function shufflePhotos(data) {
+// PREPARE/ASSEMBLE FORM PHOTOS
+function emitPhotos(data) {
   let room = data.room
 
   if (data.status == 'ready') {
     data.start = 'true'
-    let idRoomphotos = addID(room.roomPhotos)
-    room.roomPhotos = idRoomphotos
+    room.roomPhotos = addID(room.roomPhotos)
     io.to(room.roomID).emit('new_game', data)
   } else if (data.status == 'waiting') {
     data.start = 'false'
@@ -176,6 +143,14 @@ function addID(array) {
   })
 }
 
+// FORM RESULTS
+function matchPhotoResults(data, results) {
+  let roomPhotos = data.room.roomPhotos
+  
+  return results.map(photo => {
+    return roomPhotos.filter(item => item.id == photo)
+  })
+}
 
 // GET OR STORE IN SCOREBOARD (DATABASE)
 async function addToScoreboard(data) {
