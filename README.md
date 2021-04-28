@@ -41,6 +41,7 @@ https://real-time-web-21.herokuapp.com/
 - [x] Fix error things (e.g. when an user tries to submit an unfound category.. check api statuscodes!)
 - [ ] Hash for usernames
 - [ ] Haven't made use of modules for this one as I usually do, might be nice?
+- [ ] Timeout voor wanneer een user geen partner kan vinden?
 
 #### Quirks
 - Removed build command for css to avoid issues with Heroku
