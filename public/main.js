@@ -207,6 +207,7 @@ function displayCategory(category) {
 
 // RENDER SCOREBOARD GALLERY ON HOMEPAGE
 function renderScoreboard(data) {
+  gallery.innerHTML = ""
   return data.map(data => {
     gallery.innerHTML +=
       `

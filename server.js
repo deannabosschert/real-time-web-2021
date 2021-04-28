@@ -28,9 +28,9 @@ app.get('/', function (req, res) {
 })
 
 io.on('connect', async (socket) => { // alle pong-batjes
-  console.log('IO on connect')
-
   getScoreboard()
+  .then((data) => io.emit("scoreboard", data))
+
 
   socket.on("start", function (userData) {
     console.log('io socket on start')
@@ -57,15 +57,15 @@ io.on('connect', async (socket) => { // alle pong-batjes
   socket.on("quiz_results", function (data, results) {
     const winningPhotos = matchPhotoResults(data, results).flat()
 
-    if (quizResults.find(element => element == data.room.roomID )) {
-      console.log('de ander heeft al gesubmit, laat results zien') 
+    if (quizResults.find(element => element == data.room.roomID)) {
+      console.log('de ander heeft al gesubmit, laat results zien')
       io.to(data.room.roomID).emit('results', winningPhotos, 'showResults')
     } else {
 
       quizResults.push(data.room.roomID)
       io.to(data.room.roomID).emit('results', winningPhotos, 'hideResults')
     }
-  
+
     addToScoreboard(winningPhotos)
   })
 
@@ -144,7 +144,6 @@ function addID(array) {
 
 
 function getData(category) {
-  console.log('function getData')
   const count = "4"
   const apiLink = `https://api.unsplash.com/photos/random/?count=${count}&query=${category}&client_id=${process.env.API_KEY}`
 
@@ -201,7 +200,7 @@ function findRoom(data) {
   }
 }
 
-function openConnection(status) { // deze runt dus 1 keer op connection van de user (dus: per client dat entered) en loopt dan in zichzelf gedurende de sessie
+function openDatabaseConnection() { // deze runt dus 1 keer op connection van de user (dus: per client dat entered) en loopt dan in zichzelf gedurende de sessie
   // Listen to the stream.
   // This reconnection logic will attempt to reconnect when a disconnection is detected.
   // To avoid rate limites, this logic implements exponential backoff, so the wait time
@@ -211,10 +210,6 @@ function openConnection(status) { // deze runt dus 1 keer op connection van de u
   const connect = () => {
     try {
       stream = streamConnect() // ja: open connectie
-
-      // if (status == "user_left") {
-      //   stream.emit('user_left', username)
-      // }
 
       stream.on('timeout', async () => { // bijna: re-try connectie
         // Reconnect on error
@@ -296,14 +291,15 @@ async function sleep(delay) {
 
 // SCOREBOARD FROM DATABASE
 async function addToScoreboard(data) {
-   let searches = await data.map(async function (data) {
+  data.map(async (data) => {
     const client = await MongoClient.connect(url, options)
-    const db = client.db(dbName)
-    console.log("Connected correctly to server to add score") 
-    let search = await db.collection('unsplash_scores').findOneAndUpdate(
-      { "id" : data.id },
-      { $inc: { "score" : 1 },
-        $setOnInsert: {                    
+    await client.db(dbName).collection('unsplash_scores').findOneAndUpdate({
+      "id": data.id
+    }, {
+      $inc: {
+        "score": 1
+      },
+      $setOnInsert: {
         id: data.id,
         url: data.url,
         width: data.width,
@@ -313,34 +309,36 @@ async function addToScoreboard(data) {
         photographer: data.photographer,
         location: data.location,
         photoid: data.photoid
-       }},
-      {
-        upsert: true,
-        multi: true,
-      }  
-   )
-   console.log(search)
-   client.close()
-   return search
+      }
+    }, {
+      upsert: true,
+      multi: true,
+    })
+    client.close()
   })
-
-  console.log(searches)
 }
+
+// async function getScoreboard() {
+//   const client = await MongoClient.connect(url, options)
+//   const data = await client.db(dbName).collection('unsplash_scores').find({}).sort([
+//     ["score", -1]
+//   ]).limit(10).toArray()
+//   client.close()
+//   io.emit("scoreboard", data)
+// }
 
 async function getScoreboard() {
-  console.log('scores getten')
-  const client = await MongoClient.connect(url, options)
-  const db = client.db(dbName)
-  console.log("Connected correctly to server to retrieve scores")
-  // const search = await db.collection('unsplash_scores').find().toArray()
+  try {
+    return MongoClient.connect(url, options)
+      .then((client) => {
+         return client.db(dbName).collection('unsplash_scores').find({}).sort([["score", -1]]).limit(10).toArray()
+      })
+  } catch (err) {
+    console.error(err)
+  }
 
-  const search = await db.collection('unsplash_scores').find({}).sort([["score", -1]]).limit(10).toArray()                       // Skip 1 and limit 10
-  console.log(search)
-
-  client.close()
-  io.emit("scoreboard", search)
-  return
 }
+
 
 http.listen(port, () => {
   console.log('App listening on: ' + port)
