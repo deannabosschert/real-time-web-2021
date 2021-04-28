@@ -74,79 +74,15 @@ io.on('connect', async (socket) => { // alle pong-batjes
 
 })
 
-function matchPhotoResults(data, results) {
-  // merge results into data als turven
-  let roomPhotos = data.room.roomPhotos
-  //  const found = results.map(photo => {
-  //   return roomPhotos.findIndex(element => element.id == photo)
-  //  })
-
-  return results.map(photo => {
-    return roomPhotos.filter(item => item.id == photo)
-  })
-}
-
-function addScore(data) {
-  return data.map(i => {
-    return roomPhotos[i].score + 1
-  })
-}
-
-
-
-function checkStatus(data) {
-
-  if (data.status == 'ready') {
-    Array.prototype.push.apply(data.room.roomPhotos, data.photos)
-    io.emit(data.userId, data) // stuur de individuele user dat ze een andere user nu joinen
-    return data
-  } else if (data.status == 'waiting') {
-    io.emit(data.userId, data) // stuur persoonlijk bericht; waiting for another user
-    return data
-  } else {
-    console.log('error')
-  }
-  // io.to(persoonlijkeID.emit,(data.room.roomID) // je stuurt nu alleen het besloten roomnummer en de data naar de client, zodat de client zelf aan client side die room van de server kan joinen    
-  //  hierna stuurt de server de juiste data naar de room
-
-}
-
-function shufflePhotos(data) {
-  let roomNaam = data.room.roomID
-
-  if (data.status == 'ready') {
-    data.start = 'true'
-    let idRoomphotos = addID(data.room.roomPhotos)
-    data.room.roomPhotos = idRoomphotos
-
-    io.to(roomNaam).emit('new_game', data)
-
-  } else if (data.status == 'waiting') {
-    data.start = 'false'
-    io.to(roomNaam).emit('new_game', data) // beetje onnodig om alle data mee te sturen ivm performance maargoed
-  }
-}
-
-function addID(array) {
-  return array.map((x, i) => {
-    x.photoid = i + 1
-    return x
-  })
-}
 
 
 function getData(category) {
-  const count = "4"
-  const apiLink = `https://api.unsplash.com/photos/random/?count=${count}&query=${category}&client_id=${process.env.API_KEY}`
-
-  return fetch(apiLink)
+  return fetch(`https://api.unsplash.com/photos/random/?count=4&query=${category}&client_id=${process.env.API_KEY}`)
     .then(res => res.json())
     .then(data => data)
 }
 
 function cleanData(data) {
-  console.log('function cleanData')
-
   return data.map(data => {
     return {
       id: data.id,
@@ -191,6 +127,55 @@ function findRoom(data) {
     return data // je kan hier zeggen van 'nu pas de foto's assemblen'?
   }
 }
+
+function matchPhotoResults(data, results) {
+  // merge results into data als turven
+  let roomPhotos = data.room.roomPhotos
+  //  const found = results.map(photo => {
+  //   return roomPhotos.findIndex(element => element.id == photo)
+  //  })
+
+  return results.map(photo => {
+    return roomPhotos.filter(item => item.id == photo)
+  })
+}
+
+
+function checkStatus(data) {
+
+  if (data.status == 'ready') {
+    Array.prototype.push.apply(data.room.roomPhotos, data.photos)
+    io.emit(data.userId, data) // stuur de individuele user dat ze een andere user nu joinen
+    return data
+  } else if (data.status == 'waiting') {
+    io.emit(data.userId, data) // stuur persoonlijk bericht; waiting for another user
+    return data
+  } else {
+    console.log('error')
+  }
+}
+
+function shufflePhotos(data) {
+  let room = data.room
+
+  if (data.status == 'ready') {
+    data.start = 'true'
+    let idRoomphotos = addID(room.roomPhotos)
+    room.roomPhotos = idRoomphotos
+    io.to(room.roomID).emit('new_game', data)
+  } else if (data.status == 'waiting') {
+    data.start = 'false'
+    io.to(room.roomID).emit('new_game', data) // beetje onnodig om alle data mee te sturen ivm performance maargoed
+  }
+}
+
+function addID(array) {
+  return array.map((x, i) => {
+    x.photoid = i + 1
+    return x
+  })
+}
+
 
 // GET OR STORE IN SCOREBOARD (DATABASE)
 async function addToScoreboard(data) {
