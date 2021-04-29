@@ -1,4 +1,5 @@
-# Real-Time Web @cmda-minor-web · 2020/21
+# Best of the Best
+Real-Time Web @cmda-minor-web · 2020/21
 https://real-time-web-21.herokuapp.com/
 
 ![screenshot gif of app](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/screencapture_website.gif)
@@ -60,12 +61,15 @@ During this course I learned how to build a real-time application. I learned tec
 ## 📋 Concept
 _What does your app do, what is the goal? (passing butter)_ 
 
-> Users kunnen uit 4x2 foto's uit een zelfgekozen categorie kiezen, en stemmen op de beste hiervan.
+> Users kunnen uit 4x2 foto's uit een zelfgekozen categorie kiezen, en stemmen in tweetallen op de beste hiervan.
 
-Op Unsplash zijn er binnen bepaalde keywords/categories, een bijgehouden top-x populaire foto's. Deze haal ik op en laat de users in mijn app onderling beslissen welke daarvan beter zijn.
+Op Unsplash zijn er binnen bepaalde keywords/categories, een bijgehouden top-x populaire foto's. Deze haal ik op met de ingevoerde category als query, en laat de users in mijn app telkens 1 van elke categorie zien en dan onderling beslissen welke daarvan beter is. Zo wordt er een *best of the best*-scoreboard samengesteld in deze app.
 
-Twee users krijgen 2 foto's te  zien en kiezen hieruit de mooiste foto, en doen hier 4 rondes van. De mooiste foto van de 2 wint en welke foto's na zo'n vote-session winnen, wordt door de server bijgehouden in bijv een array van objecten. Dit wordt opgeslagen in een database om een scoreboard samen te stellen. 
+Twee users krijgen dus 2 foto's te  zien en kiezen hieruit de mooiste foto, en doen hier 4 rondes van. De mooiste foto van de 2 wint en welke foto's na zo'n vote-session winnen, wordt door de server bijgehouden in bijv een array van objecten. Dit wordt opgeslagen in een database om een eigen scoreboard samen te stellen. 
 
+
+<details>
+  <summary><strong>Interactie in stappen</strong> (click to expand)</summary>
 Interactie:
 - User komt binnen, voert username in en selecteert een categorie van foto's 
 - Client stuurt deze keuze naar de server 
@@ -80,7 +84,9 @@ Interactie:
 - Server stuurt dit ook naar de database
 
 Multi-user support; er zit al een default in socket.io zodra de user binnenkomt, dat diegene een personal ID toegewezen krijgt. Bij het binnentreden op de website komt iedereen in de 'general' room terecht; hier kunnen ze een scoreboard zien met de top-10-foto's, hun username invullen en een categorie invullen. Na het invullen van de categorie, doet de server met deze query een request naar de API. Hierna wordt de user aan een room toegevoegd met een andere user; de client krijgt de status hierover terug over een private verbinding. Zo worden de 1v1-groepen samengesteld, zodra de vote-sessie klaar is (of alle user disconnecten) worden de resultaten ontvangen en verwerkt op de server, de 'winning pictures'-data-array teruggestuurd naar de server en geupdatet in de database.
+</details>
 
+***
 
 <details>
   <summary><strong>Vorige versie</strong> (click to expand)</summary>
@@ -128,7 +134,6 @@ _Which actors are there in your application? (actor diagram)_
 #### DLC
 ![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/DLC_final.jpg)
 
-
 <details>
   <summary><strong>Vorige versie</strong> (click to expand)</summary>
 ![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%203_%20popular%20photos.jpg)
@@ -167,10 +172,13 @@ Daarmee haal ik in totaal 4 foto's op per user.
 
 #### Rate limiting
 - Unsplash: max 4000 per uur
-- Volgens de Dropbox Paper API kunnen maximaal 500 users connecten in dev, daarna moet je voor een Production-pack gaan
 
 ### 💽 Data cleaning
-_What has been done with the fetched data?_What has been done with the initial data? Cleaning pattern?
+_What has been done with the fetched data?_What has been done with the initial data? Cleaning pattern?_
+
+Zie de [Wiki](https://github.com/deannabosschert/real-time-web-2021/wiki/Data-cleaning) voor een uitgebreide documentatie hierover.
+
+Een response van de Unsplash API ziet er als volgt uit wanneer je 12 foto's request:  
 
 ```js
 (12) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
@@ -208,9 +216,8 @@ views: 216
 width: 3881
 ```
 
-
 Een heel tof detail hierbij is dat #color automatisch gegenereerd wordt, evenals in sommige gevallen de alt-tekst.
-Uiteindelijk render ik met deze data de gallery van foto's:
+Uiteindelijk render ik met deze data, client-size de gallery van foto's:
 
 ```html
 <article>
@@ -444,8 +451,8 @@ Goal: Assess and wrap-up the course!
 
 ### Rubric
 
-[Rubric- detailed rating of my project](https://github.com/deannabosschert/real-time-web-2021/wiki/Evaluation)
-[rubric]: https://github.com/cmda-minor-web/real-time-web-2021#grading
+[Evaluation- detailed rating of my project](https://github.com/deannabosschert/real-time-web-2021/wiki/Evaluatie)     
+[Grading]: https://github.com/cmda-minor-web/real-time-web-2021#grading
 
 ## ℹ️ Resources
 
