@@ -137,11 +137,13 @@ _Which actors are there in your application? (actor diagram)_
 
 <details>
   <summary><strong>Vorige versie</strong> (click to expand)</summary>
-![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/d38882a370edb70ac1b76ad7d63105bf1569886e/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%203_%20popular%20photos.jpg)
+  
+ ![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%203_%20popular%20photos.jpg)
 </details>
 
 <details>
   <summary><strong>Flowchart sketch</strong> (click to expand)</summary>
+  
 ![flowchart sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/flowchart.png)
 </details>
 
