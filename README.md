@@ -134,10 +134,6 @@ _Which actors are there in your application? (actor diagram)_
 ![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%203_%20popular%20photos.jpg)
 </details>
 
-<-- ## ↔️ Interaction diagram
-_How does flowed interaction through the application? (interaction diagram)_
-See above --> this one with focus on the user actions, like a wireflow? -->
-
 ## 🌍 Design patterns
 
 - Functional programming patterns
