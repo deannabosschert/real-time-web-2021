@@ -162,7 +162,6 @@ function checkUserMatches(data, chosenPhotos) {
    if (resultArray != undefined ){
      resultArray.room.chosenPhotos.push(chosenPhotos)
      const bothChosenPhotos = [...new Set(resultArray.room.chosenPhotos.flat())]
-     console.log(bothChosenPhotos)
       io.to(data.room.roomID).emit('results', bothChosenPhotos, 'showResults')
   } else {
     quizResults.push(data)

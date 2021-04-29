@@ -92,10 +92,10 @@ function scrollView(classname) {
 function startGame(data) {
   const photos = data.room.roomPhotos
 
-  photoduo1 = [photos[0], photos[2]] 
-  photoduo2 = [photos[1], photos[3]] 
-  photoduo3 = [photos[4], photos[6]] 
-  photoduo4 = [photos[5], photos[7]] 
+  photoduo1 = [photos[0], photos[6]] 
+  photoduo2 = [photos[1], photos[7]] 
+  photoduo3 = [photos[4], photos[2]] 
+  photoduo4 = [photos[5], photos[3]] 
 
   renderFormPhotos(photoduo1, 1)
   renderFormPhotos(photoduo2, 2)
