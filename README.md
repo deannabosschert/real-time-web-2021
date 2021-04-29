@@ -47,6 +47,27 @@ https://real-time-web-21.herokuapp.com/
 - Removed build command for css to avoid issues with Heroku
 - If someone opened a room and disconnected before another player could join, the room has to be destroyed from the availableRooms-array
 
+## MOSCOW
+### Must have
+- [x] App is working and published on Heroku
+- [x] App is thorougly documented in README
+- [x] Description of data life cycle
+- [x] Description of external data source
+- [x] Description of real-time events (making use of sockets)
+
+Complexity You’ve implemented enough real-time functionality for us to test your comprehension of the subject. A lot of functionality is self-written. You are able to manipulate online examples live.
+- [x] Implemented enough real-time functionality to test my comprehension of the subject (I also made a quite complex structure last year that I decided to leave out for this one, but along with this project it should show enough.)
+- [ ] I've written all of the functionality myself and I'm proud I actually did it all by myself lol, I have asked for help and been in a call with
+
+### Should have
+- [x] Database connection to store votes
+
+### Could have
+- [x] Retrieve top-10 photos from database
+- [x] Multiplayer voting (rooms)
+
+### Won't have (? yea..)
+
 ## ⚙️ Installation
 Clone this repository to your own device:
 ```bash
