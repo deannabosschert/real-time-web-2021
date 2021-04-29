@@ -1,23 +1,24 @@
 # Real-Time Web @cmda-minor-web · 2020/21
 https://real-time-web-21.herokuapp.com/
 
+![screenshot gif of app](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/screenshot_website.gif)
+
 <details>
   <summary><strong>Table of Contents</strong> (click to expand)</summary>
 
 <!-- toc -->
 
-- [✅ To-do](#--to-do)
 - [📋 Concept](#---concept)
 - [⚙️ Installation](#---installation)
 - [🧑🏼‍ Actor Diagram](#------actor-diagram)
-- [↔️ Interaction diagram](#---interaction-diagram)
 - [🌍 Design patterns](#---design-patterns)
 - [🗃 Data](#---data)
   * [🐒 Github API](#---github-api)
     + [Endpoint(s)](#endpoint-s-)
     + [Rate limiting](#rate-limiting)
   * [💽 Data cleaning](#---data-cleaning)
-- [👯🏿‍ Features (+ wishlist)](#------features----wishlist-)
+- [✅ To-do](#--to-do)
+- [👯🏿‍ Features MOSCOW (+ wishlist)](#------features----wishlist-)
 - [🏫 Assignment](#---assignment)
   * [Learning goals](#learning-goals)
   * [Week 1 - Hello API 🐒](#week-1---hello-api---)
@@ -33,48 +34,6 @@ https://real-time-web-21.herokuapp.com/
 
 </details>
 
-
-## ✅ To-do
-- [x] Draw DLC's for every concept
-- [x] Ask questions to Justus (Room logic, scoreboard logic)
-- [x] Fix error things (e.g. when an user tries to submit an unfound category.. check api statuscodes!)
-- [x] Hash for usernames
-- [ ] Haven't made use of modules for this one as I usually do, I figured it'd be cleaner to read in terms of the real-time flow?
-- [ ] Timeout voor wanneer een user geen partner kan vinden
-
-#### Quirks
-- [ ] If someone opened a room and disconnected before another player could join, the room has to be destroyed from the availableRooms-array
-- Removed build command for css to avoid issues with Heroku, so CSS is built locally first.
-
-
-## MOSCOW
-### Must have
-- [x] App is working and published on Heroku
-- [x] App is thorougly documented in README
-- [x] Description of data life cycle
-- [x] Description of external data source
-- [x] Description of real-time events (making use of sockets)
-
-- [x] Implemented enough real-time functionality to test my comprehension of the subject (I also made a quite complex structure last year that I decided to leave out for this one, but along with this project it should show enough.)
-- [x] I've written all of the functionality myself and I'm proud I actually did it all by myself lol, I have asked for help and been in a call with Reinier to Rubber Ducky' and contacted Justus but that's all
-- [x] I am able to manipulate online examples live; I can pull up the database, reset the current amounts and then update by doing voting sessions.
-- [x] User is influencing API requests between server and source
-- [x] I have set up the data manipulations myself
-- [x] The server maintains a data model and each client is continuously updated with the correct data. (sockets!)
-- [x] Multiple clients can connect to the server.
-- [x] Interaction works as expected
-- [x] I can explain how my app approaches this.
-
-### Should have
-- [x] Database connection to store votes
-- [ ] Interaction is not dependent on the number of clients --> setTimeOut on the matching of users, and catch to a solo room if no other user is found?
-
-### Could have
-- [x] Retrieve top-10 photos from database
-- [x] Multiplayer voting (rooms)
-- [ ] By interacting with the app, a user can influence the data model of the server in real time by directly modifying data --> idk if the DB-connection influence counts, or the Rooms?
-
-### Won't have (? yea..)
 
 ## ⚙️ Installation
 Clone this repository to your own device:
@@ -175,16 +134,6 @@ _Which actors are there in your application? (actor diagram)_
 ![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%203_%20popular%20photos.jpg)
 </details>
 
-## ↔️ Interaction diagram
-_How does flowed interaction through the application? (interaction diagram)_
-See above --> this one with focus on the user actions, like a wireflow? 
-
-#### Socket
-![socket](https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ExperienceTube_A5T0181-1200x630.jpg)
-
-#### 1v1 rooms
-![](https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ET-FINAL-POSTER-FRAME.jpg)
-
 ## 🌍 Design patterns
 
 - Functional programming patterns
@@ -198,7 +147,7 @@ _What external data source is featured in your project and what are its properti
 #### Unsplash API!
 https://www.programmableweb.com/api/unsplash
 
-![unsplash screenshot](https://gblobscdn.gitbook.com/assets%2F-MO3t4x8E_KNQlUwiOWq%2F-MO3t6SU8qGoybL570JI%2F-MO3u5zjbetqd4w9y-F4%2FDeanna%20-%20New%20frame%20(2).jpg?alt=media&token=b1a3b6ab-f359-4e9b-bc90-cd4a0e0d76cf)
+<img src="https://gblobscdn.gitbook.com/assets%2F-MO3t4x8E_KNQlUwiOWq%2F-MO3t6SU8qGoybL570JI%2F-MO3u5zjbetqd4w9y-F4%2FDeanna%20-%20New%20frame%20(2).jpg?alt=media&token=b1a3b6ab-f359-4e9b-bc90-cd4a0e0d76cf" alt="programmableweb unsplash screenshot" width=300>
 
 *Endpoint*
 https://api.unsplash.com/photos/?client_id=YOUR_ACCESS_KEY
@@ -206,9 +155,9 @@ https://api.unsplash.com/photos/?client_id=YOUR_ACCESS_KEY
 
 #### Properties
 *Response*
-JSON
+In JSON
+<img src="https://gblobscdn.gitbook.com/assets%2F-MO3t4x8E_KNQlUwiOWq%2F-MO3t6SU8qGoybL570JI%2F-MO3uN7pwD9lGYCYnRmW%2Fimage%20(10).png?alt=media&token=4560d63e-9b04-4ba5-bd2f-feb23a685e0e" alt="unsplash json response screenshot" width=550>
 
-![json response](https://gblobscdn.gitbook.com/assets%2F-MO3t4x8E_KNQlUwiOWq%2F-MO3t6SU8qGoybL570JI%2F-MO3uN7pwD9lGYCYnRmW%2Fimage%20(10).png?alt=media&token=4560d63e-9b04-4ba5-bd2f-feb23a685e0e)
 
 Ik doe een request naar de API met de volgende URL+queries; hierin is het keyword uiteraard afhankelijk van de input van de gebruiker.
 
@@ -273,11 +222,74 @@ Uiteindelijk render ik met deze data de gallery van foto's:
 
 
 
+
+## ✅ To-do
+- [x] Draw DLC's for every concept
+- [x] Ask questions to Justus (Room logic, scoreboard logic)
+- [x] Fix error things (e.g. when an user tries to submit an unfound category.. check api statuscodes!)
+- [x] Hash for usernames
+- [ ] Haven't made use of modules for this one as I usually do, I figured it'd be cleaner to read in terms of the real-time flow?
+- [ ] Timeout voor wanneer een user geen partner kan vinden
+
+#### Quirks
+- [ ] If someone opened a room and disconnected before another player could join, the room has to be destroyed from the availableRooms-array
+- Removed build command for css to avoid issues with Heroku, so CSS is built locally first.
+
+
+
 ## 👯🏿‍ Features (+ wishlist)
 _What would you like to add (feature wishlist / backlog)?_ 
 
 - [ ]  hmmmoduless?
-- [ ]  Disconnection-support
+- [ ]  Disconnection-support!!
+
+
+### MOSCOW
+#### Must have
+- [x] App is working and published on Heroku
+- [x] App is thorougly documented in README
+- [x] Description of data life cycle
+- [x] Description of external data source
+- [x] Description of real-time events (making use of sockets)
+
+- [x] Implemented enough real-time functionality to test my comprehension of the subject (I also made a quite complex structure last year that I decided to leave out for this one, but along with this project it should show enough.)
+- [x] I've written all of the functionality myself and I'm proud I actually did it all by myself lol, I have asked for help and been in a call with Reinier to Rubber Ducky' and contacted Justus but that's all
+- [x] I am able to manipulate online examples live; I can pull up the database, reset the current amounts and then update by doing voting sessions.
+- [x] User is influencing API requests between server and source
+- [x] I have set up the data manipulations myself
+- [x] The server maintains a data model and each client is continuously updated with the correct data. (sockets!)
+- [x] Multiple clients can connect to the server.
+- [x] Interaction works as expected
+- [x] I can explain how my app approaches this.
+
+#### Should have
+- [x] Database connection to store votes
+- [ ] Interaction is not dependent on the number of clients --> add setTimeOut on the matching of users, and catch to a solo room if no other user is found?
+
+#### Could have
+- [x] Retrieve top-10 photos from database
+- [x] Multiplayer voting (rooms)
+- [ ] By interacting with the app, a user can influence the data model of the server in real time by directly modifying data --> idk if the DB-connection influence counts, or the Rooms?
+
+#### Nice to have
+- [ ] Hand-written/illustrated examples of how sockets work (I've used quite some metaphors to help with my understanding of the subject..)
+
+#### Won't have (? yea..)
+- suggestions welcome as I find this step usually obsolete
+
+## Metaphors
+### Sockets
+<img src="https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ExperienceTube_A5T0181-1200x630.jpg" alt="socket metaphor" width=550>
+<img src="https://media0.giphy.com/media/fvA1ieS8rEV8Y/200.gif" alt="socket metaphor ping pong" width=300>
+
+#### Server @ Client
+<img src="https://media4.giphy.com/media/l4FGwx3MJMfkZP75S/200.gif" alt="socket metaphor joining rooms" width=300>
+
+
+### 1v1+ rooms
+<img src="(https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ET-FINAL-POSTER-FRAME.jpg" alt="socket rooms metaphor" width=300>
+Zie de data waarmee je de voting doet als een soort bingokaart die je meekrijgt alvorens je aan een tafeltje kan gaan zitten.
+Het tafeltje speelt alleen wel samen, dus de bingokaart wordt gewoon op de tafel neergelegd en maakt niet uit welke bij wie precies hoorde omdat je toch wel per tafel speelt.
 
 
 ## 🏫 Assignment
@@ -428,18 +440,17 @@ Goal: Assess and wrap-up the course!
 
 ### Rubric
 
-[Rubric- detailed rating of my project](https://github.com/deannabosschert/real-time-web-2021/wiki/Rubric)
-![rubric](https://github.com/deannabosschert/real-time-web-2021/blob/master/src/img/rubric.png)
-[rubric]: https://docs.google.com/spreadsheets/d/e/2PACX-1vTjLC7HzQngsRCmkxTGWvKkkH1JuA5KivKdky_9dzr1zzghARw4-ldQW_tWO3zpxT7ZQC7SpiUa0q2z/pubhtml?gid=0&single=true
+[Rubric- detailed rating of my project](https://github.com/deannabosschert/real-time-web-2021/wiki/Evaluation)
+[rubric]: https://github.com/cmda-minor-web/real-time-web-2021#grading
 
 ## ℹ️ Resources
 
 ### Credits
 - Our superamazingteachers at @CMD
+- My Rubber Ducks @Justus, @Reinier and @Daniel
 
 ### Small inspiration sources
-
-- Rubber ducky
+- https://github.com/deannabosschert/real-time-web-1920
 
 ## 🗺️ License
 Author: [Deanna Bosschert](https://github.com/deannabosschert)
