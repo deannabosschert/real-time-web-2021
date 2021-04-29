@@ -11,7 +11,6 @@ https://real-time-web-21.herokuapp.com/
 - [📋 Concept](#---concept)
 - [⚙️ Installation](#---installation)
 - [🧑🏼‍ Actor Diagram](#------actor-diagram)
-- [↔️ Interaction diagram](#---interaction-diagram)
 - [🌍 Design patterns](#---design-patterns)
 - [🗃 Data](#---data)
   * [🐒 Github API](#---github-api)
@@ -135,15 +134,9 @@ _Which actors are there in your application? (actor diagram)_
 ![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%203_%20popular%20photos.jpg)
 </details>
 
-## ↔️ Interaction diagram
+<-- ## ↔️ Interaction diagram
 _How does flowed interaction through the application? (interaction diagram)_
-See above --> this one with focus on the user actions, like a wireflow? 
-
-#### Socket
-![socket](https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ExperienceTube_A5T0181-1200x630.jpg)
-
-#### 1v1 rooms
-![](https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ET-FINAL-POSTER-FRAME.jpg)
+See above --> this one with focus on the user actions, like a wireflow? -->
 
 ## 🌍 Design patterns
 
@@ -287,6 +280,12 @@ _What would you like to add (feature wishlist / backlog)?_
 
 #### Won't have (? yea..)
 - suggestions welcome as I find this step usually obsolete
+
+#### Socket
+![socket](https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ExperienceTube_A5T0181-1200x630.jpg)
+
+#### 1v1 rooms
+![](https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ET-FINAL-POSTER-FRAME.jpg)
 
 ## 🏫 Assignment
 <details>
