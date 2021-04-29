@@ -55,16 +55,24 @@ https://real-time-web-21.herokuapp.com/
 - [x] Description of external data source
 - [x] Description of real-time events (making use of sockets)
 
-Complexity You’ve implemented enough real-time functionality for us to test your comprehension of the subject. A lot of functionality is self-written. You are able to manipulate online examples live.
 - [x] Implemented enough real-time functionality to test my comprehension of the subject (I also made a quite complex structure last year that I decided to leave out for this one, but along with this project it should show enough.)
-- [ ] I've written all of the functionality myself and I'm proud I actually did it all by myself lol, I have asked for help and been in a call with
+- [x] I've written all of the functionality myself and I'm proud I actually did it all by myself lol, I have asked for help and been in a call with Reinier to Rubber Ducky' and contacted Justus but that's all
+- [x] I am able to manipulate online examples live; I can pull up the database, reset the current amounts and then update by doing voting sessions.
+- [x] User is influencing API requests between server and source
+- [x] I have set up the data manipulations myself
+- [x] The server maintains a data model and each client is continuously updated with the correct data. (sockets!)
+- [x] Multiple clients can connect to the server.
+- [x] Interaction works as expected
+- [x] I can explain how my app approaches this.
 
 ### Should have
 - [x] Database connection to store votes
+- [ ] Interaction is not dependent on the number of clients --> setTimeOut on the matching of users, and catch to a solo room if no other user is found?
 
 ### Could have
 - [x] Retrieve top-10 photos from database
 - [x] Multiplayer voting (rooms)
+- [ ] By interacting with the app, a user can influence the data model of the server in real time by directly modifying data --> idk if the DB-connection influence counts, or the Rooms?
 
 ### Won't have (? yea..)
 
@@ -92,9 +100,32 @@ During this course I learned how to build a real-time application. I learned tec
 
 ## 📋 Concept
 _What does your app do, what is the goal? (passing butter)_ 
-### Concept 1
-> Users kunnen uit 4 foto's uit een zelfgekozen categorie kiezen, en stemmen op de beste.
 
+### Concept 1
+> Users kunnen uit 4x2 foto's uit een zelfgekozen categorie kiezen, en stemmen op de beste hiervan.
+
+Op Unsplash zijn er binnen bepaalde keywords/categories, een bijgehouden top-x populaire foto's. Deze haal ik op en laat de users in mijn app onderling beslissen welke daarvan beter zijn.
+
+Twee users krijgen 2 foto's te  zien en kiezen hieruit de mooiste foto, en doen hier 4 rondes van. De mooiste foto van de 2 wint en welke foto's na zo'n vote-session winnen, wordt door de server bijgehouden in bijv een array van objecten. Dit wordt opgeslagen in een database om een scoreboard samen te stellen. 
+
+Interactie:
+- User komt binnen, voert username in en selecteert een categorie van foto's 
+- Client stuurt deze keuze naar de server 
+- Server doet een request met deze query naar de api, ontvangt data en cleant dit
+- Server kijkt of er al een open Room is en laat de client ofwel joinen of maakt een nieuwe aan
+- Server stuurt naar de client of deze moet wachten op een andere user of dat het spel kan beginnen
+- Server bundelt de twee gecleande data-arrays en zet dit om naar een form en stuurt dit naar een 'new_game'-socket in de room
+- Client zet dit om naar een formulier en serveer dit aan de users
+- User selecteert de 'beste' foto en deze data wordt door de client teruggestuurd naar de server en bijgehouden in een (tijdelijke) array met de score
+- Server matcht de keuzes aan de foto's in de roomData
+- Server zet de tijdelijke array om tot een eindscore en stuurt dit naar de clients in de room
+- Server stuurt dit ook naar de database
+
+Multi-user support; er zit al een default in socket.io zodra de user binnenkomt, dat diegene een personal ID toegewezen krijgt. Bij het binnentreden op de website komt iedereen in de 'general' room terecht; hier kunnen ze een scoreboard zien met de top-10-foto's, hun username invullen en een categorie invullen. Na het invullen van de categorie, doet de server met deze query een request naar de API. Hierna wordt de user aan een room toegevoegd met een andere user; de client krijgt de status hierover terug over een private verbinding. Zo worden de 1v1-groepen samengesteld, zodra de vote-sessie klaar is (of alle user disconnecten) worden de resultaten ontvangen en verwerkt op de server, de 'winning pictures'-data-array teruggestuurd naar de server en geupdatet in de database.
+
+
+<details>
+  <summary><strong>Vorige versie</strong> (click to expand)</summary>
 Twee (of meer) users krijgen 4 foto's te  zien en kiezen hieruit de mooiste foto, en doen hier 4 rondes van. De mooiste foto wint en welke foto's na zo'n vote-session winnen, wordt door de server bijgehouden in bijv een array van objecten. Dit kan nog opgeslagen worden in een database om een scoreboard samen te stellen. 
 
 Interactie:
@@ -109,6 +140,7 @@ Interactie:
 - De eindscore wordt wellicht in de database nog gestored
 
 Multi-user support; er zit al een default in zodra de user binnenkomt, dat diegene een personal ID toegewezen krijgt. Bij het binnentreden op we website komt iedereen in de 'general' room terecht; hier kunnen ze een scoreboard zien met de top-10-foto's, hun username invullen en een categorie invullen. Na het invullen van de categorie, doet de server met deze query een request naar de API. De client krijgt deze data terug over een priveverbinding. Hierna wordt de user aan een room toegevoegd met een andere user; zo worden de 1v1 (of meer) -groepen samengesteld, zodra de vote-sessie klaar is (of alle user disconnecten) wordt deze destroyed en de 'winning pictures'-data-array teruggestuurd naar de server.
+</details>
 
 #### DLC
 ![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/DLC_final.jpg)
@@ -120,10 +152,10 @@ Multi-user support; er zit al een default in zodra de user binnenkomt, dat diege
 </details>
 
 ### Concept 2
-Bij nader inzien misschien beter om voor een veel simpelere api/structure te gaan;
+Na het concept van Dropbox heb ik besloten voor een veel simpelere api/structure te gaan;
 Ik wilde gaan voor gebruik van https://quizapi.io/ als Trivia-API, laat mensen in rooms potjes tegen elkaar spelen van like 5 vragen, en store de resultaten in een database voor het genereren van een leaderboard. Is een beter haalbare MVP, en er kan alsnog uitgebouwd worden met kekke CSS en categories etc.
 
-Wel nog checken of/hoe de real-time functionaliteit voldoende aan de orde komt dan.
+Moest wel nog checken of/hoe de real-time functionaliteit voldoende aan de orde komt dan.
 
 #### DLC
 <img src="https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%202_%20trivia.jpg" alt="data life cycle sketch" style="display: inline-block;"  width="546.5" height="520.4">
