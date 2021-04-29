@@ -6,7 +6,6 @@ https://real-time-web-21.herokuapp.com/
 
 <!-- toc -->
 
-- [✅ To-do](#--to-do)
 - [📋 Concept](#---concept)
 - [⚙️ Installation](#---installation)
 - [🧑🏼‍ Actor Diagram](#------actor-diagram)
@@ -17,7 +16,8 @@ https://real-time-web-21.herokuapp.com/
     + [Endpoint(s)](#endpoint-s-)
     + [Rate limiting](#rate-limiting)
   * [💽 Data cleaning](#---data-cleaning)
-- [👯🏿‍ Features (+ wishlist)](#------features----wishlist-)
+- [✅ To-do](#--to-do)
+- [👯🏿‍ Features MOSCOW (+ wishlist)](#------features----wishlist-)
 - [🏫 Assignment](#---assignment)
   * [Learning goals](#learning-goals)
   * [Week 1 - Hello API 🐒](#week-1---hello-api---)
@@ -33,51 +33,6 @@ https://real-time-web-21.herokuapp.com/
 
 </details>
 
-
-## ✅ To-do
-- [x] Draw DLC's for every concept
-- [x] Ask questions to Justus (Room logic, scoreboard logic)
-- [x] Fix error things (e.g. when an user tries to submit an unfound category.. check api statuscodes!)
-- [x] Hash for usernames
-- [ ] Haven't made use of modules for this one as I usually do, I figured it'd be cleaner to read in terms of the real-time flow?
-- [ ] Timeout voor wanneer een user geen partner kan vinden
-
-#### Quirks
-- [ ] If someone opened a room and disconnected before another player could join, the room has to be destroyed from the availableRooms-array
-- Removed build command for css to avoid issues with Heroku, so CSS is built locally first.
-
-
-## MOSCOW
-### Must have
-- [x] App is working and published on Heroku
-- [x] App is thorougly documented in README
-- [x] Description of data life cycle
-- [x] Description of external data source
-- [x] Description of real-time events (making use of sockets)
-
-- [x] Implemented enough real-time functionality to test my comprehension of the subject (I also made a quite complex structure last year that I decided to leave out for this one, but along with this project it should show enough.)
-- [x] I've written all of the functionality myself and I'm proud I actually did it all by myself lol, I have asked for help and been in a call with Reinier to Rubber Ducky' and contacted Justus but that's all
-- [x] I am able to manipulate online examples live; I can pull up the database, reset the current amounts and then update by doing voting sessions.
-- [x] User is influencing API requests between server and source
-- [x] I have set up the data manipulations myself
-- [x] The server maintains a data model and each client is continuously updated with the correct data. (sockets!)
-- [x] Multiple clients can connect to the server.
-- [x] Interaction works as expected
-- [x] I can explain how my app approaches this.
-
-### Should have
-- [x] Database connection to store votes
-- [ ] Interaction is not dependent on the number of clients --> add setTimeOut on the matching of users, and catch to a solo room if no other user is found?
-
-### Could have
-- [x] Retrieve top-10 photos from database
-- [x] Multiplayer voting (rooms)
-- [ ] By interacting with the app, a user can influence the data model of the server in real time by directly modifying data --> idk if the DB-connection influence counts, or the Rooms?
-
-### Nice to have
-- [ ] Hand-written/illustrated examples of how sockets work (I've used quite some metaphors to help with my understanding of the subject..)
-
-### Won't have (? yea..)
 
 ## ⚙️ Installation
 Clone this repository to your own device:
@@ -276,12 +231,60 @@ Uiteindelijk render ik met deze data de gallery van foto's:
 
 
 
+
+## ✅ To-do
+- [x] Draw DLC's for every concept
+- [x] Ask questions to Justus (Room logic, scoreboard logic)
+- [x] Fix error things (e.g. when an user tries to submit an unfound category.. check api statuscodes!)
+- [x] Hash for usernames
+- [ ] Haven't made use of modules for this one as I usually do, I figured it'd be cleaner to read in terms of the real-time flow?
+- [ ] Timeout voor wanneer een user geen partner kan vinden
+
+#### Quirks
+- [ ] If someone opened a room and disconnected before another player could join, the room has to be destroyed from the availableRooms-array
+- Removed build command for css to avoid issues with Heroku, so CSS is built locally first.
+
+
+
 ## 👯🏿‍ Features (+ wishlist)
 _What would you like to add (feature wishlist / backlog)?_ 
 
 - [ ]  hmmmoduless?
-- [ ]  Disconnection-support
+- [ ]  Disconnection-support!!
 
+
+### MOSCOW
+#### Must have
+- [x] App is working and published on Heroku
+- [x] App is thorougly documented in README
+- [x] Description of data life cycle
+- [x] Description of external data source
+- [x] Description of real-time events (making use of sockets)
+
+- [x] Implemented enough real-time functionality to test my comprehension of the subject (I also made a quite complex structure last year that I decided to leave out for this one, but along with this project it should show enough.)
+- [x] I've written all of the functionality myself and I'm proud I actually did it all by myself lol, I have asked for help and been in a call with Reinier to Rubber Ducky' and contacted Justus but that's all
+- [x] I am able to manipulate online examples live; I can pull up the database, reset the current amounts and then update by doing voting sessions.
+- [x] User is influencing API requests between server and source
+- [x] I have set up the data manipulations myself
+- [x] The server maintains a data model and each client is continuously updated with the correct data. (sockets!)
+- [x] Multiple clients can connect to the server.
+- [x] Interaction works as expected
+- [x] I can explain how my app approaches this.
+
+#### Should have
+- [x] Database connection to store votes
+- [ ] Interaction is not dependent on the number of clients --> add setTimeOut on the matching of users, and catch to a solo room if no other user is found?
+
+#### Could have
+- [x] Retrieve top-10 photos from database
+- [x] Multiplayer voting (rooms)
+- [ ] By interacting with the app, a user can influence the data model of the server in real time by directly modifying data --> idk if the DB-connection influence counts, or the Rooms?
+
+#### Nice to have
+- [ ] Hand-written/illustrated examples of how sockets work (I've used quite some metaphors to help with my understanding of the subject..)
+
+#### Won't have (? yea..)
+- suggestions welcome as I find this step usually obsolete
 
 ## 🏫 Assignment
 <details>
