@@ -70,18 +70,19 @@ Twee users krijgen dus 2 foto's te  zien en kiezen hieruit de mooiste foto, en d
 
 <details>
   <summary><strong>Interactie in stappen</strong> (click to expand)</summary>
-Interactie:
-- User komt binnen, voert username in en selecteert een categorie van foto's 
-- Client stuurt deze keuze naar de server 
-- Server doet een request met deze query naar de api, ontvangt data en cleant dit
-- Server kijkt of er al een open Room is en laat de client ofwel joinen of maakt een nieuwe aan
-- Server stuurt naar de client of deze moet wachten op een andere user of dat het spel kan beginnen
-- Server bundelt de twee gecleande data-arrays en zet dit om naar een form en stuurt dit naar een 'new_game'-socket in de room
-- Client zet dit om naar een formulier en serveer dit aan de users
-- User selecteert de 'beste' foto en deze data wordt door de client teruggestuurd naar de server en bijgehouden in een (tijdelijke) array met de score
-- Server matcht de keuzes aan de foto's in de roomData
-- Server zet de tijdelijke array om tot een eindscore en stuurt dit naar de clients in de room
-- Server stuurt dit ook naar de database
+  
+Interactie:     
+- User komt binnen, voert username in en selecteert een categorie van foto's                
+- Client stuurt deze keuze naar de server     
+- Server doet een request met deze query naar de api, ontvangt data en cleant dit     
+- Server kijkt of er al een open Room is en laat de client ofwel joinen of maakt een nieuwe aan     
+- Server stuurt naar de client of deze moet wachten op een andere user of dat het spel kan beginnen          
+- Server bundelt de twee gecleande data-arrays en zet dit om naar een form en stuurt dit naar een 'new_game'-socket in de room     
+- Client zet dit om naar een formulier en serveer dit aan de users          
+- User selecteert de 'beste' foto en deze data wordt door de client teruggestuurd naar de server en bijgehouden in een (tijdelijke) array met de score     
+- Server matcht de keuzes aan de foto's in de roomData     
+- Server zet de tijdelijke array om tot een eindscore en stuurt dit naar de clients in de room          
+- Server stuurt dit ook naar de database     
 
 Multi-user support; er zit al een default in socket.io zodra de user binnenkomt, dat diegene een personal ID toegewezen krijgt. Bij het binnentreden op de website komt iedereen in de 'general' room terecht; hier kunnen ze een scoreboard zien met de top-10-foto's, hun username invullen en een categorie invullen. Na het invullen van de categorie, doet de server met deze query een request naar de API. Hierna wordt de user aan een room toegevoegd met een andere user; de client krijgt de status hierover terug over een private verbinding. Zo worden de 1v1-groepen samengesteld, zodra de vote-sessie klaar is (of alle user disconnecten) worden de resultaten ontvangen en verwerkt op de server, de 'winning pictures'-data-array teruggestuurd naar de server en geupdatet in de database.
 </details>
