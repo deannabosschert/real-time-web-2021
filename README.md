@@ -67,12 +67,15 @@ https://real-time-web-21.herokuapp.com/
 
 ### Should have
 - [x] Database connection to store votes
-- [ ] Interaction is not dependent on the number of clients --> setTimeOut on the matching of users, and catch to a solo room if no other user is found?
+- [ ] Interaction is not dependent on the number of clients --> add setTimeOut on the matching of users, and catch to a solo room if no other user is found?
 
 ### Could have
 - [x] Retrieve top-10 photos from database
 - [x] Multiplayer voting (rooms)
 - [ ] By interacting with the app, a user can influence the data model of the server in real time by directly modifying data --> idk if the DB-connection influence counts, or the Rooms?
+
+### Nice to have
+- [ ] Hand-written/illustrated examples of how sockets work (I've used quite some metaphors to help with my understanding of the subject..)
 
 ### Won't have (? yea..)
 
