@@ -12,7 +12,6 @@ https://real-time-web-21.herokuapp.com/
 - [🧑🏼‍ Actor Diagram](#------actor-diagram)
 - [↔️ Interaction diagram](#---interaction-diagram)
 - [🌍 Design patterns](#---design-patterns)
-- [👍🏽 Best practices](#-----best-practices)
 - [🗃 Data](#---data)
   * [🐒 Github API](#---github-api)
     + [Endpoint(s)](#endpoint-s-)
@@ -39,13 +38,14 @@ https://real-time-web-21.herokuapp.com/
 - [x] Draw DLC's for every concept
 - [x] Ask questions to Justus (Room logic, scoreboard logic)
 - [x] Fix error things (e.g. when an user tries to submit an unfound category.. check api statuscodes!)
-- [ ] Hash for usernames
-- [ ] Haven't made use of modules for this one as I usually do, might be nice?
-- [ ] Timeout voor wanneer een user geen partner kan vinden?
+- [x] Hash for usernames
+- [ ] Haven't made use of modules for this one as I usually do, I figured it'd be cleaner to read in terms of the real-time flow?
+- [ ] Timeout voor wanneer een user geen partner kan vinden
 
 #### Quirks
-- Removed build command for css to avoid issues with Heroku
-- If someone opened a room and disconnected before another player could join, the room has to be destroyed from the availableRooms-array
+- [ ] If someone opened a room and disconnected before another player could join, the room has to be destroyed from the availableRooms-array
+- Removed build command for css to avoid issues with Heroku, so CSS is built locally first.
+
 
 ## MOSCOW
 ### Must have
@@ -101,7 +101,6 @@ During this course I learned how to build a real-time application. I learned tec
 ## 📋 Concept
 _What does your app do, what is the goal? (passing butter)_ 
 
-### Concept 1
 > Users kunnen uit 4x2 foto's uit een zelfgekozen categorie kiezen, en stemmen op de beste hiervan.
 
 Op Unsplash zijn er binnen bepaalde keywords/categories, een bijgehouden top-x populaire foto's. Deze haal ik op en laat de users in mijn app onderling beslissen welke daarvan beter zijn.
@@ -142,40 +141,6 @@ Interactie:
 Multi-user support; er zit al een default in zodra de user binnenkomt, dat diegene een personal ID toegewezen krijgt. Bij het binnentreden op we website komt iedereen in de 'general' room terecht; hier kunnen ze een scoreboard zien met de top-10-foto's, hun username invullen en een categorie invullen. Na het invullen van de categorie, doet de server met deze query een request naar de API. De client krijgt deze data terug over een priveverbinding. Hierna wordt de user aan een room toegevoegd met een andere user; zo worden de 1v1 (of meer) -groepen samengesteld, zodra de vote-sessie klaar is (of alle user disconnecten) wordt deze destroyed en de 'winning pictures'-data-array teruggestuurd naar de server.
 </details>
 
-#### DLC
-![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/DLC_final.jpg)
-
-
-<details>
-  <summary><strong>Vorige versie</strong> (click to expand)</summary>
-![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%203_%20popular%20photos.jpg)
-</details>
-
-### Concept 2
-Na het concept van Dropbox heb ik besloten voor een veel simpelere api/structure te gaan;
-Ik wilde gaan voor gebruik van https://quizapi.io/ als Trivia-API, laat mensen in rooms potjes tegen elkaar spelen van like 5 vragen, en store de resultaten in een database voor het genereren van een leaderboard. Is een beter haalbare MVP, en er kan alsnog uitgebouwd worden met kekke CSS en categories etc.
-
-Moest wel nog checken of/hoe de real-time functionaliteit voldoende aan de orde komt dan.
-
-#### DLC
-<img src="https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%202_%20trivia.jpg" alt="data life cycle sketch" style="display: inline-block;"  width="546.5" height="520.4">
-
-### Concept 3
-GitHub/Paper/anything-connectie voor maken van docs, zodat ik de docs kan schrijven in bijv Markdown via de Wiki en het weergeven wordt op mijn website in kek blogformaat
-
-Ik heb heel lang GitBook, Dropbox Paper, GitHub Wiki of andere document editing-programma's gebruikt. Laatst ben ik Figma gaan gebruiken om m'n documenten eindelijk eens geheel in eigen stijl/opmaak op te kunnen leveren. Nu typt dat alleen niet bepaald lekker weg en is het daardoor niet de meest ideale situatie voor grotere docs. Ik vond het juist wel 'lekker doortypen' in iets als GitBook of Dropbox Paper, maar daar kon die eigen opmaak dus niet in gebruikt worden. Stom! 
-
-Daarom lijkt het mij tof om een realtime connectie te maken tussen één van deze editors en een eigen output/website:
-
-- Ik typ m'n teksten gewoon in bijv Dropbox Paper
-- Ik kan de teksten inclusief custom vormgeving realtime terugvinden op m'n eigen blogpost-site
-- Ook op m'n eigen site kan ik de teksten aanpassen, waarbij de teksten eveneens realtime geüpdatet worden in Dropbox Paper
-
-#### DLC
-<img src="https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%201_%20dropbox%20paper.jpg" alt="data life cycle sketch" style="display: inline-block;"  width="502.8" height="565.6">
-
-
-
 #### Dependencies
 ```json
  "devDependencies": {
@@ -200,7 +165,15 @@ Daarom lijkt het mij tof om een realtime connectie te maken tussen één van dez
 
 ## 🧑🏼‍ Actor Diagram
 _Which actors are there in your application? (actor diagram)_
-See above --> this one with the functions specifically? 
+
+#### DLC
+![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/DLC_final.jpg)
+
+
+<details>
+  <summary><strong>Vorige versie</strong> (click to expand)</summary>
+![data life cycle sketch](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/data-life-cycles/Data%20Flow%20Diagram%20-%20concept%203_%20popular%20photos.jpg)
+</details>
 
 ## ↔️ Interaction diagram
 _How does flowed interaction through the application? (interaction diagram)_
@@ -217,12 +190,6 @@ See above --> this one with focus on the user actions, like a wireflow?
 - Functional programming patterns
 - Document structured as a cascade
 
-
-## 👍🏽 Best practices
-
-- Any tips applicable to this course or project
-
-
 ## 🗃 Data
 
 ### 🐒 API
@@ -235,7 +202,6 @@ https://www.programmableweb.com/api/unsplash
 
 *Endpoint*
 https://api.unsplash.com/photos/?client_id=YOUR_ACCESS_KEY
-
 
 
 #### Properties
@@ -311,6 +277,7 @@ Uiteindelijk render ik met deze data de gallery van foto's:
 _What would you like to add (feature wishlist / backlog)?_ 
 
 - [ ]  hmmmoduless?
+- [ ]  Disconnection-support
 
 
 ## 🏫 Assignment
