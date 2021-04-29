@@ -220,6 +220,10 @@ Uiteindelijk render ik met deze data de gallery van foto's:
 </article>
 ```
 
+### Database
+Ik sla de data ook op in een database zodat de score continu bijgehouden kan worden.
+
+<img src="https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/github/database.png" alt="screenshot of mongodb database collection for this project" width=650>
 
 
 
