@@ -287,7 +287,7 @@ _What would you like to add (feature wishlist / backlog)?_
 
 
 ### 1v1+ rooms
-<img src="(https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ET-FINAL-POSTER-FRAME.jpg" alt="socket rooms metaphor" width=300>
+<img src="https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ET-FINAL-POSTER-FRAME.jpg" alt="socket rooms metaphor" width=300>
 Zie de data waarmee je de voting doet als een soort bingokaart die je meekrijgt alvorens je aan een tafeltje kan gaan zitten.
 Het tafeltje speelt alleen wel samen, dus de bingokaart wordt gewoon op de tafel neergelegd en maakt niet uit welke bij wie precies hoorde omdat je toch wel per tafel speelt.
 
