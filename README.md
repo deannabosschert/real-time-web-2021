@@ -147,7 +147,7 @@ _What external data source is featured in your project and what are its properti
 #### Unsplash API!
 https://www.programmableweb.com/api/unsplash
 
-![unsplash screenshot](https://gblobscdn.gitbook.com/assets%2F-MO3t4x8E_KNQlUwiOWq%2F-MO3t6SU8qGoybL570JI%2F-MO3u5zjbetqd4w9y-F4%2FDeanna%20-%20New%20frame%20(2).jpg?alt=media&token=b1a3b6ab-f359-4e9b-bc90-cd4a0e0d76cf)
+<img src="https://gblobscdn.gitbook.com/assets%2F-MO3t4x8E_KNQlUwiOWq%2F-MO3t6SU8qGoybL570JI%2F-MO3u5zjbetqd4w9y-F4%2FDeanna%20-%20New%20frame%20(2).jpg?alt=media&token=b1a3b6ab-f359-4e9b-bc90-cd4a0e0d76cf" alt="programmableweb unsplash screenshot" width=300>
 
 *Endpoint*
 https://api.unsplash.com/photos/?client_id=YOUR_ACCESS_KEY
@@ -155,9 +155,9 @@ https://api.unsplash.com/photos/?client_id=YOUR_ACCESS_KEY
 
 #### Properties
 *Response*
-JSON
+In JSON
+<img src="https://gblobscdn.gitbook.com/assets%2F-MO3t4x8E_KNQlUwiOWq%2F-MO3t6SU8qGoybL570JI%2F-MO3uN7pwD9lGYCYnRmW%2Fimage%20(10).png?alt=media&token=4560d63e-9b04-4ba5-bd2f-feb23a685e0e" alt="unsplash json response screenshot" width=550>
 
-![json response](https://gblobscdn.gitbook.com/assets%2F-MO3t4x8E_KNQlUwiOWq%2F-MO3t6SU8qGoybL570JI%2F-MO3uN7pwD9lGYCYnRmW%2Fimage%20(10).png?alt=media&token=4560d63e-9b04-4ba5-bd2f-feb23a685e0e)
 
 Ik doe een request naar de API met de volgende URL+queries; hierin is het keyword uiteraard afhankelijk van de input van de gebruiker.
 
@@ -277,11 +277,15 @@ _What would you like to add (feature wishlist / backlog)?_
 #### Won't have (? yea..)
 - suggestions welcome as I find this step usually obsolete
 
-#### Socket
-![socket](https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ExperienceTube_A5T0181-1200x630.jpg)
+#### Sockets
+<img src="https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ExperienceTube_A5T0181-1200x630.jpg" alt="socket metaphor" width=550>
+<img src="https://media0.giphy.com/media/fvA1ieS8rEV8Y/200.gif" alt="socket metaphor ping pong" width=550>
 
-#### 1v1 rooms
-![](https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ET-FINAL-POSTER-FRAME.jpg)
+Server @ Client
+<img src="https://media4.giphy.com/media/l4FGwx3MJMfkZP75S/200.gif" alt="socket metaphor ping pong" width=550>
+
+#### 1v1+ rooms
+<img src="(https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ET-FINAL-POSTER-FRAME.jpg" alt="socket rooms metaphor" width=550>
 
 ## 🏫 Assignment
 <details>
@@ -431,18 +435,17 @@ Goal: Assess and wrap-up the course!
 
 ### Rubric
 
-[Rubric- detailed rating of my project](https://github.com/deannabosschert/real-time-web-2021/wiki/Rubric)
-![rubric](https://github.com/deannabosschert/real-time-web-2021/blob/master/src/img/rubric.png)
-[rubric]: https://docs.google.com/spreadsheets/d/e/2PACX-1vTjLC7HzQngsRCmkxTGWvKkkH1JuA5KivKdky_9dzr1zzghARw4-ldQW_tWO3zpxT7ZQC7SpiUa0q2z/pubhtml?gid=0&single=true
+[Rubric- detailed rating of my project](https://github.com/deannabosschert/real-time-web-2021/wiki/Evaluation)
+[rubric]: https://github.com/cmda-minor-web/real-time-web-2021#grading
 
 ## ℹ️ Resources
 
 ### Credits
 - Our superamazingteachers at @CMD
+- My Rubber Ducks @Justus, @Reinier and @Daniel
 
 ### Small inspiration sources
-
-- Rubber ducky
+- https://github.com/deannabosschert/real-time-web-1920
 
 ## 🗺️ License
 Author: [Deanna Bosschert](https://github.com/deannabosschert)
