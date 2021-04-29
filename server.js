@@ -46,7 +46,6 @@ io.on('connect', async (socket) => {
       .then((data) => emitPhotos(data))
   })
 
-
   socket.on("form_results", (data, results) => {
     const chosenPhotos = matchFormtoRoomPhotos(data, results).flat()
     data.room.chosenPhotos = chosenPhotos
