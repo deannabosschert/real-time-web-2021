@@ -277,15 +277,20 @@ _What would you like to add (feature wishlist / backlog)?_
 #### Won't have (? yea..)
 - suggestions welcome as I find this step usually obsolete
 
-#### Sockets
+## Metaphors
+### Sockets
 <img src="https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ExperienceTube_A5T0181-1200x630.jpg" alt="socket metaphor" width=550>
-<img src="https://media0.giphy.com/media/fvA1ieS8rEV8Y/200.gif" alt="socket metaphor ping pong" width=550>
+<img src="https://media0.giphy.com/media/fvA1ieS8rEV8Y/200.gif" alt="socket metaphor ping pong" width=300>
 
-Server @ Client
-<img src="https://media4.giphy.com/media/l4FGwx3MJMfkZP75S/200.gif" alt="socket metaphor ping pong" width=550>
+#### Server @ Client
+<img src="https://media4.giphy.com/media/l4FGwx3MJMfkZP75S/200.gif" alt="socket metaphor joining rooms" width=300>
 
-#### 1v1+ rooms
-<img src="(https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ET-FINAL-POSTER-FRAME.jpg" alt="socket rooms metaphor" width=550>
+
+### 1v1+ rooms
+<img src="(https://experiencetube.com/wp-content/uploads/sites/9/2017/09/ET-FINAL-POSTER-FRAME.jpg" alt="socket rooms metaphor" width=300>
+Zie de data waarmee je de voting doet als een soort bingokaart die je meekrijgt alvorens je aan een tafeltje kan gaan zitten.
+Het tafeltje speelt alleen wel samen, dus de bingokaart wordt gewoon op de tafel neergelegd en maakt niet uit welke bij wie precies hoorde omdat je toch wel per tafel speelt.
+
 
 ## 🏫 Assignment
 <details>
