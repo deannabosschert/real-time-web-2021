@@ -60,7 +60,6 @@ userdataForm.addEventListener("submit", (event) => {
 
   socket.emit("start", userData)
 
-
   renderInfo(".userdataSet", 'p', `your username: <span id="username">${usernameInput.value}</span>`, 'false')
   renderInfo(".userdataSet", 'p', `your category: ${categoryInput.value}`, 'false')
   false
