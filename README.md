@@ -1,6 +1,8 @@
 # Real-Time Web @cmda-minor-web · 2020/21
 https://real-time-web-21.herokuapp.com/
 
+![screenshot gif of app](https://github.com/deannabosschert/real-time-web-2021/blob/main/public/assets/img/documentation/screenshot_website.gif)
+
 <details>
   <summary><strong>Table of Contents</strong> (click to expand)</summary>
 
